@@ -209,4 +209,5 @@ def tic():
     toc(False)
 
 
-bot.run(TOKEN)
+def setup(bot):
+    bot.add_cog(TW(bot))
