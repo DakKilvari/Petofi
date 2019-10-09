@@ -11,7 +11,7 @@ async def on_ready():
     game = discord.Game(".help")
     await bot.change_presence(status=discord.Status.online, activity=game)
 
-extensions = ['cmd_TW', 'cmd_Top80', 'error_handler']
+extensions = ['cmd_DS_Geo_TB', 'cmd_TW', 'cmd_Top80', 'error_handler']
 
 if __name__ == '__main__':
     for extension in extensions:
