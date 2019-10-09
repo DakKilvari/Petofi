@@ -1,11 +1,10 @@
 from api_swgoh_help import api_swgoh_help, settings
 from numpy import *
-from discord.ext.commands import Bot
+from discord.ext import commands
 import discord
 import time
 
 creds = settings('USERNAME', 'PASSWORD')
-
 client = api_swgoh_help(creds)
 
 class DS_Geo_TB(commands.Cog):
@@ -210,4 +209,4 @@ def tic():
 
 
 def setup(bot):
-    bot.add_cog(TW(bot))
+    bot.add_cog(DS_Geo_TB(bot))
