@@ -110,6 +110,7 @@ class TW(commands.Cog):
                 'g11  :: ' + ' ' * round(1 / len(str(guild1['g11']))) + str(guild1['g11']) + ' vs ' + str(guild2['g11']) + '\n' +
                 'g12  :: ' + ' ' * round(1 / len(str(guild1['g12']))) + str(guild1['g12']) + ' vs ' + str(guild2['g12']) + '\n' +
                 'g13  :: ' + ' ' * round(1 / len(str(guild1['g13']))) + str(guild1['g13']) + ' vs ' + str(guild2['g13']) + '\n' +
+                'R3+  :: ' + ' ' * round(1 / len(str(guild1['R3+']))) + str(guild1['R3+']) + ' vs ' + str(guild2['R3+']) + '\n' +
                 'z    :: ' + ' ' * round(1 / len(str(guild1['egyzeta']))) + str(guild1['egyzeta']) + ' vs ' + str(guild2['egyzeta']) + '\n' +
                 'zz   :: ' + ' ' * round(1 / len(str(guild1['ketzeta']))) + str(guild1['ketzeta']) + ' vs ' + str(guild2['ketzeta']) + '\n' +
                 'zzz  :: ' + ' ' * round(1 / len(str(guild1['haromzeta']))) + str(guild1['haromzeta']) + ' vs ' + str(guild2['haromzeta']) + '```')
@@ -242,6 +243,7 @@ def character_data_search(guilddata, charname):
                  "g11": 0,
                  "g12": 0,
                  "g13": 0,
+                 "R3+": 0,
                  "egyzeta": 0,
                  "ketzeta": 0,
                  "haromzeta": 0,
@@ -267,6 +269,8 @@ def character_data_search(guilddata, charname):
                     character["g12"] += 1
                 if chardata[j]['gear'] == 13:
                     character["g13"] += 1
+                if chardata[j]['relic']['currentTier'] >= 4:
+                    character["R3+"] += 1
                 sumz = 0
                 for c in chardata[j]['skills']:
                     if c['tier'] == 8 and c['isZeta'] == True:
