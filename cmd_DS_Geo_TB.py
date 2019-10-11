@@ -12,7 +12,7 @@ class DS_Geo_TB(commands.Cog):
         self.bot = bot
 
     @commands.command(aliases=['DS Geo TB'])
-    @commands.has_any_role('CobraAdmin')  # User need this role to run command (can have multiple)
+    @commands.has_any_role('Master', 'Officer')  # User need this role to run command (can have multiple)
     async def DS_Geo_TB(self, ctx, allycode: int):
         tic()
         await ctx.message.add_reaction("⏳")
@@ -42,19 +42,19 @@ class DS_Geo_TB(commands.Cog):
 
             s:str = '\n'.join(map(str, guild_members))
             n:int = len(guild_members)
-            embed.add_field(name=str(n) + ' játékos nem áll készen P2 Dooku & Asajj pályára:', value='```' + s + '```')
+            embed.add_field(name=str(n) + ' játékos nem áll készen P2 Dooku & Asajj pályára:', value='```' + "\n" + s + '```')
 
             guild_members = character_data_search_P3(guilddata)
 
             s: str = '\n'.join(map(str, guild_members))
             n: int = len(guild_members)
-            embed.add_field(name=str(n) + ' játékos nem áll készen P3 szepa droidos pályára:', value='```' + s + '```')
+            embed.add_field(name=str(n) + ' játékos nem áll készen P3 szepa droidos pályára:', value='```' + "\n" + s + '```')
 
             guild_members = character_data_search_Wat_Tambor(guilddata)
 
             s: str = '\n'.join(map(str, guild_members))
             n: int = len(guild_members)
-            embed.add_field(name=str(n) + ' játékos nem áll készen Wat Tambor shard megszerzésére:', value='```' + s + '```')
+            embed.add_field(name=str(n) + ' játékos nem áll készen Wat Tambor shard megszerzésére:', value='```' + "\n" + s + '```')
 
 
 
@@ -171,9 +171,9 @@ def character_data_search_P2(guilddata):
         ae = 0
         j = 0
         for b in chardata:
-            if chardata[j]['defId'] == "COUNTDOOKU" and chardata[j]['rarity'] == 6 and chardata[j]['gear'] >= 11 and chardata[j]['gp'] > 16499:
+            if chardata[j]['defId'] == "COUNTDOOKU" and chardata[j]['rarity'] >= 6 and chardata[j]['gear'] >= 11 and chardata[j]['gp'] > 16499:
                 aa = 1
-            if chardata[j]['defId'] == "ASAJVENTRESS" and chardata[j]['rarity'] == 6 and chardata[j]['gear'] >= 11 and chardata[j]['gp'] > 16499:
+            if chardata[j]['defId'] == "ASAJVENTRESS" and chardata[j]['rarity'] >= 6 and chardata[j]['gear'] >= 11 and chardata[j]['gp'] > 16499:
                 ab = 1
             j += 1
         if aa != 1 or ab != 1:
