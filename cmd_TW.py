@@ -23,20 +23,20 @@ class TW(commands.Cog):
                           "JEDIKNIGHTREVAN",
                           "PADMEAMIDALA",
                           "GRIEVOUS",
-                          "GEONOSIANBROODALPHA"]
+                          "GENERALSKYWALKER"]
 
         ship_list = ["MILLENNIUMFALCON",
-                     "JEDISTARFIGHTERANAKIN"]
+                     "CAPITALNEGOTIATOR"]
 
         character_list2 = ["Darth Revan",
                            "Darth Malak",
                            "Jedi Knight Revan",
                            "Padmé Amidala",
                            "General Grievous",
-                           "Geonosian Brood Alpha"]
+                           "General Skywalker"]
 
         ship_list2 = ["Han's Millennium Falcon",
-                      "Anakin's Eta-2 Starfighter"]
+                      "Negotiator"]
 
         raw_guild1 = client.fetchGuilds(allycode1)
         raw_guild2 = client.fetchGuilds(allycode2)
