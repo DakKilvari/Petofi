@@ -12,7 +12,7 @@ class TW(commands.Cog):
         self.bot = bot
 
     @commands.command(aliases=['Territory War'])
-    @commands.has_any_role('Master', 'Officer')  # User need this role to run command (can have multiple)
+    @commands.has_any_role('Leader', 'Officer', 'Commander')  # User need this role to run command (can have multiple)
 
     async def tw(self, ctx, allycode1: int, allycode2: int):
         tic()
@@ -63,6 +63,8 @@ class TW(commands.Cog):
         if temp1 != -1 and temp2 != -1:
 
             await ctx.message.add_reaction("✅")
+
+            print("\n" + "TW lekérés folyamatban.")
 
             guilddata1 = fetchGuildRoster(raw_guild1)
             guilddata2 = fetchGuildRoster(raw_guild2)
@@ -146,7 +148,7 @@ class TW(commands.Cog):
     async def josoultsag_hiba(self, ctx, error):
         self.ctx = ctx
         if isinstance(error, commands.CheckFailure):
-            print("Permission error!!!")
+            print("\n" + "Jogosultság hiba!")
             await self.ctx.send('⛔ - Nincsen hozzá jogosultságod!')
 
 
