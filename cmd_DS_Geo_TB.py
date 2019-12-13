@@ -1,10 +1,11 @@
 from api_swgoh_help import api_swgoh_help, settings
+from db_handler import db_handler
 from numpy import *
 from discord.ext import commands
 import discord
 import time
 
-creds = settings('USERNAME', 'PASSWORD')
+creds = settings()
 client = api_swgoh_help(creds)
 
 class DS_Geo_TB(commands.Cog):
@@ -12,10 +13,24 @@ class DS_Geo_TB(commands.Cog):
         self.bot = bot
 
     @commands.command(aliases=['DS Geo TB'])
-    @commands.has_any_role('Master', 'Officer')  # User need this role to run command (can have multiple)
-    async def DS_Geo_TB(self, ctx, allycode: int):
+    @commands.has_any_role('Leader', 'Officer', 'Commander')  # User need this role to run command (can have multiple)
+    async def DS_Geo_TB(self, ctx, raw_allycode):
         tic()
         await ctx.message.add_reaction("⏳")
+
+        m1 = str(ctx.author.id)
+        try:
+            m2 = str(ctx.message.mentions[0].id)
+        except:
+            m2 = "000000000"
+
+        database = db_handler(m1, m2)
+        mydb = database.myDb()
+        mycursor = mydb.cursor()
+        allycode = database.fetchMe(raw_allycode, mycursor)
+
+        mycursor.close()
+        mydb.close()
 
         raw_guild = client.fetchGuilds(allycode)
 
@@ -33,29 +48,35 @@ class DS_Geo_TB(commands.Cog):
 
             await ctx.message.add_reaction("✅")
 
+            print("\n" + "DS Geo TB lekérés folyamatban.")
+
             guilddata = fetchGuildRoster(raw_guild)
 
-            embed = discord.Embed(title='DS Geo TB Wat Tambor special mission', url="https://swgoh.gg/p/" + str(raw_guild[0]['roster'][0]['allyCode']) + "/", color=0x7289da)
+            embed = discord.Embed(title='DS Geo TB P1-P2-P3 áttekintő', url="https://swgoh.gg/p/" + str(raw_guild[0]['roster'][0]['allyCode']) + "/", color=0x7289da)
 
+            guild_members = character_data_search_P1(guilddata)
+
+            s: str = '\n'.join(map(str, guild_members))
+            n: int = len(guild_members)
+            embed.add_field(name=str(n) + ' játékos nem áll készen P1 szepa pályára:', value='```' + "\n" + s + '```', inline='false')
 
             guild_members = character_data_search_P2(guilddata)
 
-            s:str = '\n'.join(map(str, guild_members))
-            n:int = len(guild_members)
-            embed.add_field(name=str(n) + ' játékos nem áll készen P2 Dooku & Asajj pályára:', value='```' + "\n" + s + '```')
+            s: str = '\n'.join(map(str, guild_members))
+            n: int = len(guild_members)
+            embed.add_field(name=str(n) + ' játékos nem áll készen P2 Dooku & Asajj pályára:', value='```' + "\n" + s + '```', inline='false')
 
             guild_members = character_data_search_P3(guilddata)
 
             s: str = '\n'.join(map(str, guild_members))
             n: int = len(guild_members)
-            embed.add_field(name=str(n) + ' játékos nem áll készen P3 szepa droidos pályára:', value='```' + "\n" + s + '```')
+            embed.add_field(name=str(n) + ' játékos nem áll készen P3 szepa droidos pályára:', value='```' + "\n" + s + '```', inline='false')
 
             guild_members = character_data_search_Wat_Tambor(guilddata)
 
             s: str = '\n'.join(map(str, guild_members))
             n: int = len(guild_members)
-            embed.add_field(name=str(n) + ' játékos nem áll készen Wat Tambor shard megszerzésére:', value='```' + "\n" + s + '```')
-
+            embed.add_field(name=str(n) + ' játékos nem áll készen Wat Tambor shard megszerzésére:', value='```' + "\n" + s + '```', inline='false')
 
 
             await ctx.send(embed=embed)
@@ -70,7 +91,7 @@ class DS_Geo_TB(commands.Cog):
     async def josoultsag_hiba(self, ctx, error):
         self.ctx = ctx
         if isinstance(error, commands.CheckFailure):
-            print("Permission error!!!")
+            print("\n" + "Jogosultság hiba!")
             await self.ctx.send('⛔ - Nincsen hozzá jogosultságod!')
 
 
@@ -152,6 +173,34 @@ def character_data_search_P3(guilddata):
                 ae = 1
             j += 1
         if aa != 1 or ab != 1 or ac != 1 or ad != 1 or ae != 1:
+            chardata_ally.insert(k, guilddata[i]['name'])
+            k += 1
+        i += 1
+
+    return chardata_ally
+
+def character_data_search_P1(guilddata):
+    k = 0
+    i = 0
+    chardata_ally = []
+    for a in guilddata:
+        chardata = guilddata[i]['roster']
+        aa = 0
+        ab = 0
+        ac = 0
+        ad = 0
+        j = 0
+        for b in chardata:
+            if chardata[j]['defId'] == "NUTEGUNRAY" and chardata[j]['rarity'] >= 6 and chardata[j]['gear'] >= 11 and chardata[j]['gp'] > 16499:
+                aa = 1
+            if chardata[j]['defId'] == "B1BATTLEDROIDV2" and chardata[j]['rarity'] >= 6 and chardata[j]['gear'] >= 11 and chardata[j]['gp'] > 16499:
+                ab = 1
+            if chardata[j]['defId'] == "B2SUPERBATTLEDROID" and chardata[j]['rarity'] >= 6 and chardata[j]['gear'] >= 11 and chardata[j]['gp'] > 16499:
+                ac = 1
+            if chardata[j]['defId'] == "DROIDEKA" and chardata[j]['rarity'] >= 6 and chardata[j]['gear'] >= 11 and chardata[j]['gp'] > 16499:
+                ad = 1
+            j += 1
+        if aa != 1 or ab != 1 or ac != 1 or ad != 1:
             chardata_ally.insert(k, guilddata[i]['name'])
             k += 1
         i += 1
