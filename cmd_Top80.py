@@ -2,21 +2,36 @@ import time
 from numpy import *
 from discord.ext import commands
 from api_swgoh_help import api_swgoh_help, settings
+from db_handler import db_handler
 
-creds = settings('USERNAME', 'PASSWORD')
-client = api_swgoh_help(creds)
 
 class Top80(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
     @commands.command(aliases=['Top 80'])
-    @commands.has_any_role('CobraAdmin')  # User need this role to run command (can have multiple)
-    async def Top80(self,ctx,allycode:int):
+    @commands.has_any_role('Member')  # User need this role to run command (can have multiple)
+    async def Top80(self, ctx, raw_allycode):
 
         tic()
         await ctx.message.add_reaction("⏳")
 
+        m1 = str(ctx.author.id)
+        try:
+            m2 = str(ctx.message.mentions[0].id)
+        except:
+            m2 = "000000000"
+
+        database = db_handler(m1, m2)
+        mydb = database.myDb()
+        mycursor = mydb.cursor()
+        allycode = database.fetchMe(raw_allycode, mycursor)
+
+        mycursor.close()
+        mydb.close()
+
+        creds = settings()
+        client = api_swgoh_help(creds)
         raw_player = client.fetchPlayers(allycode)
 
         temp = 0
@@ -30,6 +45,8 @@ class Top80(commands.Cog):
             pass
 
         if temp != -1:
+
+            print("\n" + raw_player[0]['name'] + "-tól top80 lekérés.")
 
             await ctx.message.add_reaction("✅")
 
@@ -47,7 +64,7 @@ class Top80(commands.Cog):
     async def josoultsag_hiba(self, ctx, error):
         self.ctx = ctx
         if isinstance(error, commands.CheckFailure):
-            print("Permission error!!!")
+            print("\n" + "Jogosultság hiba!")
             await self.ctx.send('⛔ - Nincsen hozzá jogosultságod!')
 
 def fetchPlayerRoster(raw_player):
@@ -60,8 +77,12 @@ def fetchPlayerRoster(raw_player):
     player['jatekosnev'] = raw_player[0]['name']
     i = 0
     for a in raw_player[0]['roster']:
+        relikGP:int = 0
         if raw_player[0]['roster'][i]['combatType'] == "CHARACTER":
-            temp.insert(i, raw_player[0]['roster'][i]['gp'])
+            if raw_player[0]['roster'][i]['gear'] == 13:
+                relikGP = fetchRelik(raw_player[0]['roster'][i])
+            fullGP = raw_player[0]['roster'][i]['gp'] + relikGP
+            temp.insert(i, fullGP)
         i += 1
     temp.sort(reverse=True)
 
@@ -71,6 +92,28 @@ def fetchPlayerRoster(raw_player):
         i += 1
 
     return player
+
+def fetchRelik(player):
+
+    relikGP:int = 0
+    if player['relic']['currentTier'] == 2:
+        relikGP = 0
+    if player['relic']['currentTier'] == 3:
+        relikGP = 759
+    if player['relic']['currentTier'] == 4:
+        relikGP = 1594
+    if player['relic']['currentTier'] == 5:
+        relikGP = 2505
+    if player['relic']['currentTier'] == 6:
+        relikGP = 3492
+    if player['relic']['currentTier'] == 7:
+        relikGP = 4554
+    if player['relic']['currentTier'] == 8:
+        relikGP = 6072
+    if player['relic']['currentTier'] == 9:
+        relikGP = 7969
+
+    return relikGP
 
 def TicTocGenerator():
     # Generator that returns time differences
