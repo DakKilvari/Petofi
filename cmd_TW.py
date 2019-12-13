@@ -3,8 +3,9 @@ import discord
 from numpy import *
 from discord.ext import commands
 from api_swgoh_help import api_swgoh_help, settings
+from db_handler import db_handler
 
-creds = settings('USERNAME', 'PASSWORD')
+creds = settings()
 client = api_swgoh_help(creds)
 
 class TW(commands.Cog):
@@ -14,7 +15,7 @@ class TW(commands.Cog):
     @commands.command(aliases=['Territory War'])
     @commands.has_any_role('Leader', 'Officer', 'Commander')  # User need this role to run command (can have multiple)
 
-    async def tw(self, ctx, allycode1: int, allycode2: int):
+    async def tw(self, ctx, raw_allycode1, allycode2: int):
         tic()
         await ctx.message.add_reaction("⏳")
 
@@ -37,6 +38,21 @@ class TW(commands.Cog):
 
         ship_list2 = ["Han's Millennium Falcon",
                       "Negotiator"]
+
+
+        m1 = str(ctx.author.id)
+        try:
+            m2 = str(ctx.message.mentions[0].id)
+        except:
+            m2 = "000000000"
+
+        database = db_handler(m1, m2)
+        mydb = database.myDb()
+        mycursor = mydb.cursor()
+        allycode1 = database.fetchMe(raw_allycode1, mycursor)
+
+        mycursor.close()
+        mydb.close()
 
         raw_guild1 = client.fetchGuilds(allycode1)
         raw_guild2 = client.fetchGuilds(allycode2)
@@ -90,7 +106,7 @@ class TW(commands.Cog):
             '15+ speed mods  :: ' + ' ' * (lth - len(str(overview1['15speed']))) + str('{:,}'.format(overview1['15speed'])) + ' vs ' + str('{:,}'.format(overview2['15speed'])) + '\n' +
             '20+ speed mods  ::  ' + ' ' * (lth - len(str(overview1['20speed']))) + str('{:,}'.format(overview1['20speed'])) + ' vs ' + str('{:,}'.format(overview2['20speed'])) + '\n' +
             '25+ speed mods  ::  ' + ' ' * (lth - len(str(overview1['25speed']))) + str('{:,}'.format(overview1['25speed'])) + ' vs ' + str('{:,}'.format(overview2['25speed'])) + '\n' +
-            '100+ off mods   :: ' + ' ' * (lth - len(str(overview1['100off']))) + str('{:,}'.format(overview1['100off'])) + ' vs ' + str('{:,}'.format(overview2['100off'])) + '```')
+            '100+ off mods   :: ' + ' ' * (lth - len(str(overview1['100off']))) + str('{:,}'.format(overview1['100off'])) + ' vs ' + str('{:,}'.format(overview2['100off'])) + '```', inline='false')
 
             i = 0
             j: int = 30
