@@ -1,11 +1,11 @@
 from api_swgoh_help import api_swgoh_help, settings
+from db_handler import db_handler
 from numpy import *
 import discord
 import time
 from discord.ext import commands
 
-
-creds = settings('USERNAME', 'PASSWORD')
+creds = settings()
 client = api_swgoh_help(creds)
 
 class GUILDRANK(commands.Cog):
@@ -14,9 +14,23 @@ class GUILDRANK(commands.Cog):
 
     @commands.command(aliases=['GuildRang'])
     @commands.has_any_role('Leader', 'Officer', 'Commander')  # User need this role to run command (can have multiple)
-    async def guild_rang(self, ctx, allycode: int):
+    async def guild_rang(self, ctx, raw_allycode):
         tic()
         await ctx.message.add_reaction("⏳")
+
+        m1 = str(ctx.author.id)
+        try:
+            m2 = str(ctx.message.mentions[0].id)
+        except:
+            m2 = "000000000"
+
+        database = db_handler(m1, m2)
+        mydb = database.myDb()
+        mycursor = mydb.cursor()
+        allycode = database.fetchMe(raw_allycode, mycursor)
+
+        mycursor.close()
+        mydb.close()
 
         raw_guild = client.fetchGuilds(allycode)
 
@@ -33,6 +47,8 @@ class GUILDRANK(commands.Cog):
         if temp != -1:
 
             await ctx.message.add_reaction("✅")
+
+            print("\n" + "Guild rang lekérés folyamatban.")
 
             guilddata = fetchGuildRoster(raw_guild)
 
@@ -66,7 +82,7 @@ class GUILDRANK(commands.Cog):
             str(player[i+6]['jatekosnev']) + ' ' * (lth-len(str(player[i+6]['jatekosnev']))) + ' ' + str(player[i+6]['rank']) + ' pont' + '  ' + str(player[i+6]['ranknev']) + '\n' +
             str(player[i+7]['jatekosnev']) + ' ' * (lth-len(str(player[i+7]['jatekosnev']))) + ' ' + str(player[i+7]['rank']) + ' pont' + '  ' + str(player[i+7]['ranknev']) + '\n' +
             str(player[i+8]['jatekosnev']) + ' ' * (lth-len(str(player[i+8]['jatekosnev']))) + ' ' + str(player[i+8]['rank']) + ' pont' + '  ' + str(player[i+8]['ranknev']) + '\n' +
-            str(player[i+9]['jatekosnev']) + ' ' * (lth-len(str(player[i+9]['jatekosnev']))) + ' ' + str(player[i+9]['rank']) + ' pont' + '  ' + str(player[i+9]['ranknev']) + '\n' + '```')
+            str(player[i+9]['jatekosnev']) + ' ' * (lth-len(str(player[i+9]['jatekosnev']))) + ' ' + str(player[i+9]['rank']) + ' pont' + '  ' + str(player[i+9]['ranknev']) + '\n' + '```', inline='false')
 
             i = 10
             embed.add_field(name='=================== Top 11 - 20 ===================', value=
@@ -79,7 +95,7 @@ class GUILDRANK(commands.Cog):
             str(player[i+6]['jatekosnev']) + ' ' * (lth-len(str(player[i+6]['jatekosnev']))) + ' ' + str(player[i+6]['rank']) + ' pont' + '  ' + str(player[i+6]['ranknev']) + '\n' +
             str(player[i+7]['jatekosnev']) + ' ' * (lth-len(str(player[i+7]['jatekosnev']))) + ' ' + str(player[i+7]['rank']) + ' pont' + '  ' + str(player[i+7]['ranknev']) + '\n' +
             str(player[i+8]['jatekosnev']) + ' ' * (lth-len(str(player[i+8]['jatekosnev']))) + ' ' + str(player[i+8]['rank']) + ' pont' + '  ' + str(player[i+8]['ranknev']) + '\n' +
-            str(player[i+9]['jatekosnev']) + ' ' * (lth-len(str(player[i+9]['jatekosnev']))) + ' ' + str(player[i+9]['rank']) + ' pont' + '  ' + str(player[i+9]['ranknev']) + '\n' + '```')
+            str(player[i+9]['jatekosnev']) + ' ' * (lth-len(str(player[i+9]['jatekosnev']))) + ' ' + str(player[i+9]['rank']) + ' pont' + '  ' + str(player[i+9]['ranknev']) + '\n' + '```', inline='false')
 
             i = 20
             embed.add_field(name='=================== Top 21 - 30 ===================', value=
@@ -92,7 +108,7 @@ class GUILDRANK(commands.Cog):
             str(player[i+6]['jatekosnev']) + ' ' * (lth-len(str(player[i+6]['jatekosnev']))) + ' ' + str(player[i+6]['rank']) + ' pont' + '  ' + str(player[i+6]['ranknev']) + '\n' +
             str(player[i+7]['jatekosnev']) + ' ' * (lth-len(str(player[i+7]['jatekosnev']))) + ' ' + str(player[i+7]['rank']) + ' pont' + '  ' + str(player[i+7]['ranknev']) + '\n' +
             str(player[i+8]['jatekosnev']) + ' ' * (lth-len(str(player[i+8]['jatekosnev']))) + ' ' + str(player[i+8]['rank']) + ' pont' + '  ' + str(player[i+8]['ranknev']) + '\n' +
-            str(player[i+9]['jatekosnev']) + ' ' * (lth-len(str(player[i+9]['jatekosnev']))) + ' ' + str(player[i+9]['rank']) + ' pont' + '  ' + str(player[i+9]['ranknev']) + '\n' + '```')
+            str(player[i+9]['jatekosnev']) + ' ' * (lth-len(str(player[i+9]['jatekosnev']))) + ' ' + str(player[i+9]['rank']) + ' pont' + '  ' + str(player[i+9]['ranknev']) + '\n' + '```', inline='false')
 
             i = 30
             embed.add_field(name='=================== Top 31 - 40 ===================', value=
@@ -105,7 +121,7 @@ class GUILDRANK(commands.Cog):
             str(player[i+6]['jatekosnev']) + ' ' * (lth-len(str(player[i+6]['jatekosnev']))) + ' ' + str(player[i+6]['rank']) + ' pont' + '  ' + str(player[i+6]['ranknev']) + '\n' +
             str(player[i+7]['jatekosnev']) + ' ' * (lth-len(str(player[i+7]['jatekosnev']))) + ' ' + str(player[i+7]['rank']) + ' pont' + '  ' + str(player[i+7]['ranknev']) + '\n' +
             str(player[i+8]['jatekosnev']) + ' ' * (lth-len(str(player[i+8]['jatekosnev']))) + ' ' + str(player[i+8]['rank']) + ' pont' + '  ' + str(player[i+8]['ranknev']) + '\n' +
-            str(player[i+9]['jatekosnev']) + ' ' * (lth-len(str(player[i+9]['jatekosnev']))) + ' ' + str(player[i+9]['rank']) + ' pont' + '  ' + str(player[i+9]['ranknev']) + '\n' + '```')
+            str(player[i+9]['jatekosnev']) + ' ' * (lth-len(str(player[i+9]['jatekosnev']))) + ' ' + str(player[i+9]['rank']) + ' pont' + '  ' + str(player[i+9]['ranknev']) + '\n' + '```', inline='false')
 
             i = 40
             embed.add_field(name='=================== Top 41 - 50 ===================', value=
@@ -118,7 +134,7 @@ class GUILDRANK(commands.Cog):
             str(player[i+6]['jatekosnev']) + ' ' * (lth-len(str(player[i+6]['jatekosnev']))) + ' ' * round(1 / len(str(player[i+6]['rank']))) + str(player[i+6]['rank']) + ' pont' + '  ' + str(player[i+6]['ranknev']) + '\n' +
             str(player[i+7]['jatekosnev']) + ' ' * (lth-len(str(player[i+7]['jatekosnev']))) + ' ' * round(1 / len(str(player[i+7]['rank']))) + str(player[i+7]['rank']) + ' pont' + '  ' + str(player[i+7]['ranknev']) + '\n' +
             str(player[i+8]['jatekosnev']) + ' ' * (lth-len(str(player[i+8]['jatekosnev']))) + ' ' * round(1 / len(str(player[i+8]['rank']))) + str(player[i+8]['rank']) + ' pont' + '  ' + str(player[i+8]['ranknev']) + '\n' +
-            str(player[i+9]['jatekosnev']) + ' ' * (lth-len(str(player[i+9]['jatekosnev']))) + ' ' * round(1 / len(str(player[i+9]['rank']))) + str(player[i+9]['rank']) + ' pont' + '  ' + str(player[i+9]['ranknev']) + '\n' + '```')
+            str(player[i+9]['jatekosnev']) + ' ' * (lth-len(str(player[i+9]['jatekosnev']))) + ' ' * round(1 / len(str(player[i+9]['rank']))) + str(player[i+9]['rank']) + ' pont' + '  ' + str(player[i+9]['ranknev']) + '\n' + '```', inline='false')
 
 
 
@@ -133,7 +149,7 @@ class GUILDRANK(commands.Cog):
     async def josoultsag_hiba(self, ctx, error):
         self.ctx = ctx
         if isinstance(error, commands.CheckFailure):
-            print("Permission error!!!")
+            print("\n" + "Jogosultság hiba!")
             await self.ctx.send('⛔ - Nincsen hozzá jogosultságod!')
 
 def Sort(a):
@@ -321,7 +337,7 @@ def fetchPlayerRoster(guilddata):
                     if b['tier'] == 8 and b['isZeta'] == True:
                         temp += 1
                 if temp >= 2:
-                    player[k]['rank'] += 1
+                    player[k]['rank'] += 2
             if a['defId'] == "NUTEGUNRAY" and a['gear'] >= 12:
                 temp = 0
                 for b in a['skills']:
