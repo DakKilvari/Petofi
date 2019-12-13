@@ -2,9 +2,7 @@ from api_swgoh_help import api_swgoh_help, settings
 from numpy import *
 import time
 from discord.ext import commands
-
-creds = settings('USERNAME', 'PASSWORD')
-client = api_swgoh_help(creds)
+from db_handler import db_handler
 
 class RANK(commands.Cog):
     def __init__(self, bot):
@@ -12,10 +10,27 @@ class RANK(commands.Cog):
 
     @commands.command(aliases=['JatekosRang'])
     @commands.has_any_role('Member')  # User need this role to run command (can have multiple)
-    async def rang(self, ctx, allycode: int):
+    async def rang(self, ctx, raw_allycode):
+
         tic()
         await ctx.message.add_reaction("⏳")
 
+        m1 = str(ctx.author.id)
+        try:
+            m2 = str(ctx.message.mentions[0].id)
+        except:
+            m2 = "000000000"
+
+        database = db_handler(m1, m2)
+        mydb = database.myDb()
+        mycursor = mydb.cursor()
+        allycode = database.fetchMe(raw_allycode, mycursor)
+
+        mycursor.close()
+        mydb.close()
+
+        creds = settings()
+        client = api_swgoh_help(creds)
         raw_player = client.fetchPlayers(allycode)
 
         temp = 0
@@ -30,17 +45,25 @@ class RANK(commands.Cog):
 
         if temp != -1:
 
-            print(raw_player[0]['name'])
+            print("\n" + raw_player[0]['name'] + "-tól rang lekérés.")
 
             await ctx.message.add_reaction("✅")
 
             player = fetchPlayerRoster(raw_player)
 
-            player = fetchPlayerRanknev(player )
+            player = fetchPlayerRanknev(player)
 
-            await ctx.send(ctx.message.author.mention + " a jelenlegi rang pontszámod: " + str('{:,}'.format(player['rank'])) + ".  A rangod pedig: " + str(player['ranknev']))
+            player['chars'].sort()
+            player['ships'].sort()
 
-            print(player['jatekosnev'])
+            s: str = '\n'.join(map(str, player['chars']))
+            s2: str = '\n'.join(map(str, player['ships']))
+
+            if s == "" and s2 == "":
+                await ctx.send("**Nincsen beszámolható egységed, vagy hajód!**")
+            else:
+                await ctx.send(ctx.message.author.mention + " " + player['jatekosnev'] + " jelenlegi rang pontszáma: " + str('{:,}'.format(player['rank'])) + ".  A rangja pedig: " + str(player['ranknev']))
+                await ctx.send("**Beszámolt karakterek:** \n" + s + "\n\n**Beszámolt hajók:** \n" + s2)
 
             toc()
 
@@ -51,7 +74,7 @@ class RANK(commands.Cog):
     async def josoultsag_hiba(self, ctx, error):
         self.ctx = ctx
         if isinstance(error, commands.CheckFailure):
-            print("Permission error!!!")
+            print("\n" + "Jogosultság hiba!")
             await self.ctx.send('⛔ - Nincsen hozzá jogosultságod!')
 
 
@@ -80,7 +103,9 @@ def fetchPlayerRoster(raw_player):
     player = {
         "jatekosnev": " ",
         "rank": 0,
-        "ranknev": " "
+        "ranknev": " ",
+        "chars": [],
+        "ships": [],
     }
 
     player['jatekosnev'] = raw_player[0]['name']
@@ -95,14 +120,19 @@ def fetchPlayerRoster(raw_player):
                 if b['tier'] == 8 and b['isZeta'] == True:
                     temp += 1
             if temp >= 2:
+                player['chars'].insert(player['rank'], "Geonosian Brood Alpha")
                 player['rank'] += 1
         if a['defId'] == "GEONOSIANSOLDIER" and a['gear'] >= 12:
+            player['chars'].insert(player['rank'], "Geonosian Soldier")
             player['rank'] += 1
         if a['defId'] == "GEONOSIANSPY" and a['gear'] >= 12:
+            player['chars'].insert(player['rank'], "Geonosian Spy")
             player['rank'] += 1
         if a['defId'] == "SUNFAC" and a['gear'] >= 12:
+            player['chars'].insert(player['rank'], "Sun Fac")
             player['rank'] += 1
         if a['defId'] == "POGGLETHELESSER" and a['gear'] >= 12:
+            player['chars'].insert(player['rank'], "Poggle the Lesser")
             player['rank'] += 1
 
 
@@ -112,6 +142,7 @@ def fetchPlayerRoster(raw_player):
                 if b['tier'] == 8 and b['isZeta'] == True:
                     temp += 1
             if temp >= 2:
+                player['chars'].insert(player['rank'], "General Grievous")
                 player['rank'] += 1
         if a['defId'] == "B1BATTLEDROIDV2" and a['gear'] >= 13:
             temp = 0
@@ -119,6 +150,7 @@ def fetchPlayerRoster(raw_player):
                 if b['tier'] == 8 and b['isZeta'] == True:
                     temp += 1
             if temp >= 1:
+                player['chars'].insert(player['rank'], "B1 Battle Droid")
                 player['rank'] += 1
         if a['defId'] == "B2SUPERBATTLEDROID" and a['gear'] >= 13:
             temp = 0
@@ -126,10 +158,13 @@ def fetchPlayerRoster(raw_player):
                 if b['tier'] == 8 and b['isZeta'] == True:
                     temp += 1
             if temp >= 1:
+                player['chars'].insert(player['rank'], "B2 Super Battle Droid")
                 player['rank'] += 1
         if a['defId'] == "MAGNAGUARD" and a['gear'] >= 13:
+            player['chars'].insert(player['rank'], "IG-100 MagnaGuard")
             player['rank'] += 1
         if a['defId'] == "DROIDEKA" and a['gear'] >= 12:
+            player['chars'].insert(player['rank'], "Droideka")
             player['rank'] += 1
 
 
@@ -139,6 +174,7 @@ def fetchPlayerRoster(raw_player):
                 if b['tier'] == 8 and b['isZeta'] == True:
                     temp += 1
             if temp >= 2:
+                player['chars'].insert(player['rank'], "Darth Traya")
                 player['rank'] += 1
         if a['defId'] == "DARTHSION" and a['gear'] >= 13:
             temp = 0
@@ -146,6 +182,7 @@ def fetchPlayerRoster(raw_player):
                 if b['tier'] == 8 and b['isZeta'] == True:
                     temp += 1
             if temp >= 1:
+                player['chars'].insert(player['rank'], "Darth Sion")
                 player['rank'] += 1
         if a['defId'] == "DARTHNIHILUS" and a['gear'] >= 12:
             temp = 0
@@ -153,6 +190,7 @@ def fetchPlayerRoster(raw_player):
                 if b['tier'] == 8 and b['isZeta'] == True:
                     temp += 1
             if temp >= 1:
+                player['chars'].insert(player['rank'], "Darth Nihilus")
                 player['rank'] += 1
         if a['defId'] == "GRANDADMIRALTHRAWN" and a['gear'] >= 12:
             temp = 0
@@ -160,6 +198,7 @@ def fetchPlayerRoster(raw_player):
                 if b['tier'] == 8 and b['isZeta'] == True:
                     temp += 1
             if temp >= 1:
+                player['chars'].insert(player['rank'], "Grand Admiral Thrawn")
                 player['rank'] += 1
         if a['defId'] == "COUNTDOOKU" and a['gear'] >= 12:
             temp = 0
@@ -167,6 +206,7 @@ def fetchPlayerRoster(raw_player):
                 if b['tier'] == 8 and b['isZeta'] == True:
                     temp += 1
             if temp >= 1:
+                player['chars'].insert(player['rank'], "Count Dooku")
                 player['rank'] += 1
 
 
@@ -176,6 +216,7 @@ def fetchPlayerRoster(raw_player):
                 if b['tier'] == 8 and b['isZeta'] == True:
                     temp += 1
             if temp >= 3:
+                player['chars'].insert(player['rank'], "Darth Revan")
                 player['rank'] += 1
         if a['defId'] == "BASTILASHANDARK" and a['gear'] >= 13:
             temp = 0
@@ -183,10 +224,13 @@ def fetchPlayerRoster(raw_player):
                 if b['tier'] == 8 and b['isZeta'] == True:
                     temp += 1
             if temp >= 1:
+                player['chars'].insert(player['rank'], "Bastila Shan (Fallen)")
                 player['rank'] += 1
         if a['defId'] == "SITHTROOPER" and a['gear'] >= 12:
+            player['chars'].insert(player['rank'], "Sith Trooper")
             player['rank'] += 1
         if a['defId'] == "SITHMARAUDER" and a['gear'] >= 12:
+            player['chars'].insert(player['rank'], "Sith Marauder")
             player['rank'] += 1
         if a['defId'] == "EMPERORPALPATINE" and a['gear'] >= 12:
             temp = 0
@@ -194,6 +238,7 @@ def fetchPlayerRoster(raw_player):
                 if b['tier'] == 8 and b['isZeta'] == True:
                     temp += 1
             if temp >= 2:
+                player['chars'].insert(player['rank'], "Emperor Palpatine")
                 player['rank'] += 1
 
 
@@ -203,13 +248,15 @@ def fetchPlayerRoster(raw_player):
                 if b['tier'] == 8 and b['isZeta'] == True:
                     temp += 1
             if temp >= 2:
-                player['rank'] += 1
+                player['chars'].insert(player['rank'], "Darth Malak")
+                player['rank'] += 2
         if a['defId'] == "NUTEGUNRAY" and a['gear'] >= 12:
             temp = 0
             for b in a['skills']:
                 if b['tier'] == 8 and b['isZeta'] == True:
                     temp += 1
             if temp >= 1:
+                player['chars'].insert(player['rank'], "Nute Gunray")
                 player['rank'] += 1
 
 
@@ -219,6 +266,7 @@ def fetchPlayerRoster(raw_player):
                 if b['tier'] == 8 and b['isZeta'] == True:
                     temp += 1
             if temp >= 2:
+                player['chars'].insert(player['rank'], "Mother Talzin")
                 player['rank'] += 1
         if a['defId'] == "ASAJVENTRESS" and a['gear'] >= 13:
             temp = 0
@@ -226,16 +274,21 @@ def fetchPlayerRoster(raw_player):
                 if b['tier'] == 8 and b['isZeta'] == True:
                     temp += 1
             if temp >= 2:
+                player['chars'].insert(player['rank'], "Asajj Ventress")
                 player['rank'] += 1
         if a['defId'] == "NIGHTSISTERZOMBIE" and a['gear'] >= 12:
+            player['chars'].insert(player['rank'], "Nightsister Zombie")
             player['rank'] += 1
         if a['defId'] == "DAKA" and a['gear'] >= 13:
+            player['chars'].insert(player['rank'], "Old Daka")
             player['rank'] += 1
         if a['defId'] == "TALIA" and a['gear'] >= 12 and s == 0:
             t = 1
+            player['chars'].insert(player['rank'], "Talia")
             player['rank'] += 1
         if a['defId'] == "NIGHTSISTERSPIRIT" and a['gear'] >= 12 and t == 0:
             s = 1
+            player['chars'].insert(player['rank'], "Nightsister Spirit")
             player['rank'] += 1
 
 
@@ -245,6 +298,7 @@ def fetchPlayerRoster(raw_player):
                 if b['tier'] == 8 and b['isZeta'] == True:
                     temp += 1
             if temp >= 1:
+                player['chars'].insert(player['rank'], "Wat Tambor")
                 player['rank'] += 1
 
 
@@ -258,6 +312,7 @@ def fetchPlayerRoster(raw_player):
                         if c['tier'] == 8:
                             temp += 1
                     if temp == 5:
+                        player['ships'].insert(player['rank'], "Chimaera")
                         player['rank'] += 1
                 j += 1
         if a['defId'] == "CAPITALSTARDESTROYER" and a['rarity'] == 7 and a['level'] == 85:
@@ -270,6 +325,7 @@ def fetchPlayerRoster(raw_player):
                         if c['tier'] == 8:
                             temp += 1
                     if temp == 5:
+                        player['ships'].insert(player['rank'], "Executrix")
                         player['rank'] += 1
                 j += 1
         if a['defId'] == "CAPITALNEGOTIATOR" and a['rarity'] == 7 and a['level'] == 85:
@@ -282,6 +338,7 @@ def fetchPlayerRoster(raw_player):
                         if c['tier'] == 8:
                             temp += 1
                     if temp == 5:
+                        player['ships'].insert(player['rank'], "Negotiator")
                         player['rank'] += 1
                 j += 1
         if a['defId'] == "GEONOSIANSTARFIGHTER2" and a['rarity'] == 7 and a['level'] == 85:
@@ -294,6 +351,7 @@ def fetchPlayerRoster(raw_player):
                         if c['tier'] == 8:
                             temp += 1
                     if temp >= 3:
+                        player['ships'].insert(player['rank'], "Geonosian Soldier's Starfighter")
                         player['rank'] += 1
                 j += 1
         if a['defId'] == "GEONOSIANSTARFIGHTER3" and a['rarity'] == 7 and a['level'] == 85:
@@ -306,6 +364,7 @@ def fetchPlayerRoster(raw_player):
                         if c['tier'] == 8:
                             temp += 1
                     if temp >= 3:
+                        player['ships'].insert(player['rank'], "Geonosian Spy's Starfighter")
                         player['rank'] += 1
                 j += 1
         if a['defId'] == "HOUNDSTOOTH" and a['rarity'] == 7 and a['level'] == 85:
@@ -318,6 +377,7 @@ def fetchPlayerRoster(raw_player):
                         if c['tier'] == 8:
                             temp += 1
                     if temp >= 3:
+                        player['ships'].insert(player['rank'], "Hound's Tooth")
                         player['rank'] += 1
                 j += 1
         if a['defId'] == "GEONOSIANSTARFIGHTER1" and a['rarity'] == 7 and a['level'] == 85:
@@ -330,6 +390,7 @@ def fetchPlayerRoster(raw_player):
                         if c['tier'] == 8:
                             temp += 1
                     if temp >= 3:
+                        player['ships'].insert(player['rank'], "Sun Fac's Geonosian Starfighter")
                         player['rank'] += 1
                 j += 1
         if a['defId'] == "MILLENNIUMFALCON" and a['rarity'] == 7 and a['level'] == 85:
@@ -349,6 +410,7 @@ def fetchPlayerRoster(raw_player):
                     if c['tier'] == 8:
                         temp += 1
                 if temp == 4:
+                    player['ships'].insert(player['rank'], "Han's Millennium Falcon")
                     player['rank'] += 1
         i += 1
 
