@@ -4,9 +4,11 @@ from numpy import *
 import discord
 import time
 from discord.ext import commands
+import cmd_rank
 
 creds = settings()
 client = api_swgoh_help(creds)
+
 
 class GUILDRANK(commands.Cog):
     def __init__(self, bot):
@@ -82,7 +84,7 @@ class GUILDRANK(commands.Cog):
             str(player[i+6]['jatekosnev']) + ' ' * (lth-len(str(player[i+6]['jatekosnev']))) + ' ' + str(player[i+6]['rank']) + ' pont' + '  ' + str(player[i+6]['ranknev']) + '\n' +
             str(player[i+7]['jatekosnev']) + ' ' * (lth-len(str(player[i+7]['jatekosnev']))) + ' ' + str(player[i+7]['rank']) + ' pont' + '  ' + str(player[i+7]['ranknev']) + '\n' +
             str(player[i+8]['jatekosnev']) + ' ' * (lth-len(str(player[i+8]['jatekosnev']))) + ' ' + str(player[i+8]['rank']) + ' pont' + '  ' + str(player[i+8]['ranknev']) + '\n' +
-            str(player[i+9]['jatekosnev']) + ' ' * (lth-len(str(player[i+9]['jatekosnev']))) + ' ' + str(player[i+9]['rank']) + ' pont' + '  ' + str(player[i+9]['ranknev']) + '\n' + '```', inline='false')
+            str(player[i+9]['jatekosnev']) + ' ' * (lth-len(str(player[i+9]['jatekosnev']))) + ' ' + str(player[i+9]['rank']) + ' pont' + '  ' + str(player[i+9]['ranknev']) + '\n' + '```')
 
             i = 10
             embed.add_field(name='=================== Top 11 - 20 ===================', value=
@@ -95,7 +97,7 @@ class GUILDRANK(commands.Cog):
             str(player[i+6]['jatekosnev']) + ' ' * (lth-len(str(player[i+6]['jatekosnev']))) + ' ' + str(player[i+6]['rank']) + ' pont' + '  ' + str(player[i+6]['ranknev']) + '\n' +
             str(player[i+7]['jatekosnev']) + ' ' * (lth-len(str(player[i+7]['jatekosnev']))) + ' ' + str(player[i+7]['rank']) + ' pont' + '  ' + str(player[i+7]['ranknev']) + '\n' +
             str(player[i+8]['jatekosnev']) + ' ' * (lth-len(str(player[i+8]['jatekosnev']))) + ' ' + str(player[i+8]['rank']) + ' pont' + '  ' + str(player[i+8]['ranknev']) + '\n' +
-            str(player[i+9]['jatekosnev']) + ' ' * (lth-len(str(player[i+9]['jatekosnev']))) + ' ' + str(player[i+9]['rank']) + ' pont' + '  ' + str(player[i+9]['ranknev']) + '\n' + '```', inline='false')
+            str(player[i+9]['jatekosnev']) + ' ' * (lth-len(str(player[i+9]['jatekosnev']))) + ' ' + str(player[i+9]['rank']) + ' pont' + '  ' + str(player[i+9]['ranknev']) + '\n' + '```')
 
             i = 20
             embed.add_field(name='=================== Top 21 - 30 ===================', value=
@@ -108,7 +110,7 @@ class GUILDRANK(commands.Cog):
             str(player[i+6]['jatekosnev']) + ' ' * (lth-len(str(player[i+6]['jatekosnev']))) + ' ' + str(player[i+6]['rank']) + ' pont' + '  ' + str(player[i+6]['ranknev']) + '\n' +
             str(player[i+7]['jatekosnev']) + ' ' * (lth-len(str(player[i+7]['jatekosnev']))) + ' ' + str(player[i+7]['rank']) + ' pont' + '  ' + str(player[i+7]['ranknev']) + '\n' +
             str(player[i+8]['jatekosnev']) + ' ' * (lth-len(str(player[i+8]['jatekosnev']))) + ' ' + str(player[i+8]['rank']) + ' pont' + '  ' + str(player[i+8]['ranknev']) + '\n' +
-            str(player[i+9]['jatekosnev']) + ' ' * (lth-len(str(player[i+9]['jatekosnev']))) + ' ' + str(player[i+9]['rank']) + ' pont' + '  ' + str(player[i+9]['ranknev']) + '\n' + '```', inline='false')
+            str(player[i+9]['jatekosnev']) + ' ' * (lth-len(str(player[i+9]['jatekosnev']))) + ' ' + str(player[i+9]['rank']) + ' pont' + '  ' + str(player[i+9]['ranknev']) + '\n' + '```')
 
             i = 30
             embed.add_field(name='=================== Top 31 - 40 ===================', value=
@@ -121,7 +123,7 @@ class GUILDRANK(commands.Cog):
             str(player[i+6]['jatekosnev']) + ' ' * (lth-len(str(player[i+6]['jatekosnev']))) + ' ' + str(player[i+6]['rank']) + ' pont' + '  ' + str(player[i+6]['ranknev']) + '\n' +
             str(player[i+7]['jatekosnev']) + ' ' * (lth-len(str(player[i+7]['jatekosnev']))) + ' ' + str(player[i+7]['rank']) + ' pont' + '  ' + str(player[i+7]['ranknev']) + '\n' +
             str(player[i+8]['jatekosnev']) + ' ' * (lth-len(str(player[i+8]['jatekosnev']))) + ' ' + str(player[i+8]['rank']) + ' pont' + '  ' + str(player[i+8]['ranknev']) + '\n' +
-            str(player[i+9]['jatekosnev']) + ' ' * (lth-len(str(player[i+9]['jatekosnev']))) + ' ' + str(player[i+9]['rank']) + ' pont' + '  ' + str(player[i+9]['ranknev']) + '\n' + '```', inline='false')
+            str(player[i+9]['jatekosnev']) + ' ' * (lth-len(str(player[i+9]['jatekosnev']))) + ' ' + str(player[i+9]['rank']) + ' pont' + '  ' + str(player[i+9]['ranknev']) + '\n' + '```')
 
             i = 40
             embed.add_field(name='=================== Top 41 - 50 ===================', value=
@@ -134,7 +136,7 @@ class GUILDRANK(commands.Cog):
             str(player[i+6]['jatekosnev']) + ' ' * (lth-len(str(player[i+6]['jatekosnev']))) + ' ' * round(1 / len(str(player[i+6]['rank']))) + str(player[i+6]['rank']) + ' pont' + '  ' + str(player[i+6]['ranknev']) + '\n' +
             str(player[i+7]['jatekosnev']) + ' ' * (lth-len(str(player[i+7]['jatekosnev']))) + ' ' * round(1 / len(str(player[i+7]['rank']))) + str(player[i+7]['rank']) + ' pont' + '  ' + str(player[i+7]['ranknev']) + '\n' +
             str(player[i+8]['jatekosnev']) + ' ' * (lth-len(str(player[i+8]['jatekosnev']))) + ' ' * round(1 / len(str(player[i+8]['rank']))) + str(player[i+8]['rank']) + ' pont' + '  ' + str(player[i+8]['ranknev']) + '\n' +
-            str(player[i+9]['jatekosnev']) + ' ' * (lth-len(str(player[i+9]['jatekosnev']))) + ' ' * round(1 / len(str(player[i+9]['rank']))) + str(player[i+9]['rank']) + ' pont' + '  ' + str(player[i+9]['ranknev']) + '\n' + '```', inline='false')
+            str(player[i+9]['jatekosnev']) + ' ' * (lth-len(str(player[i+9]['jatekosnev']))) + ' ' * round(1 / len(str(player[i+9]['rank']))) + str(player[i+9]['rank']) + ' pont' + '  ' + str(player[i+9]['ranknev']) + '\n' + '```')
 
 
 
@@ -159,22 +161,7 @@ def fetchPlayerRanknev(player):
     i = 0
     n = int_(len(player))
     while i < n:
-        if player[i]['rank'] >= 0 and player[i]['rank'] <= 5:
-            player[i]['ranknev'] = "Párafarmer"
-        if player[i]['rank'] > 5 and player[i]['rank'] <= 10:
-            player[i]['ranknev'] = "Droid"
-        if player[i]['rank'] > 10 and player[i]['rank'] <= 15:
-            player[i]['ranknev'] = "Roncsvadász"
-        if player[i]['rank'] > 15 and player[i]['rank'] <= 20:
-            player[i]['ranknev'] = "Kalóz"
-        if player[i]['rank'] > 20 and player[i]['rank'] <= 25:
-            player[i]['ranknev'] = "Csempész"
-        if player[i]['rank'] > 25 and player[i]['rank'] <= 30:
-            player[i]['ranknev'] = "Fejvadász"
-        if player[i]['rank'] > 30 and player[i]['rank'] <= 35:
-            player[i]['ranknev'] = "Stormtrooper"
-        if player[i]['rank'] > 35 and player[i]['rank'] <= 40:
-            player[i]['ranknev'] = "Tie-Fighter Pilot"
+        cmd_rank.fetchPlayerRanknev(player[i])
         i += 1
 
     return player
@@ -218,273 +205,13 @@ def fetchPlayerRoster(guilddata):
         player[k]['jatekosnev'] = guilddata[k]['name']
         player[k]['rank'] = 0
         raw_player = guilddata[k]
-        i = 0
+
         t = 0
         s = 0
-        for a in raw_player['roster']:
-            a = raw_player['roster'][i]
-            if a['defId'] == "GEONOSIANBROODALPHA" and a['gear'] >= 13:
-                temp = 0
-                for b in a['skills']:
-                    if b['tier'] == 8 and b['isZeta'] == True:
-                        temp += 1
-                if temp >= 2:
-                    player[k]['rank'] += 1
-            if a['defId'] == "GEONOSIANSOLDIER" and a['gear'] >= 12:
-                player[k]['rank'] += 1
-            if a['defId'] == "GEONOSIANSPY" and a['gear'] >= 12:
-                player[k]['rank'] += 1
-            if a['defId'] == "SUNFAC" and a['gear'] >= 12:
-                player[k]['rank'] += 1
-            if a['defId'] == "POGGLETHELESSER" and a['gear'] >= 12:
-                player[k]['rank'] += 1
 
+        rankplayer = cmd_rank.fetchPlayerRoster(raw_player)
+        player[k]['rank'] = rankplayer['rank']
 
-            if a['defId'] == "GRIEVOUS" and a['gear'] >= 13:
-                temp = 0
-                for b in a['skills']:
-                    if b['tier'] == 8 and b['isZeta'] == True:
-                        temp += 1
-                if temp >= 2:
-                    player[k]['rank'] += 1
-            if a['defId'] == "B1BATTLEDROIDV2" and a['gear'] >= 13:
-                temp = 0
-                for b in a['skills']:
-                    if b['tier'] == 8 and b['isZeta'] == True:
-                        temp += 1
-                if temp >= 1:
-                    player[k]['rank'] += 1
-            if a['defId'] == "B2SUPERBATTLEDROID" and a['gear'] >= 13:
-                temp = 0
-                for b in a['skills']:
-                    if b['tier'] == 8 and b['isZeta'] == True:
-                        temp += 1
-                if temp >= 1:
-                    player[k]['rank'] += 1
-            if a['defId'] == "MAGNAGUARD" and a['gear'] >= 13:
-                player[k]['rank'] += 1
-            if a['defId'] == "DROIDEKA" and a['gear'] >= 12:
-                player[k]['rank'] += 1
-
-
-            if a['defId'] == "DARTHTRAYA" and a['gear'] >= 12:
-                temp = 0
-                for b in a['skills']:
-                    if b['tier'] == 8 and b['isZeta'] == True:
-                        temp += 1
-                if temp >= 2:
-                    player[k]['rank'] += 1
-            if a['defId'] == "DARTHSION" and a['gear'] >= 13:
-                temp = 0
-                for b in a['skills']:
-                    if b['tier'] == 8 and b['isZeta'] == True:
-                        temp += 1
-                if temp >= 1:
-                    player[k]['rank'] += 1
-            if a['defId'] == "DARTHNIHILUS" and a['gear'] >= 12:
-                temp = 0
-                for b in a['skills']:
-                    if b['tier'] == 8 and b['isZeta'] == True:
-                        temp += 1
-                if temp >= 1:
-                    player[k]['rank'] += 1
-            if a['defId'] == "GRANDADMIRALTHRAWN" and a['gear'] >= 12:
-                temp = 0
-                for b in a['skills']:
-                    if b['tier'] == 8 and b['isZeta'] == True:
-                        temp += 1
-                if temp >= 1:
-                    player[k]['rank'] += 1
-            if a['defId'] == "COUNTDOOKU" and a['gear'] >= 12:
-                temp = 0
-                for b in a['skills']:
-                    if b['tier'] == 8 and b['isZeta'] == True:
-                        temp += 1
-                if temp >= 1:
-                    player[k]['rank'] += 1
-
-
-            if a['defId'] == "DARTHREVAN" and a['gear'] >= 13:
-                temp = 0
-                for b in a['skills']:
-                    if b['tier'] == 8 and b['isZeta'] == True:
-                        temp += 1
-                if temp >= 3:
-                    player[k]['rank'] += 1
-            if a['defId'] == "BASTILASHANDARK" and a['gear'] >= 13:
-                temp = 0
-                for b in a['skills']:
-                    if b['tier'] == 8 and b['isZeta'] == True:
-                        temp += 1
-                if temp >= 1:
-                    player[k]['rank'] += 1
-            if a['defId'] == "SITHTROOPER" and a['gear'] >= 12:
-                player[k]['rank'] += 1
-            if a['defId'] == "SITHMARAUDER" and a['gear'] >= 12:
-                player[k]['rank'] += 1
-            if a['defId'] == "EMPERORPALPATINE" and a['gear'] >= 12:
-                temp = 0
-                for b in a['skills']:
-                    if b['tier'] == 8 and b['isZeta'] == True:
-                        temp += 1
-                if temp >= 2:
-                    player[k]['rank'] += 1
-
-
-            if a['defId'] == "DARTHMALAK" and a['gear'] >= 13:
-                temp = 0
-                for b in a['skills']:
-                    if b['tier'] == 8 and b['isZeta'] == True:
-                        temp += 1
-                if temp >= 2:
-                    player[k]['rank'] += 2
-            if a['defId'] == "NUTEGUNRAY" and a['gear'] >= 12:
-                temp = 0
-                for b in a['skills']:
-                    if b['tier'] == 8 and b['isZeta'] == True:
-                        temp += 1
-                if temp >= 1:
-                    player[k]['rank'] += 1
-
-
-            if a['defId'] == "MOTHERTALZIN" and a['gear'] >= 12:
-                temp = 0
-                for b in a['skills']:
-                    if b['tier'] == 8 and b['isZeta'] == True:
-                        temp += 1
-                if temp >= 2:
-                    player[k]['rank'] += 1
-            if a['defId'] == "ASAJVENTRESS" and a['gear'] >= 13:
-                temp = 0
-                for b in a['skills']:
-                    if b['tier'] == 8 and b['isZeta'] == True:
-                        temp += 1
-                if temp >= 2:
-                    player[k]['rank'] += 1
-            if a['defId'] == "NIGHTSISTERZOMBIE" and a['gear'] >= 12:
-                player[k]['rank'] += 1
-            if a['defId'] == "DAKA" and a['gear'] >= 13:
-                player[k]['rank'] += 1
-            if a['defId'] == "TALIA" and a['gear'] >= 12 and s == 0:
-                t = 1
-                player[k]['rank'] += 1
-            if a['defId'] == "NIGHTSISTERSPIRIT" and a['gear'] >= 12 and t == 0:
-                s = 1
-                player[k]['rank'] += 1
-
-
-            if a['defId'] == "WATTAMBOR" and a['gear'] >= 12:
-                temp = 0
-                for b in a['skills']:
-                    if b['tier'] == 8 and b['isZeta'] == True:
-                        temp += 1
-                if temp >= 1:
-                    player[k]['rank'] += 1
-
-
-            if a['defId'] == "CAPITALCHIMAERA" and a['rarity'] == 7 and a['level'] == 85:
-                j = 0
-                for b in raw_player['roster']:
-                    b = raw_player['roster'][j]
-                    if b['defId'] == "GRANDADMIRALTHRAWN" and b['gear'] >= 12:
-                        temp = 0
-                        for c in a['skills']:
-                            if c['tier'] == 8:
-                                temp += 1
-                        if temp == 5:
-                            player[k]['rank'] += 1
-                    j += 1
-            if a['defId'] == "CAPITALSTARDESTROYER" and a['rarity'] == 7 and a['level'] == 85:
-                j = 0
-                for b in raw_player['roster']:
-                    b = raw_player['roster'][j]
-                    if b['defId'] == "GRANDMOFFTARKIN" and b['gear'] >= 12:
-                        temp = 0
-                        for c in a['skills']:
-                            if c['tier'] == 8:
-                                temp += 1
-                        if temp == 5:
-                            player[k]['rank'] += 1
-                    j += 1
-            if a['defId'] == "CAPITALNEGOTIATOR" and a['rarity'] == 7 and a['level'] == 85:
-                j = 0
-                for b in raw_player['roster']:
-                    b = raw_player['roster'][j]
-                    if b['defId'] == "GENERALKENOBI" and b['gear'] >= 12:
-                        temp = 0
-                        for c in a['skills']:
-                            if c['tier'] == 8:
-                                temp += 1
-                        if temp == 5:
-                            player[k]['rank'] += 1
-                    j += 1
-            if a['defId'] == "GEONOSIANSTARFIGHTER2" and a['rarity'] == 7 and a['level'] == 85:
-                j = 0
-                for b in raw_player['roster']:
-                    b = raw_player['roster'][j]
-                    if b['defId'] == "GEONOSIANSOLDIER" and b['gear'] >= 12:
-                        temp = 0
-                        for c in a['skills']:
-                            if c['tier'] == 8:
-                                temp += 1
-                        if temp >= 3:
-                            player[k]['rank'] += 1
-                    j += 1
-            if a['defId'] == "GEONOSIANSTARFIGHTER3" and a['rarity'] == 7 and a['level'] == 85:
-                j = 0
-                for b in raw_player['roster']:
-                    b = raw_player['roster'][j]
-                    if b['defId'] == "GEONOSIANSPY" and b['gear'] >= 12:
-                        temp = 0
-                        for c in a['skills']:
-                            if c['tier'] == 8:
-                                temp += 1
-                        if temp >= 3:
-                            player[k]['rank'] += 1
-                    j += 1
-            if a['defId'] == "HOUNDSTOOTH" and a['rarity'] == 7 and a['level'] == 85:
-                j = 0
-                for b in raw_player['roster']:
-                    b = raw_player['roster'][j]
-                    if b['defId'] == "BOSSK" and b['gear'] >= 12:
-                        temp = 0
-                        for c in a['skills']:
-                            if c['tier'] == 8:
-                                temp += 1
-                        if temp >= 3:
-                            player[k]['rank'] += 1
-                    j += 1
-            if a['defId'] == "GEONOSIANSTARFIGHTER1" and a['rarity'] == 7 and a['level'] == 85:
-                j = 0
-                for b in raw_player['roster']:
-                    b = raw_player['roster'][j]
-                    if b['defId'] == "SUNFAC" and b['gear'] >= 12:
-                        temp = 0
-                        for c in a['skills']:
-                            if c['tier'] == 8:
-                                temp += 1
-                        if temp >= 3:
-                            player[k]['rank'] += 1
-                    j += 1
-            if a['defId'] == "MILLENNIUMFALCON" and a['rarity'] == 7 and a['level'] == 85:
-                j = 0
-                d = 0
-                e = 0
-                for b in raw_player['roster']:
-                    b = raw_player['roster'][j]
-                    if b['defId'] == "HANSOLO" and b['gear'] >= 12:
-                        d = 1
-                    if b['defId'] == "CHEWBACCALEGENDARY" and b['gear'] >= 12:
-                        e = 1
-                    j += 1
-                if d == 1 and e == 1:
-                    temp = 0
-                    for c in a['skills']:
-                        if c['tier'] == 8:
-                            temp += 1
-                    if temp == 4:
-                        player[k]['rank'] += 1
-            i += 1
         k += 1
 
     return player

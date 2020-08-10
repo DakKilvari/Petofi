@@ -127,7 +127,7 @@ class CG(commands.Cog):
             myresult = mycursor.fetchone()
 
             if myresult != None:
-                if tipus == "süti":
+                if tipus == "suti":
                     sql = "SELECT Cookie FROM pilvax WHERE DiscordID = %s"
                     adr = (DiscordID,)
                     mycursor.execute(sql, adr)
@@ -164,7 +164,7 @@ class CG(commands.Cog):
                     t = n + number
                     await ctx.send("<@" + DiscordID + ">" + " kapott " + str(number) + " ☕-t, így van neki " + str(t))
 
-                if tipus != "süti" and tipus != "zacc":
+                if tipus != "suti" and tipus != "zacc":
                     await ctx.message.add_reaction("❌")
 
             else:
@@ -208,7 +208,7 @@ class CG(commands.Cog):
             myresult = mycursor.fetchone()
 
             if myresult != None:
-                if tipus == "süti":
+                if tipus == "suti":
                     sql = "SELECT Cookie FROM pilvax WHERE DiscordID = %s"
                     adr = (DiscordID,)
                     mycursor.execute(sql, adr)
@@ -262,7 +262,7 @@ class CG(commands.Cog):
                         await ctx.message.add_reaction("❌")
                         await ctx.send("<@" + DiscordID + ">" + " Nincs elegendő sütid a beváltásra!")
 
-                if tipus != "süti" and tipus != "zacc":
+                if tipus != "suti" and tipus != "zacc":
                     await ctx.message.add_reaction("❌")
 
             else:
@@ -349,7 +349,7 @@ class CG(commands.Cog):
 
     @commands.command(aliases=['Lekeres'])
     @commands.has_any_role('Member')  # User need this role to run command (can have multiple)
-    async def mennyi(self, ctx, userid:str, tipus:str):
+    async def mennyi(self, ctx, userid:str):
 
         AuthorID = str(ctx.author.id)
         try:
