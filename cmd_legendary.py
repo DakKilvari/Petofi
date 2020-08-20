@@ -45,83 +45,56 @@ class LENGEDARY(commands.Cog):
 
         if temp != -1:
 
-            print("\n" + raw_player[0]['name'] + "-tól rang lekérés.")
+            print("\n" + raw_player[0]['name'] + "-tól legendary lekérés.")
 
             await ctx.message.add_reaction("✅")
 
-            if show == "Rey":
-                player = fetchPlayerRey(raw_player[0])
-
-                player['chars'].sort()
-                player['ships'].sort()
-                player['miss'].sort()
-                player['missShips'].sort()
-
-                await ctx.send(ctx.message.author.mention + " " + player['jatekosnev'] + " Galactic Legends Rey eventre állása: ")
-
-                s: str = '\n'.join(map(str, player['chars']))
-                s2: str = '\n'.join(map(str, player['ships']))
-                s3: str = '\n'.join(map(str, player['miss']))
-                s4: str = '\n'.join(map(str, player['missShips']))
-
-                message1 = ""
-                message2 = ""
-                message3 = ""
-                message4 = ""
-
-                message1 += "\n**Meglévő karakterek:** \n" + str("```ini\n" + s + "```")
-                message2 += "\n**Meglévő hajók:** \n" + str("```ini\n" + s2 + "```")
-                message3 += "\n**Hiányzó karakterek:** \n" + str("```ini\n" + s3 + "```")
-                message4 += "\n**Hiányzó hajók:** \n" + str("```ini\n" + s4 + "```")
-
-                if message1 != "\n**Meglévő karakterek:** \n" + str("```ini\n" + "```"):
-                    await ctx.send(message1)
-                if message2 != "\n**Meglévő hajók:** \n" + str("```ini\n" + "```"):
-                    await ctx.send(message2)
-                if message3 != "\n**Hiányzó karakterek:** \n" + str("```ini\n" + "```"):
-                    await ctx.send(message3)
-                if message4 != "\n**Hiányzó hajók:** \n" + str("```ini\n" + "```"):
-                    await ctx.send(message4)
-
-
-
-            if show == "SLKR" or show == "slkr":
-                player = fetchPlayerSLKR(raw_player[0])
-
-                player['chars'].sort()
-                player['ships'].sort()
-                player['miss'].sort()
-                player['missShips'].sort()
-
-                await ctx.send(ctx.message.author.mention + " " + player['jatekosnev'] + " Galactic Legends SLKR eventre állása: ")
-
-                s: str = '\n'.join(map(str, player['chars']))
-                s2: str = '\n'.join(map(str, player['ships']))
-                s3: str = '\n'.join(map(str, player['miss']))
-                s4: str = '\n'.join(map(str, player['missShips']))
-
-                message1 = ""
-                message2 = ""
-                message3 = ""
-                message4 = ""
-
-                message1 += "\n**Meglévő karakterek:** \n" + str("```ini\n" + s + "```")
-                message2 += "\n**Meglévő hajók:** \n" + str("```ini\n" + s2 + "```")
-                message3 += "\n**Hiányzó karakterek:** \n" + str("```ini\n" + s3 + "```")
-                message4 += "\n**Hiányzó hajók:** \n" + str("```ini\n" + s4 + "```")
-
-                if message1 != "\n**Meglévő karakterek:** \n" + str("```ini\n" + "```"):
-                    await ctx.send(message1)
-                if message2 != "\n**Meglévő hajók:** \n" + str("```ini\n" + "```"):
-                    await ctx.send(message2)
-                if message3 != "\n**Hiányzó karakterek:** \n" + str("```ini\n" + "```"):
-                    await ctx.send(message3)
-                if message4 != "\n**Hiányzó hajók:** \n" + str("```ini\n" + "```"):
-                    await ctx.send(message4)
-
-
-            if show != "Rey" and show != "SLKR":
+            if show != "Rey" and show != "SLKR" and show != "slkr":
                 await ctx.send(ctx.message.author.mention + " Nem adtál meg parancsot! / Ilyen parancs nincs még. :)")
+            else:
+                if show == "Rey":
+                    player = fetchPlayerRey(raw_player[0])
+
+                    player['chars'].sort()
+                    player['ships'].sort()
+                    player['miss'].sort()
+                    player['missShips'].sort()
+
+                    await ctx.send(ctx.message.author.mention + " " + player['jatekosnev'] + " Galactic Legends Rey eventre állása: ")
+
+                if show == "SLKR" or show == "slkr":
+                    player = fetchPlayerSLKR(raw_player[0])
+
+                    player['chars'].sort()
+                    player['ships'].sort()
+                    player['miss'].sort()
+                    player['missShips'].sort()
+
+                    await ctx.send(ctx.message.author.mention + " " + player['jatekosnev'] + " Galactic Legends SLKR eventre állása: ")
+
+                s: str = '\n'.join(map(str, player['chars']))
+                s2: str = '\n'.join(map(str, player['ships']))
+                s3: str = '\n'.join(map(str, player['miss']))
+                s4: str = '\n'.join(map(str, player['missShips']))
+
+                message1 = ""
+                message2 = ""
+                message3 = ""
+                message4 = ""
+
+                message1 += "\n**Meglévő karakterek:** \n" + str("```ini\n" + s + "```")
+                message2 += "\n**Meglévő hajók:** \n" + str("```ini\n" + s2 + "```")
+                message3 += "\n**Hiányzó karakterek:** \n" + str("```ini\n" + s3 + "```")
+                message4 += "\n**Hiányzó hajók:** \n" + str("```ini\n" + s4 + "```")
+
+                if message1 != "\n**Meglévő karakterek:** \n" + str("```ini\n" + "```"):
+                    await ctx.send(message1)
+                if message2 != "\n**Meglévő hajók:** \n" + str("```ini\n" + "```"):
+                    await ctx.send(message2)
+                if message3 != "\n**Hiányzó karakterek:** \n" + str("```ini\n" + "```"):
+                    await ctx.send(message3)
+                if message4 != "\n**Hiányzó hajók:** \n" + str("```ini\n" + "```"):
+                    await ctx.send(message4)
 
             toc()
 
