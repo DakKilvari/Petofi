@@ -85,7 +85,7 @@ class LENGEDARY(commands.Cog):
 
 
 
-            if show == "SLKR":
+            if show == "SLKR" or show == "slkr":
                 player = fetchPlayerSLKR(raw_player[0])
 
                 player['chars'].sort()
