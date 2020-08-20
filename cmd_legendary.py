@@ -49,10 +49,10 @@ class LENGEDARY(commands.Cog):
 
             await ctx.message.add_reaction("✅")
 
-            if show != "Rey" and show != "SLKR" and show != "slkr":
+            if show != "Rey" and show != "rey" and show != "SLKR" and show != "slkr":
                 await ctx.send(ctx.message.author.mention + " Nem adtál meg parancsot! / Ilyen parancs nincs még. :)")
             else:
-                if show == "Rey":
+                if show == "Rey" or show == "rey":
                     player = fetchPlayerRey(raw_player[0])
                     await ctx.send(ctx.message.author.mention + " " + player['jatekosnev'] + " Galactic Legends Rey eventre állása: ")
 
