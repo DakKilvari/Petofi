@@ -54,23 +54,16 @@ class LENGEDARY(commands.Cog):
             else:
                 if show == "Rey":
                     player = fetchPlayerRey(raw_player[0])
-
-                    player['chars'].sort()
-                    player['ships'].sort()
-                    player['miss'].sort()
-                    player['missShips'].sort()
-
                     await ctx.send(ctx.message.author.mention + " " + player['jatekosnev'] + " Galactic Legends Rey eventre állása: ")
 
                 if show == "SLKR" or show == "slkr":
                     player = fetchPlayerSLKR(raw_player[0])
-
-                    player['chars'].sort()
-                    player['ships'].sort()
-                    player['miss'].sort()
-                    player['missShips'].sort()
-
                     await ctx.send(ctx.message.author.mention + " " + player['jatekosnev'] + " Galactic Legends SLKR eventre állása: ")
+
+                player['chars'].sort()
+                player['ships'].sort()
+                player['miss'].sort()
+                player['missShips'].sort()
 
                 s: str = '\n'.join(map(str, player['chars']))
                 s2: str = '\n'.join(map(str, player['ships']))
