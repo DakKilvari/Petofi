@@ -132,24 +132,24 @@ def fChar(player, raw_player, defID, realName, gear, zeta, relic, pont):
             else:
                 missingZeta = 1
 
-            if a['gear'] >= gear and a['relic']['currentTier'] >= relic or (a['gear'] >= gear - 1 and pont > 1):
+            if a['gear'] >= gear and (a['relic']['currentTier']-2) >= relic or (a['gear'] >= gear - 1 and pont > 1):
                 l2 = len(str(a['gear']))
                 if missingZeta == 0:
                         player['chars'].insert(player['rank'], printName)
-                        if a['gear'] >= gear and a['relic']['currentTier'] >= relic:
+                        if a['gear'] >= gear and (a['relic']['currentTier']-2) >= relic:
                             player['rank'] += pont
                         else:
                             player['rank'] += 1
-                            player['miss'].insert(player['rank'], printName + (26-l)* ' ' + ' (1P) G:' + str(a['gear']) + '/' + str(gear) + (2-l2)* ' ' + ' & R:' + str(a['relic']['currentTier']-1) + '/' + str(relic) + '')
+                            player['miss'].insert(player['rank'], printName + (26-l)* ' ' + ' (1P) G:' + str(a['gear']) + '/' + str(gear) + (2-l2)* ' ' + ' & R:' + str(a['relic']['currentTier']-2) + '/' + str(relic) + '')
                         retval = 1
                 else:
                     player['miss'].insert(player['rank'], printName + (26-l)* ' ' + ' Z:' + str(temp) + '/' + str(zeta) + '')
             else:
                 l2 = len(str(a['gear']))
                 if missingZeta == 0:
-                    player['miss'].insert(player['rank'], printName + (26-l)* ' ' + ' G:' + str(a['gear']) + '/' + str(gear) + (2-l2)* ' ' + ' & R:' + str(a['relic']['currentTier']-1) + '/' + str(relic) + '')
+                    player['miss'].insert(player['rank'], printName + (26-l)* ' ' + ' G:' + str(a['gear']) + '/' + str(gear) + (2-l2)* ' ' + ' & R:' + str(a['relic']['currentTier']-2) + '/' + str(relic) + '')
                 else:
-                    player['miss'].insert(player['rank'], printName + (26-l)* ' ' + ' G:' + str(a['gear']) + '/' + str(gear) + (2-l2)* ' ' + ' & R:' + str(a['relic']['currentTier']-1) + '/' + str(relic) + ' & Z:' + str(temp) + '/' + str(zeta) + '')
+                    player['miss'].insert(player['rank'], printName + (26-l)* ' ' + ' G:' + str(a['gear']) + '/' + str(gear) + (2-l2)* ' ' + ' & R:' + str(a['relic']['currentTier']-2) + '/' + str(relic) + ' & Z:' + str(temp) + '/' + str(zeta) + '')
         i += 1
     if missingChar == 1:
         player['miss'].insert(player['rank'], printName + (26-l)* ' ' + ' L')
