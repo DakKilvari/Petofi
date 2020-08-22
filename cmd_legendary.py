@@ -49,7 +49,7 @@ class LENGEDARY(commands.Cog):
 
             await ctx.message.add_reaction("✅")
 
-            if show != "Rey" and show != "rey" and show != "SLKR" and show != "slkr":
+            if show != "Rey" and show != "rey" and show != "SLKR" and show != "slkr" and show != "KAM" and show != "kam" and show != "JKL" and show != "jkl":
                 await ctx.send(ctx.message.author.mention + " Nem adtál meg parancsot! / Ilyen parancs nincs még. :)")
             else:
                 if show == "Rey" or show == "rey":
@@ -59,6 +59,14 @@ class LENGEDARY(commands.Cog):
                 if show == "SLKR" or show == "slkr":
                     player = fetchPlayerSLKR(raw_player[0])
                     await ctx.send(ctx.message.author.mention + " " + player['jatekosnev'] + " Galactic Legends SLKR eventre állása: ")
+
+                if show == "KAM" or show == "kam":
+                    player = fetchPlayerKAM(raw_player[0])
+                    await ctx.send(ctx.message.author.mention + " " + player['jatekosnev'] + " KAM SM-re állása: ")
+
+                if show == "JKL" or show == "jkl":
+                    player = fetchPlayerJKL(raw_player[0])
+                    await ctx.send(ctx.message.author.mention + " " + player['jatekosnev'] + " JKL legendary eventre állása: ")
 
                 player['chars'].sort()
                 player['ships'].sort()
@@ -266,6 +274,50 @@ def fetchPlayerSLKR(raw_player):
     fChar(player, raw_player, "EMPERORPALPATINE", "Emperor Palpatine", 13, 2, 7, 1)
 
     fShip(player, raw_player, "CAPITALFINALIZER", "Finalizer", 5, "GENERALHUX", "", "", 1)
+
+    return player
+
+def fetchPlayerKAM(raw_player):
+    player = {
+        "jatekosnev": " ",
+        "rank": 0,
+        "chars": [],
+        "ships": [],
+        "miss": [],
+        "missShips": [],
+    }
+
+    player['jatekosnev'] = raw_player['name']
+
+    fChar(player, raw_player, "SHAAKTI", "Shaak Ti", 13, 2, 3, 1)
+    fChar(player, raw_player, "CT210408", "Echo", 13, 1, 7, 1)
+    fChar(player, raw_player, "CT7567", "Rex", 13, 1, 5, 1)
+    fChar(player, raw_player, "CT5555", "Fives", 13, 2, 7, 1)
+    fChar(player, raw_player, "ARCTROOPER501ST", "ARC Trooper", 13, 1, 7, 1)
+
+    return player
+
+def fetchPlayerJKL(raw_player):
+    player = {
+        "jatekosnev": " ",
+        "rank": 0,
+        "chars": [],
+        "ships": [],
+        "miss": [],
+        "missShips": [],
+    }
+
+    player['jatekosnev'] = raw_player['name']
+
+    fChar(player, raw_player, "COMMANDERLUKESKYWALKER", "Commander Luke Skywalker", 13, 3, 3, 1)
+    fChar(player, raw_player, "HOTHLEIA", "Rebel Officer Leia Organa", 13, 0, 3, 1)
+    fChar(player, raw_player, "HOTHHAN", "Captain Han Solo", 13, 0, 3, 1)
+    fChar(player, raw_player, "WAMPA", "Wampa", 13, 1, 3, 1)
+    fChar(player, raw_player, "CHEWBACCALEGENDARY", "Chewbacca", 13, 2, 3, 1)
+    fChar(player, raw_player, "VADER", "Darth Vader", 13, 3, 3, 1)
+    fChar(player, raw_player, "C3POLEGENDARY", "C3PO", 13, 1, 3, 1)
+    fChar(player, raw_player, "ADMINISTRATORLANDO", "Lando Calrissian", 13, 0, 3, 1)
+    fChar(player, raw_player, "HERMITYODA", "Hermit Yoda", 13, 1, 3, 1)
 
     return player
 
