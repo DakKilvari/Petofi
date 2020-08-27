@@ -263,7 +263,7 @@ def fetchPlayerSLKR(raw_player):
     fChar(player, raw_player, "KYLORENUNMASKED", "Kylo Ren (Unmasked)", 13, 2, 7, 1)
     fChar(player, raw_player, "FIRSTORDEREXECUTIONER", "First Order Executioner", 13, 0, 5, 1)
     fChar(player, raw_player, "FIRSTORDEROFFICERMALE", "First Order Officer", 13, 0, 5, 1)
-    fChar(player, raw_player, "FIRSTORDERSPECIALFORCESPILOT", "First Order SF TIE Pilot", 13, 0, 5, 1)
+    fChar(player, raw_player, "FIRSTORDERSPECIALFORCESPILOT", "First Order SF TIE Pilot", 13, 0, 3, 1)
     fChar(player, raw_player, "FIRSTORDERTROOPER", "First Order Stromtrooper", 13, 0, 5, 1)
     fChar(player, raw_player, "FIRSTORDERTIEPILOT", "First Order TIE Pilot", 13, 0, 3, 1)
     fChar(player, raw_player, "KYLOREN", "Kylo Ren", 13, 1, 7, 0)
