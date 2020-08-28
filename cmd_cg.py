@@ -129,7 +129,7 @@ class CG(commands.Cog):
 
             if myresult != None:
                 if tipus == "suti":
-                    sql = "SELECT Cookie FROM pilvax WHERE DiscordID = %s"
+                    sql = "SELECT Suti FROM pilvax WHERE DiscordID = %s"
                     adr = (DiscordID,)
                     mycursor.execute(sql, adr)
                     myresult = mycursor.fetchone()
@@ -139,7 +139,7 @@ class CG(commands.Cog):
                     if n + number > 5:
                         n = 5 - number
 
-                    sql = "UPDATE pilvax SET Cookie = %s WHERE DiscordID = %s"
+                    sql = "UPDATE pilvax SET Suti = %s WHERE DiscordID = %s"
                     val = (n + number, DiscordID)
                     mycursor.execute(sql, val)
                     mydb.commit()
@@ -149,14 +149,14 @@ class CG(commands.Cog):
                     await ctx.send("<@" + DiscordID + ">" + " kapott " + str(number) + " 🍪-t, így van neki " + str(t))
 
                 if tipus == "zacc":
-                    sql = "SELECT Ground FROM pilvax WHERE DiscordID = %s"
+                    sql = "SELECT Zacc FROM pilvax WHERE DiscordID = %s"
                     adr = (DiscordID,)
                     mycursor.execute(sql, adr)
                     myresult = mycursor.fetchone()
                     for x in myresult:
                         n = x
 
-                    sql = "UPDATE pilvax SET Ground = %s WHERE DiscordID = %s"
+                    sql = "UPDATE pilvax SET Zacc = %s WHERE DiscordID = %s"
                     val = (n + number, DiscordID)
                     mycursor.execute(sql, val)
                     mydb.commit()
@@ -210,14 +210,14 @@ class CG(commands.Cog):
 
             if myresult != None:
                 if tipus == "suti":
-                    sql = "SELECT Cookie FROM pilvax WHERE DiscordID = %s"
+                    sql = "SELECT Suti FROM pilvax WHERE DiscordID = %s"
                     adr = (DiscordID,)
                     mycursor.execute(sql, adr)
                     myresult = mycursor.fetchone()
                     for x in myresult:
                         n = x
 
-                    sql = "UPDATE pilvax SET Cookie = %s WHERE DiscordID = %s"
+                    sql = "UPDATE pilvax SET Suti = %s WHERE DiscordID = %s"
                     val = (n - number, DiscordID)
                     t = n - number
 
@@ -228,7 +228,7 @@ class CG(commands.Cog):
                         "<@" + DiscordID + ">" + " megevett " + str(number) + " 🍪-t, így van neki " + str(t))
 
                 if tipus == "zacc":
-                    sql = "SELECT Cookie FROM pilvax WHERE DiscordID = %s"
+                    sql = "SELECT Suti FROM pilvax WHERE DiscordID = %s"
                     adr = (DiscordID,)
                     mycursor.execute(sql, adr)
                     myresult = mycursor.fetchone()
@@ -237,19 +237,19 @@ class CG(commands.Cog):
 
                     if n >= 2:
 
-                        sql = "UPDATE pilvax SET Cookie = %s WHERE DiscordID = %s"
+                        sql = "UPDATE pilvax SET Suti = %s WHERE DiscordID = %s"
                         val = (n - 1, DiscordID)
 
                         mycursor.execute(sql, val)
                         mydb.commit()
-                        sql = "SELECT Ground FROM pilvax WHERE DiscordID = %s"
+                        sql = "SELECT Zacc FROM pilvax WHERE DiscordID = %s"
                         adr = (DiscordID,)
                         mycursor.execute(sql, adr)
                         myresult = mycursor.fetchone()
                         for x in myresult:
                             n = x
 
-                        sql = "UPDATE pilvax SET Ground = %s WHERE DiscordID = %s"
+                        sql = "UPDATE pilvax SET Zacc = %s WHERE DiscordID = %s"
                         val = (n - number, DiscordID)
                         t = n - number
 
@@ -308,14 +308,14 @@ class CG(commands.Cog):
 
             if myresult != None:
                 if tipus == "zacc":
-                    sql = "SELECT Ground FROM pilvax WHERE DiscordID = %s"
+                    sql = "SELECT Zacc FROM pilvax WHERE DiscordID = %s"
                     adr = (DiscordID,)
                     mycursor.execute(sql, adr)
                     myresult = mycursor.fetchone()
                     for x in myresult:
                         n = x
 
-                    sql = "UPDATE pilvax SET Ground = %s WHERE DiscordID = %s"
+                    sql = "UPDATE pilvax SET Zacc = %s WHERE DiscordID = %s"
                     val = (n - number, DiscordID)
                     t = n - number
 
@@ -370,7 +370,7 @@ class CG(commands.Cog):
 
             if myresult != None:
                 n: int
-                sql = "SELECT Cookie FROM pilvax WHERE DiscordID = %s"
+                sql = "SELECT Suti FROM pilvax WHERE DiscordID = %s"
                 adr = (DiscordID,)
                 mycursor.execute(sql, adr)
                 myresult = mycursor.fetchone()
@@ -378,7 +378,7 @@ class CG(commands.Cog):
                     n = x
 
                 z: int
-                sql = "SELECT Ground FROM pilvax WHERE DiscordID = %s"
+                sql = "SELECT Zacc FROM pilvax WHERE DiscordID = %s"
                 adr = (DiscordID,)
                 mycursor.execute(sql, adr)
                 myresult = mycursor.fetchone()
@@ -417,7 +417,7 @@ class CG(commands.Cog):
         mydb = database.myDb()
         mycursor = mydb.cursor()
 
-        sql = "SELECT DiscordName FROM pilvax WHERE Ground > 2"
+        sql = "SELECT DiscordName FROM pilvax WHERE Zacc > 2"
         mycursor.execute(sql)
         myresult = mycursor.fetchall()
         n = []
@@ -467,7 +467,7 @@ class CG(commands.Cog):
                   {'nev': ' ', 'suti': 0, 'zacc': 0}, {'nev': ' ', 'suti': 0, 'zacc': 0}, {'nev': ' ', 'suti': 0, 'zacc': 0}, {'nev': ' ', 'suti': 0, 'zacc': 0}, {'nev': ' ', 'suti': 0, 'zacc': 0},
                   {'nev': ' ', 'suti': 0, 'zacc': 0}, {'nev': ' ', 'suti': 0, 'zacc': 0}, {'nev': ' ', 'suti': 0, 'zacc': 0}, {'nev': ' ', 'suti': 0, 'zacc': 0}, {'nev': ' ', 'suti': 0, 'zacc': 0},]
 
-        sql = "SELECT DiscordName, Cookie, Ground FROM pilvax"
+        sql = "SELECT DiscordName, Suti, Zacc FROM pilvax"
         mycursor.execute(sql)
         myresult = mycursor.fetchall()
         for x in myresult:
