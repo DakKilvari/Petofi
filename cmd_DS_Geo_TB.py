@@ -13,8 +13,8 @@ class DS_Geo_TB(commands.Cog):
         self.bot = bot
 
     @commands.command(aliases=['DS Geo TB'])
-    @commands.has_any_role('Leader', 'Officer', 'Commander')  # User need this role to run command (can have multiple)
-    async def DS_Geo_TB(self, ctx, raw_allycode):
+    @commands.has_any_role('Leader', 'Officer')  # User need this role to run command (can have multiple)
+    async def dsgeotb(self, ctx, raw_allycode):
         tic()
         await ctx.message.add_reaction("⏳")
 
@@ -56,24 +56,28 @@ class DS_Geo_TB(commands.Cog):
 
             guild_members = character_data_search_P1(guilddata)
 
+            guild_members.sort()
             s: str = '\n'.join(map(str, guild_members))
             n: int = len(guild_members)
             embed.add_field(name=str(n) + ' játékos nem áll készen P1 szepa pályára:', value='```' + "\n" + s + '```', inline='false')
 
             guild_members = character_data_search_P2(guilddata)
 
+            guild_members.sort()
             s: str = '\n'.join(map(str, guild_members))
             n: int = len(guild_members)
             embed.add_field(name=str(n) + ' játékos nem áll készen P2 Dooku & Asajj pályára:', value='```' + "\n" + s + '```', inline='false')
 
             guild_members = character_data_search_P3(guilddata)
 
+            guild_members.sort()
             s: str = '\n'.join(map(str, guild_members))
             n: int = len(guild_members)
             embed.add_field(name=str(n) + ' játékos nem áll készen P3 szepa droidos pályára:', value='```' + "\n" + s + '```', inline='false')
 
             guild_members = character_data_search_Wat_Tambor(guilddata)
 
+            guild_members.sort()
             s: str = '\n'.join(map(str, guild_members))
             n: int = len(guild_members)
             embed.add_field(name=str(n) + ' játékos nem áll készen Wat Tambor shard megszerzésére:', value='```' + "\n" + s + '```', inline='false')
@@ -87,7 +91,7 @@ class DS_Geo_TB(commands.Cog):
             pass
 
 
-    @DS_Geo_TB.error
+    @dsgeotb.error
     async def josoultsag_hiba(self, ctx, error):
         self.ctx = ctx
         if isinstance(error, commands.CheckFailure):

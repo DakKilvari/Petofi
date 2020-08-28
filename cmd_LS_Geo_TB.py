@@ -13,8 +13,8 @@ class LS_Geo_TB(commands.Cog):
         self.bot = bot
 
     @commands.command(aliases=['LS Geo TB'])
-    @commands.has_any_role('Leader', 'Officer', 'Commander')  # User need this role to run command (can have multiple)
-    async def LS_Geo_TB(self, ctx, raw_allycode):
+    @commands.has_any_role('Leader', 'Officer')  # User need this role to run command (can have multiple)
+    async def lsgeotb(self, ctx, raw_allycode):
         tic()
         await ctx.message.add_reaction("⏳")
 
@@ -96,7 +96,7 @@ class LS_Geo_TB(commands.Cog):
             pass
 
 
-    @LS_Geo_TB.error
+    @lsgeotb.error
     async def josoultsag_hiba(self, ctx, error):
         self.ctx = ctx
         if isinstance(error, commands.CheckFailure):

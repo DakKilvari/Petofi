@@ -13,7 +13,7 @@ class TW(commands.Cog):
         self.bot = bot
 
     @commands.command(aliases=['Territory War'])
-    @commands.has_any_role('Leader', 'Officer', 'Commander')  # User need this role to run command (can have multiple)
+    @commands.has_any_role('Leader', 'Officer')  # User need this role to run command (can have multiple)
 
     async def tw(self, ctx, raw_allycode1, allycode2: int):
         tic()

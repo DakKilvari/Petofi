@@ -11,7 +11,7 @@ class Top80(commands.Cog):
 
     @commands.command(aliases=['Top 80'])
     @commands.has_any_role('Member')  # User need this role to run command (can have multiple)
-    async def Top80(self, ctx, raw_allycode):
+    async def top80(self, ctx, raw_allycode):
 
         tic()
         await ctx.message.add_reaction("⏳")
@@ -60,7 +60,7 @@ class Top80(commands.Cog):
             pass
 
 
-    @Top80.error
+    @top80.error
     async def josoultsag_hiba(self, ctx, error):
         self.ctx = ctx
         if isinstance(error, commands.CheckFailure):
