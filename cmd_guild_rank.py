@@ -17,7 +17,7 @@ class GUILDRANK(commands.Cog):
 
     @commands.command(aliases=['GuildRang'])
     @commands.has_any_role(global_settings.Role1, global_settings.Role2)  # User need this role to run command (can have multiple)
-    async def guild_rang(self, ctx, raw_allycode):
+    async def guildrang(self, ctx, raw_allycode):
         tic()
         await ctx.message.add_reaction("⏳")
 
@@ -148,7 +148,7 @@ class GUILDRANK(commands.Cog):
         else:
             pass
 
-    @guild_rang.error
+    @guildrang.error
     async def josoultsag_hiba(self, ctx, error):
         self.ctx = ctx
         if isinstance(error, commands.CheckFailure):
