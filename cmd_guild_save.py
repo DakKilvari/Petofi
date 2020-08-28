@@ -72,8 +72,6 @@ class GUILDSAVE(commands.Cog):
 
                 player = fetchPlayerRoster(guilddata)
 
-                player.sort(reverse=True, key=Sort)
-
 
                 i = 0
                 n = int_(len(player))
@@ -113,8 +111,6 @@ class GUILDSAVE(commands.Cog):
             print("\n" + "Jogosultság hiba!")
             await self.ctx.send('⛔ - Nincsen hozzá jogosultságod!')
 
-def Sort(a):
-    return a['rank']
 
 
 def fetchPlayerRoster(guilddata):
