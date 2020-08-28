@@ -5,6 +5,7 @@ import time
 from discord.ext import commands
 import cmd_rank
 import cmd_guild_rank
+import global_settings
 
 
 creds = settings()
@@ -16,7 +17,7 @@ class GUILDSAVE(commands.Cog):
         self.bot = bot
 
     @commands.command(aliases=['GuildRangMentes'])
-    @commands.has_any_role('Leader', 'Officer')  # User need this role to run command (can have multiple)
+    @commands.has_any_role(global_settings.Role1, global_settings.Role2)  # User need this role to run command (can have multiple)
     async def guild_save(self, ctx, raw_allycode, month="m"):
 
         tic()

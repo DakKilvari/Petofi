@@ -4,6 +4,7 @@ from numpy import *
 from discord.ext import commands
 from api_swgoh_help import api_swgoh_help, settings
 from db_handler import db_handler
+import global_settings
 
 creds = settings()
 client = api_swgoh_help(creds)
@@ -13,7 +14,7 @@ class TW(commands.Cog):
         self.bot = bot
 
     @commands.command(aliases=['Territory War'])
-    @commands.has_any_role('Leader', 'Officer')  # User need this role to run command (can have multiple)
+    @commands.has_any_role(global_settings.Role1, global_settings.Role2)  # User need this role to run command (can have multiple)
 
     async def tw(self, ctx, raw_allycode1, allycode2: int):
         tic()

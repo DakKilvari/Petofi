@@ -3,7 +3,7 @@ from db_handler import db_handler
 from numpy import *
 import time
 from discord.ext import commands
-from db_handler import db_handler
+import global_settings
 
 
 class RANK(commands.Cog):
@@ -11,7 +11,7 @@ class RANK(commands.Cog):
         self.bot = bot
 
     @commands.command(aliases=['JatekosRang'])
-    @commands.has_any_role('Member')  # User need this role to run command (can have multiple)
+    @commands.has_any_role(global_settings.Role3)  # User need this role to run command (can have multiple)
     async def rang(self, ctx, raw_allycode, show="b"):
 
         tic()

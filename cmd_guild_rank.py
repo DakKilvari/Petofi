@@ -5,6 +5,7 @@ import discord
 import time
 from discord.ext import commands
 import cmd_rank
+import global_settings
 
 creds = settings()
 client = api_swgoh_help(creds)
@@ -15,7 +16,7 @@ class GUILDRANK(commands.Cog):
         self.bot = bot
 
     @commands.command(aliases=['GuildRang'])
-    @commands.has_any_role('Leader', 'Officer')  # User need this role to run command (can have multiple)
+    @commands.has_any_role(global_settings.Role1, global_settings.Role2)  # User need this role to run command (can have multiple)
     async def guild_rang(self, ctx, raw_allycode):
         tic()
         await ctx.message.add_reaction("⏳")

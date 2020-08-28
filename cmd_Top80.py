@@ -3,6 +3,7 @@ from numpy import *
 from discord.ext import commands
 from api_swgoh_help import api_swgoh_help, settings
 from db_handler import db_handler
+import global_settings
 
 
 class Top80(commands.Cog):
@@ -10,7 +11,7 @@ class Top80(commands.Cog):
         self.bot = bot
 
     @commands.command(aliases=['Top 80'])
-    @commands.has_any_role('Member')  # User need this role to run command (can have multiple)
+    @commands.has_any_role(global_settings.Role3)  # User need this role to run command (can have multiple)
     async def top80(self, ctx, raw_allycode):
 
         tic()

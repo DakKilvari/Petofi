@@ -2,6 +2,7 @@ from db_handler import db_handler
 from numpy import *
 import discord
 from discord.ext import commands
+import global_settings
 
 
 class CG(commands.Cog):
@@ -9,7 +10,7 @@ class CG(commands.Cog):
         self.bot = bot
 
     @commands.command(aliases=['Regisztracio'])
-    @commands.has_any_role('Leader', 'Officer')  # User need this role to run command (can have multiple)
+    @commands.has_any_role(global_settings.Role1, global_settings.Role2)  # User need this role to run command (can have multiple)
     async def register(self, ctx, userid:str, allycode:int):
 
         AuthorID = str(ctx.author.id)
@@ -60,7 +61,7 @@ class CG(commands.Cog):
 
 
     @commands.command(aliases=['Torles'])
-    @commands.has_any_role('Leader', 'Officer')  # User need this role to run command (can have multiple)
+    @commands.has_any_role(global_settings.Role1, global_settings.Role2)  # User need this role to run command (can have multiple)
     async def delete(self, ctx, userid:str):
 
         AuthorID = str(ctx.author.id)
@@ -107,7 +108,7 @@ class CG(commands.Cog):
 
 
     @commands.command(aliases=['Hozzaadas'])
-    @commands.has_any_role('Cukrosbácsi')  # User need this role to run command (can have multiple)
+    @commands.has_any_role(global_settings.Role4)  # User need this role to run command (can have multiple)
     async def add(self, ctx, userid:str, number:int, tipus:str):
 
         AuthorID = str(ctx.author.id)
@@ -188,7 +189,7 @@ class CG(commands.Cog):
 
 
     @commands.command(aliases=['Elvonas'])
-    @commands.has_any_role('Cukrosbácsi')  # User need this role to run command (can have multiple)
+    @commands.has_any_role(global_settings.Role4)  # User need this role to run command (can have multiple)
     async def remove(self, ctx, userid:str, number:int, tipus:str):
 
         AuthorID = str(ctx.author.id)
@@ -286,7 +287,7 @@ class CG(commands.Cog):
 
 
     @commands.command(aliases=['Lejart'])
-    @commands.has_any_role('Cukrosbácsi')  # User need this role to run command (can have multiple)
+    @commands.has_any_role(global_settings.Role4)  # User need this role to run command (can have multiple)
     async def expire(self, ctx, userid:str, number:int, tipus:str):
 
         AuthorID = str(ctx.author.id)
@@ -348,7 +349,7 @@ class CG(commands.Cog):
 
 
     @commands.command(aliases=['Lekeres'])
-    @commands.has_any_role('Member')  # User need this role to run command (can have multiple)
+    @commands.has_any_role(global_settings.Role3)  # User need this role to run command (can have multiple)
     async def mennyi(self, ctx, userid:str):
 
         AuthorID = str(ctx.author.id)
@@ -407,7 +408,7 @@ class CG(commands.Cog):
 
 
     @commands.command(aliases=['Zaccok'])
-    @commands.has_any_role('Leader', 'Officer')  # User need this role to run command (can have multiple)
+    @commands.has_any_role(global_settings.Role1, global_settings.Role2)  # User need this role to run command (can have multiple)
     async def zaccosodott(self, ctx):
         
         AuthorID = "0"
@@ -443,7 +444,7 @@ class CG(commands.Cog):
 
 
     @commands.command(aliases=['Osszes suti es zacc'])
-    @commands.has_any_role('Leader', 'Officer')  # User need this role to run command (can have multiple)
+    @commands.has_any_role(global_settings.Role1, global_settings.Role2)  # User need this role to run command (can have multiple)
     async def osszes(self, ctx):
 
         await ctx.message.add_reaction("⏳")
