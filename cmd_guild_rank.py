@@ -84,7 +84,7 @@ class GUILDRANK(commands.Cog):
             str(player[i+6]['jatekosnev']) + ' ' * (lth-len(str(player[i+6]['jatekosnev']))) + ' ' + str(player[i+6]['rank']) + ' pont' + '  ' + str(player[i+6]['ranknev']) + '\n' +
             str(player[i+7]['jatekosnev']) + ' ' * (lth-len(str(player[i+7]['jatekosnev']))) + ' ' + str(player[i+7]['rank']) + ' pont' + '  ' + str(player[i+7]['ranknev']) + '\n' +
             str(player[i+8]['jatekosnev']) + ' ' * (lth-len(str(player[i+8]['jatekosnev']))) + ' ' + str(player[i+8]['rank']) + ' pont' + '  ' + str(player[i+8]['ranknev']) + '\n' +
-            str(player[i+9]['jatekosnev']) + ' ' * (lth-len(str(player[i+9]['jatekosnev']))) + ' ' + str(player[i+9]['rank']) + ' pont' + '  ' + str(player[i+9]['ranknev']) + '\n' + '```')
+            str(player[i+9]['jatekosnev']) + ' ' * (lth-len(str(player[i+9]['jatekosnev']))) + ' ' + str(player[i+9]['rank']) + ' pont' + '  ' + str(player[i+9]['ranknev']) + '\n' + '```', inline='false')
 
             i = 10
             embed.add_field(name='=================== Top 11 - 20 ===================', value=
@@ -97,7 +97,7 @@ class GUILDRANK(commands.Cog):
             str(player[i+6]['jatekosnev']) + ' ' * (lth-len(str(player[i+6]['jatekosnev']))) + ' ' + str(player[i+6]['rank']) + ' pont' + '  ' + str(player[i+6]['ranknev']) + '\n' +
             str(player[i+7]['jatekosnev']) + ' ' * (lth-len(str(player[i+7]['jatekosnev']))) + ' ' + str(player[i+7]['rank']) + ' pont' + '  ' + str(player[i+7]['ranknev']) + '\n' +
             str(player[i+8]['jatekosnev']) + ' ' * (lth-len(str(player[i+8]['jatekosnev']))) + ' ' + str(player[i+8]['rank']) + ' pont' + '  ' + str(player[i+8]['ranknev']) + '\n' +
-            str(player[i+9]['jatekosnev']) + ' ' * (lth-len(str(player[i+9]['jatekosnev']))) + ' ' + str(player[i+9]['rank']) + ' pont' + '  ' + str(player[i+9]['ranknev']) + '\n' + '```')
+            str(player[i+9]['jatekosnev']) + ' ' * (lth-len(str(player[i+9]['jatekosnev']))) + ' ' + str(player[i+9]['rank']) + ' pont' + '  ' + str(player[i+9]['ranknev']) + '\n' + '```', inline='false')
 
             i = 20
             embed.add_field(name='=================== Top 21 - 30 ===================', value=
@@ -110,7 +110,7 @@ class GUILDRANK(commands.Cog):
             str(player[i+6]['jatekosnev']) + ' ' * (lth-len(str(player[i+6]['jatekosnev']))) + ' ' + str(player[i+6]['rank']) + ' pont' + '  ' + str(player[i+6]['ranknev']) + '\n' +
             str(player[i+7]['jatekosnev']) + ' ' * (lth-len(str(player[i+7]['jatekosnev']))) + ' ' + str(player[i+7]['rank']) + ' pont' + '  ' + str(player[i+7]['ranknev']) + '\n' +
             str(player[i+8]['jatekosnev']) + ' ' * (lth-len(str(player[i+8]['jatekosnev']))) + ' ' + str(player[i+8]['rank']) + ' pont' + '  ' + str(player[i+8]['ranknev']) + '\n' +
-            str(player[i+9]['jatekosnev']) + ' ' * (lth-len(str(player[i+9]['jatekosnev']))) + ' ' + str(player[i+9]['rank']) + ' pont' + '  ' + str(player[i+9]['ranknev']) + '\n' + '```')
+            str(player[i+9]['jatekosnev']) + ' ' * (lth-len(str(player[i+9]['jatekosnev']))) + ' ' + str(player[i+9]['rank']) + ' pont' + '  ' + str(player[i+9]['ranknev']) + '\n' + '```', inline='false')
 
             i = 30
             embed.add_field(name='=================== Top 31 - 40 ===================', value=
@@ -123,7 +123,7 @@ class GUILDRANK(commands.Cog):
             str(player[i+6]['jatekosnev']) + ' ' * (lth-len(str(player[i+6]['jatekosnev']))) + ' ' + str(player[i+6]['rank']) + ' pont' + '  ' + str(player[i+6]['ranknev']) + '\n' +
             str(player[i+7]['jatekosnev']) + ' ' * (lth-len(str(player[i+7]['jatekosnev']))) + ' ' + str(player[i+7]['rank']) + ' pont' + '  ' + str(player[i+7]['ranknev']) + '\n' +
             str(player[i+8]['jatekosnev']) + ' ' * (lth-len(str(player[i+8]['jatekosnev']))) + ' ' + str(player[i+8]['rank']) + ' pont' + '  ' + str(player[i+8]['ranknev']) + '\n' +
-            str(player[i+9]['jatekosnev']) + ' ' * (lth-len(str(player[i+9]['jatekosnev']))) + ' ' + str(player[i+9]['rank']) + ' pont' + '  ' + str(player[i+9]['ranknev']) + '\n' + '```')
+            str(player[i+9]['jatekosnev']) + ' ' * (lth-len(str(player[i+9]['jatekosnev']))) + ' ' + str(player[i+9]['rank']) + ' pont' + '  ' + str(player[i+9]['ranknev']) + '\n' + '```', inline='false')
 
             i = 40
             embed.add_field(name='=================== Top 41 - 50 ===================', value=
@@ -136,7 +136,7 @@ class GUILDRANK(commands.Cog):
             str(player[i+6]['jatekosnev']) + ' ' * (lth-len(str(player[i+6]['jatekosnev']))) + ' ' * round(1 / len(str(player[i+6]['rank']))) + str(player[i+6]['rank']) + ' pont' + '  ' + str(player[i+6]['ranknev']) + '\n' +
             str(player[i+7]['jatekosnev']) + ' ' * (lth-len(str(player[i+7]['jatekosnev']))) + ' ' * round(1 / len(str(player[i+7]['rank']))) + str(player[i+7]['rank']) + ' pont' + '  ' + str(player[i+7]['ranknev']) + '\n' +
             str(player[i+8]['jatekosnev']) + ' ' * (lth-len(str(player[i+8]['jatekosnev']))) + ' ' * round(1 / len(str(player[i+8]['rank']))) + str(player[i+8]['rank']) + ' pont' + '  ' + str(player[i+8]['ranknev']) + '\n' +
-            str(player[i+9]['jatekosnev']) + ' ' * (lth-len(str(player[i+9]['jatekosnev']))) + ' ' * round(1 / len(str(player[i+9]['rank']))) + str(player[i+9]['rank']) + ' pont' + '  ' + str(player[i+9]['ranknev']) + '\n' + '```')
+            str(player[i+9]['jatekosnev']) + ' ' * (lth-len(str(player[i+9]['jatekosnev']))) + ' ' * round(1 / len(str(player[i+9]['rank']))) + str(player[i+9]['rank']) + ' pont' + '  ' + str(player[i+9]['ranknev']) + '\n' + '```', inline='false')
 
 
 
