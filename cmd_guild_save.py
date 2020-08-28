@@ -18,7 +18,7 @@ class GUILDSAVE(commands.Cog):
 
     @commands.command(aliases=['GuildRangMentes'])
     @commands.has_any_role(global_settings.Role1, global_settings.Role2)  # User need this role to run command (can have multiple)
-    async def guild_save(self, ctx, raw_allycode, month="m"):
+    async def guildsave(self, ctx, raw_allycode, month="m"):
 
         tic()
         await ctx.message.add_reaction("⏳")
@@ -62,12 +62,16 @@ class GUILDSAVE(commands.Cog):
             mycursor.execute(sql, adr)
             myresult = mycursor.fetchone()
 
-            if temp != -1 and myresult != None and month == 'January' or month == 'February' or month == 'March' or month == 'April' or month == 'May' or month == 'June' or month == 'July' or month == 'August' or month == 'September' or month == 'October' or month == 'November' or month == 'December':
+            if temp != -1 and myresult != None and month == 'jan' or month == '1' or month == 'feb' or month == '2' or month == 'mar' or month == '3' or\
+                    month == 'apr' or month == '4' or month == 'may' or month == '5' or month == 'jun' or month == '6' or month == 'jul' or month == '7' or\
+                    month == 'aug' or month == '8' or month == 'sep' or month == '9' or month == 'okt' or month == '10' or month == 'nov' or month == '11' or month == 'dec' or month == '12':
+
+                honap = switch_month_names(month)
 
                 await ctx.message.add_reaction("✅")
 
-                await ctx.send("Guild rang mentés folyamatban. ⏳")
-                print("Guild rang mentés folyamatban.")
+                await ctx.send(honap + "i guild rang mentés folyamatban. ⏳")
+                print(str(honap) + "i guild rang mentés folyamatban.")
 
                 guilddata = cmd_guild_rank.fetchGuildRoster(raw_guild)
 
@@ -81,7 +85,7 @@ class GUILDSAVE(commands.Cog):
                     n: int
 
 
-                    sql = "UPDATE pilvax SET " + month + " = %s WHERE Allycode = %s"
+                    sql = "UPDATE pilvax SET " + honap + " = %s WHERE Allycode = %s"
                     adr = (player[i]['rank'], player[i]['allycode'])
                     mycursor.execute(sql, adr)
                     mydb.commit()
@@ -105,7 +109,7 @@ class GUILDSAVE(commands.Cog):
             pass
 
 
-    @guild_save.error
+    @guildsave.error
     async def josoultsag_hiba(self, ctx, error):
         self.ctx = ctx
         if isinstance(error, commands.CheckFailure):
@@ -146,6 +150,32 @@ def fetchPlayerRoster(guilddata):
 
     return player
 
+def switch_month_names(month):
+    if month == 'jan' or month == '1':
+        honap = 'Januar'
+    if month == 'feb' or month == '2':
+        honap = 'Februar'
+    if month == 'mar' or month == '3':
+        honap = 'Marcius'
+    if month == 'apr' or month == '4':
+        honap = 'Aprilis'
+    if month == 'maj' or month == '5':
+        honap = 'Majus'
+    if month == 'jun' or month == '6':
+        honap = 'Junius'
+    if month == 'jul' or month == '7':
+        honap = 'Julius'
+    if month == 'aug' or month == '8':
+        honap = 'Augusztus'
+    if month == 'sep' or month == '9':
+        honap = 'Szeptember'
+    if month == 'okt' or month == '10':
+        honap = 'Oktober'
+    if month == 'nov' or month == '11':
+        honap = 'November'
+    if month == 'dec' or month == '12':
+        honap = 'December'
+    return honap
 
 def TicTocGenerator():
     # Generator that returns time differences
