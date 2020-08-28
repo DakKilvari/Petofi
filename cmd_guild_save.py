@@ -6,6 +6,7 @@ from discord.ext import commands
 import cmd_rank
 import cmd_guild_rank
 import global_settings
+import datetime
 
 
 creds = settings()
@@ -62,37 +63,48 @@ class GUILDSAVE(commands.Cog):
             mycursor.execute(sql, adr)
             myresult = mycursor.fetchone()
 
+
             if temp != -1 and myresult != None and month == 'jan' or month == '1' or month == 'feb' or month == '2' or month == 'mar' or month == '3' or\
                     month == 'apr' or month == '4' or month == 'may' or month == '5' or month == 'jun' or month == '6' or month == 'jul' or month == '7' or\
                     month == 'aug' or month == '8' or month == 'sep' or month == '9' or month == 'okt' or month == '10' or month == 'nov' or month == '11' or month == 'dec' or month == '12':
 
                 honap = switch_month_names(month)
 
-                await ctx.message.add_reaction("✅")
+                today = datetime.datetime.now()
+                mth = switch_month_names(today.month)
 
-                await ctx.send(honap + "i guild rang mentés folyamatban. ⏳")
-                print(str(honap) + "i guild rang mentés folyamatban.")
+                if honap == mth:
+                    await ctx.message.add_reaction("✅")
 
-                guilddata = cmd_guild_rank.fetchGuildRoster(raw_guild)
+                    await ctx.send(honap + "i guild rang mentés folyamatban. ⏳")
+                    print(str(honap) + "i guild rang mentés folyamatban.")
 
-                player = fetchPlayerRoster(guilddata)
+                    guilddata = cmd_guild_rank.fetchGuildRoster(raw_guild)
 
-
-                i = 0
-                n = int_(len(player))
-
-                while i < n:
-                    n: int
+                    player = fetchPlayerRoster(guilddata)
 
 
-                    sql = "UPDATE pilvax SET " + honap + " = %s WHERE Allycode = %s"
-                    adr = (player[i]['rank'], player[i]['allycode'])
-                    mycursor.execute(sql, adr)
-                    mydb.commit()
-                    i += 1
+                    i = 0
+                    n = int_(len(player))
 
-                await ctx.send("Guild rang mentés kész! ✅")
-                print("Guild rang mentés kész!")
+                    while i < n:
+                        n: int
+
+
+                        sql = "UPDATE pilvax SET " + honap + " = %s WHERE Allycode = %s"
+                        adr = (player[i]['rank'], player[i]['allycode'])
+                        mycursor.execute(sql, adr)
+                        mydb.commit()
+                        i += 1
+
+                    await ctx.send("Guild rang mentés kész! ✅")
+                    print("Guild rang mentés kész!")
+
+                else:
+                    await ctx.message.add_reaction("❌")
+                    await ctx.send("Hibás hónap! Nem " + honap + " van, nem engedélyezett a guild rang mentés.")
+                    print("Hibás hónap!")
+
 
             else:
                 await ctx.message.add_reaction("❌")
@@ -151,29 +163,29 @@ def fetchPlayerRoster(guilddata):
     return player
 
 def switch_month_names(month):
-    if month == 'jan' or month == '1':
+    if month == 'jan' or month == '1' or month == 1:
         honap = 'Januar'
-    if month == 'feb' or month == '2':
+    if month == 'feb' or month == '2' or month == 2:
         honap = 'Februar'
-    if month == 'mar' or month == '3':
+    if month == 'mar' or month == '3' or month == 3:
         honap = 'Marcius'
-    if month == 'apr' or month == '4':
+    if month == 'apr' or month == '4' or month == 4:
         honap = 'Aprilis'
-    if month == 'maj' or month == '5':
+    if month == 'maj' or month == '5' or month == 5:
         honap = 'Majus'
-    if month == 'jun' or month == '6':
+    if month == 'jun' or month == '6' or month == 6:
         honap = 'Junius'
-    if month == 'jul' or month == '7':
+    if month == 'jul' or month == '7' or month == 7:
         honap = 'Julius'
-    if month == 'aug' or month == '8':
+    if month == 'aug' or month == '8' or month == 8:
         honap = 'Augusztus'
-    if month == 'sep' or month == '9':
+    if month == 'sep' or month == '9' or month == 9:
         honap = 'Szeptember'
-    if month == 'okt' or month == '10':
+    if month == 'okt' or month == '10' or month == 10:
         honap = 'Oktober'
-    if month == 'nov' or month == '11':
+    if month == 'nov' or month == '11' or month == 11:
         honap = 'November'
-    if month == 'dec' or month == '12':
+    if month == 'dec' or month == '12' or month == 12:
         honap = 'December'
     return honap
 
