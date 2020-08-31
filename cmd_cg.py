@@ -1,9 +1,13 @@
-from db_handler import db_handler
-from numpy import *
-import discord
-from discord.ext import commands
 import global_settings
+from api_swgoh_help import api_swgoh_help, settings
+from numpy import *
+import time
+from db_handler import db_handler
+from discord.ext import commands
+import discord
 
+creds = settings()
+client = api_swgoh_help(creds)
 
 class CG(commands.Cog):
     def __init__(self, bot):
@@ -445,127 +449,172 @@ class CG(commands.Cog):
 
     @commands.command(aliases=['Osszes suti es zacc'])
     @commands.has_any_role(global_settings.Role1, global_settings.Role2)  # User need this role to run command (can have multiple)
-    async def osszes(self, ctx):
+    async def osszes2(self, ctx, raw_allycode):
 
+        tic()
         await ctx.message.add_reaction("⏳")
 
-        AuthorID = "0"
-        DiscordID = "0"
-        database = db_handler(AuthorID, DiscordID)
+        m1 = str(ctx.author.id)
+        try:
+            m2 = str(ctx.message.mentions[0].id)
+        except:
+            m2 = "000000000"
+
+        database = db_handler(m1, m2)
         mydb = database.myDb()
         mycursor = mydb.cursor()
-
-        i: int = 0
-        player = [{'nev': ' ', 'suti': 0, 'zacc': 0}, {'nev': ' ', 'suti': 0, 'zacc': 0}, {'nev': ' ', 'suti': 0, 'zacc': 0}, {'nev': ' ', 'suti': 0, 'zacc': 0}, {'nev': ' ', 'suti': 0, 'zacc': 0},
-                  {'nev': ' ', 'suti': 0, 'zacc': 0}, {'nev': ' ', 'suti': 0, 'zacc': 0}, {'nev': ' ', 'suti': 0, 'zacc': 0}, {'nev': ' ', 'suti': 0, 'zacc': 0}, {'nev': ' ', 'suti': 0, 'zacc': 0},
-                  {'nev': ' ', 'suti': 0, 'zacc': 0}, {'nev': ' ', 'suti': 0, 'zacc': 0}, {'nev': ' ', 'suti': 0, 'zacc': 0}, {'nev': ' ', 'suti': 0, 'zacc': 0}, {'nev': ' ', 'suti': 0, 'zacc': 0},
-                  {'nev': ' ', 'suti': 0, 'zacc': 0}, {'nev': ' ', 'suti': 0, 'zacc': 0}, {'nev': ' ', 'suti': 0, 'zacc': 0}, {'nev': ' ', 'suti': 0, 'zacc': 0}, {'nev': ' ', 'suti': 0, 'zacc': 0},
-                  {'nev': ' ', 'suti': 0, 'zacc': 0}, {'nev': ' ', 'suti': 0, 'zacc': 0}, {'nev': ' ', 'suti': 0, 'zacc': 0}, {'nev': ' ', 'suti': 0, 'zacc': 0}, {'nev': ' ', 'suti': 0, 'zacc': 0},
-                  {'nev': ' ', 'suti': 0, 'zacc': 0}, {'nev': ' ', 'suti': 0, 'zacc': 0}, {'nev': ' ', 'suti': 0, 'zacc': 0}, {'nev': ' ', 'suti': 0, 'zacc': 0}, {'nev': ' ', 'suti': 0, 'zacc': 0},
-                  {'nev': ' ', 'suti': 0, 'zacc': 0}, {'nev': ' ', 'suti': 0, 'zacc': 0}, {'nev': ' ', 'suti': 0, 'zacc': 0}, {'nev': ' ', 'suti': 0, 'zacc': 0}, {'nev': ' ', 'suti': 0, 'zacc': 0},
-                  {'nev': ' ', 'suti': 0, 'zacc': 0}, {'nev': ' ', 'suti': 0, 'zacc': 0}, {'nev': ' ', 'suti': 0, 'zacc': 0}, {'nev': ' ', 'suti': 0, 'zacc': 0}, {'nev': ' ', 'suti': 0, 'zacc': 0},
-                  {'nev': ' ', 'suti': 0, 'zacc': 0}, {'nev': ' ', 'suti': 0, 'zacc': 0}, {'nev': ' ', 'suti': 0, 'zacc': 0}, {'nev': ' ', 'suti': 0, 'zacc': 0}, {'nev': ' ', 'suti': 0, 'zacc': 0},
-                  {'nev': ' ', 'suti': 0, 'zacc': 0}, {'nev': ' ', 'suti': 0, 'zacc': 0}, {'nev': ' ', 'suti': 0, 'zacc': 0}, {'nev': ' ', 'suti': 0, 'zacc': 0}, {'nev': ' ', 'suti': 0, 'zacc': 0},]
-
-        sql = "SELECT DiscordName, Suti, Zacc FROM pilvax"
-        mycursor.execute(sql)
-        myresult = mycursor.fetchall()
-        for x in myresult:
-            player[i]['nev'] = x[0][:-5]
-            player[i]['suti'] = x[1]
-            player[i]['zacc'] = x[2]
-            print(str(player[i]['nev']) + "  " + str(player[i]['suti']) + "  " + str(player[i]['zacc']))
-            i += 1
+        allycode = database.fetchMe(raw_allycode, mycursor)
 
         mycursor.close()
         mydb.close()
 
-        player.sort(reverse=False, key=Sort)
+        raw_guild = client.fetchGuilds(allycode)
 
-        i = 0
-        n = int_(len(player))
-        lth = 0
-        while i < n:
-            lth2 = int_(len(player[i]['nev']))
-            if lth2 > lth:
-                lth = lth2
-            i += 1
+        temp = 0
+        print(str(temp))
 
-        embed = discord.Embed(title='Pilvax Hungary',
-                              url="https://swgoh.gg/g/1294/pilvax-hungary/",
-                              color=0x7289da)
+        try:
+            raw_guild['status_code'] == 404
+            await ctx.send("Hibás ally kód!")
+            await ctx.message.add_reaction("❌")
+            temp = -1
+        except:
+            pass
 
-        i = 0
-        embed.add_field(name='============== Süti és Zacctáblázat 1/5 ==============', value=
-        '```' + str(player[i]['nev']) + ' ' * (lth - len(str(player[i]['nev']))) + ' ' + str(player[i]['suti']) + ' 🍪' + '  ' + str(player[i]['zacc']) + ' ♨️' + '\n' +
-        str(player[i + 1]['nev']) + ' ' * (lth - len(str(player[i + 1]['nev']))) + ' ' + str(player[i + 1]['suti']) + ' 🍪' + '  ' + str(player[i + 1]['zacc']) + ' ♨️' + '\n' +
-        str(player[i + 2]['nev']) + ' ' * (lth - len(str(player[i + 2]['nev']))) + ' ' + str(player[i + 2]['suti']) + ' 🍪' + '  ' + str(player[i + 2]['zacc']) + ' ♨️' + '\n' +
-        str(player[i + 3]['nev']) + ' ' * (lth - len(str(player[i + 3]['nev']))) + ' ' + str(player[i + 3]['suti']) + ' 🍪' + '  ' + str(player[i + 3]['zacc']) + ' ♨️' + '\n' +
-        str(player[i + 4]['nev']) + ' ' * (lth - len(str(player[i + 4]['nev']))) + ' ' + str(player[i + 4]['suti']) + ' 🍪' + '  ' + str(player[i + 4]['zacc']) + ' ♨️' + '\n' +
-        str(player[i + 5]['nev']) + ' ' * (lth - len(str(player[i + 5]['nev']))) + ' ' + str(player[i + 5]['suti']) + ' 🍪' + '  ' + str(player[i + 5]['zacc']) + ' ♨️' + '\n' +
-        str(player[i + 6]['nev']) + ' ' * (lth - len(str(player[i + 6]['nev']))) + ' ' + str(player[i + 6]['suti']) + ' 🍪' + '  ' + str(player[i + 6]['zacc']) + ' ♨️' + '\n' +
-        str(player[i + 7]['nev']) + ' ' * (lth - len(str(player[i + 7]['nev']))) + ' ' + str(player[i + 7]['suti']) + ' 🍪' + '  ' + str(player[i + 7]['zacc']) + ' ♨️' + '\n' +
-        str(player[i + 8]['nev']) + ' ' * (lth - len(str(player[i + 8]['nev']))) + ' ' + str(player[i + 8]['suti']) + ' 🍪' + '  ' + str(player[i + 8]['zacc']) + ' ♨️' + '\n' +
-        str(player[i + 9]['nev']) + ' ' * (lth - len(str(player[i + 9]['nev']))) + ' ' + str(player[i + 9]['suti']) + ' 🍪' + '  ' + str(player[i + 9]['zacc']) + ' ♨️' + '\n' + '```', inline='false')
+        DiscordID = m1
+        AuthorID = m2
 
-        i = 10
-        embed.add_field(name='============== Süti és Zacctáblázat 2/5 ==============', value=
-        '```' + str(player[i]['nev']) + ' ' * (lth - len(str(player[i]['nev']))) + ' ' + str(player[i]['suti']) + ' 🍪' + '  ' + str(player[i]['zacc']) + ' ♨️' + '\n' +
-        str(player[i + 1]['nev']) + ' ' * (lth - len(str(player[i + 1]['nev']))) + ' ' + str(player[i + 1]['suti']) + ' 🍪' + '  ' + str(player[i + 1]['zacc']) + ' ♨️' + '\n' +
-        str(player[i + 2]['nev']) + ' ' * (lth - len(str(player[i + 2]['nev']))) + ' ' + str(player[i + 2]['suti']) + ' 🍪' + '  ' + str(player[i + 2]['zacc']) + ' ♨️' + '\n' +
-        str(player[i + 3]['nev']) + ' ' * (lth - len(str(player[i + 3]['nev']))) + ' ' + str(player[i + 3]['suti']) + ' 🍪' + '  ' + str(player[i + 3]['zacc']) + ' ♨️' + '\n' +
-        str(player[i + 4]['nev']) + ' ' * (lth - len(str(player[i + 4]['nev']))) + ' ' + str(player[i + 4]['suti']) + ' 🍪' + '  ' + str(player[i + 4]['zacc']) + ' ♨️' + '\n' +
-        str(player[i + 5]['nev']) + ' ' * (lth - len(str(player[i + 5]['nev']))) + ' ' + str(player[i + 5]['suti']) + ' 🍪' + '  ' + str(player[i + 5]['zacc']) + ' ♨️' + '\n' +
-        str(player[i + 6]['nev']) + ' ' * (lth - len(str(player[i + 6]['nev']))) + ' ' + str(player[i + 6]['suti']) + ' 🍪' + '  ' + str(player[i + 6]['zacc']) + ' ♨️' + '\n' +
-        str(player[i + 7]['nev']) + ' ' * (lth - len(str(player[i + 7]['nev']))) + ' ' + str(player[i + 7]['suti']) + ' 🍪' + '  ' + str(player[i + 7]['zacc']) + ' ♨️' + '\n' +
-        str(player[i + 8]['nev']) + ' ' * (lth - len(str(player[i + 8]['nev']))) + ' ' + str(player[i + 8]['suti']) + ' 🍪' + '  ' + str(player[i + 8]['zacc']) + ' ♨️' + '\n' +
-        str(player[i + 9]['nev']) + ' ' * (lth - len(str(player[i + 9]['nev']))) + ' ' + str(player[i + 9]['suti']) + ' 🍪' + '  ' + str(player[i + 9]['zacc']) + ' ♨️' + '\n' + '```', inline='false')
+        print(str(allycode))
 
-        i=20
-        embed.add_field(name='============== Süti és Zacctáblázat 3/5 ==============', value=
-        '```' + str(player[i]['nev']) + ' ' * (lth - len(str(player[i]['nev']))) + ' ' + str(player[i]['suti']) + ' 🍪' + '  ' + str(player[i]['zacc']) + ' ♨️' + '\n' +
-        str(player[i + 1]['nev']) + ' ' * (lth - len(str(player[i + 1]['nev']))) + ' ' + str(player[i + 1]['suti']) + ' 🍪' + '  ' + str(player[i + 1]['zacc']) + ' ♨️' + '\n' +
-        str(player[i + 2]['nev']) + ' ' * (lth - len(str(player[i + 2]['nev']))) + ' ' + str(player[i + 2]['suti']) + ' 🍪' + '  ' + str(player[i + 2]['zacc']) + ' ♨️' + '\n' +
-        str(player[i + 3]['nev']) + ' ' * (lth - len(str(player[i + 3]['nev']))) + ' ' + str(player[i + 3]['suti']) + ' 🍪' + '  ' + str(player[i + 3]['zacc']) + ' ♨️' + '\n' +
-        str(player[i + 4]['nev']) + ' ' * (lth - len(str(player[i + 4]['nev']))) + ' ' + str(player[i + 4]['suti']) + ' 🍪' + '  ' + str(player[i + 4]['zacc']) + ' ♨️' + '\n' +
-        str(player[i + 5]['nev']) + ' ' * (lth - len(str(player[i + 5]['nev']))) + ' ' + str(player[i + 5]['suti']) + ' 🍪' + '  ' + str(player[i + 5]['zacc']) + ' ♨️' + '\n' +
-        str(player[i + 6]['nev']) + ' ' * (lth - len(str(player[i + 6]['nev']))) + ' ' + str(player[i + 6]['suti']) + ' 🍪' + '  ' + str(player[i + 6]['zacc']) + ' ♨️' + '\n' +
-        str(player[i + 7]['nev']) + ' ' * (lth - len(str(player[i + 7]['nev']))) + ' ' + str(player[i + 7]['suti']) + ' 🍪' + '  ' + str(player[i + 7]['zacc']) + ' ♨️' + '\n' +
-        str(player[i + 8]['nev']) + ' ' * (lth - len(str(player[i + 8]['nev']))) + ' ' + str(player[i + 8]['suti']) + ' 🍪' + '  ' + str(player[i + 8]['zacc']) + ' ♨️' + '\n' +
-        str(player[i + 9]['nev']) + ' ' * (lth - len(str(player[i + 9]['nev']))) + ' ' + str(player[i + 9]['suti']) + ' 🍪' + '  ' + str(player[i + 9]['zacc']) + ' ♨️' + '\n' + '```', inline='false')
+        if DiscordID != "000000000":
+            database = db_handler(AuthorID, DiscordID)
+            mydb = database.myDb()
+            mycursor = mydb.cursor()
 
-        i=30
-        embed.add_field(name='============== Süti és Zacctáblázat 4/5 ==============', value=
-        '```' + str(player[i]['nev']) + ' ' * (lth - len(str(player[i]['nev']))) + ' ' + str(player[i]['suti']) + ' 🍪' + '  ' + str(player[i]['zacc']) + ' ♨️' + '\n' +
-        str(player[i + 1]['nev']) + ' ' * (lth - len(str(player[i + 1]['nev']))) + ' ' + str(player[i + 1]['suti']) + ' 🍪' + '  ' + str(player[i + 1]['zacc']) + ' ♨️' + '\n' +
-        str(player[i + 2]['nev']) + ' ' * (lth - len(str(player[i + 2]['nev']))) + ' ' + str(player[i + 2]['suti']) + ' 🍪' + '  ' + str(player[i + 2]['zacc']) + ' ♨️' + '\n' +
-        str(player[i + 3]['nev']) + ' ' * (lth - len(str(player[i + 3]['nev']))) + ' ' + str(player[i + 3]['suti']) + ' 🍪' + '  ' + str(player[i + 3]['zacc']) + ' ♨️' + '\n' +
-        str(player[i + 4]['nev']) + ' ' * (lth - len(str(player[i + 4]['nev']))) + ' ' + str(player[i + 4]['suti']) + ' 🍪' + '  ' + str(player[i + 4]['zacc']) + ' ♨️' + '\n' +
-        str(player[i + 5]['nev']) + ' ' * (lth - len(str(player[i + 5]['nev']))) + ' ' + str(player[i + 5]['suti']) + ' 🍪' + '  ' + str(player[i + 5]['zacc']) + ' ♨️' + '\n' +
-        str(player[i + 6]['nev']) + ' ' * (lth - len(str(player[i + 6]['nev']))) + ' ' + str(player[i + 6]['suti']) + ' 🍪' + '  ' + str(player[i + 6]['zacc']) + ' ♨️' + '\n' +
-        str(player[i + 7]['nev']) + ' ' * (lth - len(str(player[i + 7]['nev']))) + ' ' + str(player[i + 7]['suti']) + ' 🍪' + '  ' + str(player[i + 7]['zacc']) + ' ♨️' + '\n' +
-        str(player[i + 8]['nev']) + ' ' * (lth - len(str(player[i + 8]['nev']))) + ' ' + str(player[i + 8]['suti']) + ' 🍪' + '  ' + str(player[i + 8]['zacc']) + ' ♨️' + '\n' +
-        str(player[i + 9]['nev']) + ' ' * (lth - len(str(player[i + 9]['nev']))) + ' ' + str(player[i + 9]['suti']) + ' 🍪' + '  ' + str(player[i + 9]['zacc']) + ' ♨️' + '\n' + '```', inline='false')
+            sql = "SELECT DiscordID FROM pilvax WHERE DiscordID = %s"
+            adr = (DiscordID,)
+            mycursor.execute(sql, adr)
+            myresult = mycursor.fetchone()
 
-        i=40
-        embed.add_field(name='============== Süti és Zacctáblázat 5/5 ==============', value=
-        '```' + str(player[i]['nev']) + ' ' * (lth - len(str(player[i]['nev']))) + ' ' + str(player[i]['suti']) + ' 🍪' + '  ' + str(player[i]['zacc']) + ' ♨️' + '\n' +
-        str(player[i + 1]['nev']) + ' ' * (lth - len(str(player[i + 1]['nev']))) + ' ' + str(player[i + 1]['suti']) + ' 🍪' + '  ' + str(player[i + 1]['zacc']) + ' ♨️' + '\n' +
-        str(player[i + 2]['nev']) + ' ' * (lth - len(str(player[i + 2]['nev']))) + ' ' + str(player[i + 2]['suti']) + ' 🍪' + '  ' + str(player[i + 2]['zacc']) + ' ♨️' + '\n' +
-        str(player[i + 3]['nev']) + ' ' * (lth - len(str(player[i + 3]['nev']))) + ' ' + str(player[i + 3]['suti']) + ' 🍪' + '  ' + str(player[i + 3]['zacc']) + ' ♨️' + '\n' +
-        str(player[i + 4]['nev']) + ' ' * (lth - len(str(player[i + 4]['nev']))) + ' ' + str(player[i + 4]['suti']) + ' 🍪' + '  ' + str(player[i + 4]['zacc']) + ' ♨️' + '\n' +
-        str(player[i + 5]['nev']) + ' ' * (lth - len(str(player[i + 5]['nev']))) + ' ' + str(player[i + 5]['suti']) + ' 🍪' + '  ' + str(player[i + 5]['zacc']) + ' ♨️' + '\n' +
-        str(player[i + 6]['nev']) + ' ' * (lth - len(str(player[i + 6]['nev']))) + ' ' + str(player[i + 6]['suti']) + ' 🍪' + '  ' + str(player[i + 6]['zacc']) + ' ♨️' + '\n' +
-        str(player[i + 7]['nev']) + ' ' * (lth - len(str(player[i + 7]['nev']))) + ' ' + str(player[i + 7]['suti']) + ' 🍪' + '  ' + str(player[i + 7]['zacc']) + ' ♨️' + '\n' +
-        str(player[i + 8]['nev']) + ' ' * (lth - len(str(player[i + 8]['nev']))) + ' ' + str(player[i + 8]['suti']) + ' 🍪' + '  ' + str(player[i + 8]['zacc']) + ' ♨️' + '\n' +
-        str(player[i + 9]['nev']) + ' ' * (lth - len(str(player[i + 9]['nev']))) + ' ' + str(player[i + 9]['suti']) + ' 🍪' + '  ' + str(player[i + 9]['zacc']) + ' ♨️' + '\n' + '```', inline='false')
+            if temp != -1 and myresult != None:
 
-        await ctx.send(embed=embed)
+                await ctx.send("Sütik és zaccok betöltése folyamatban. ⏳")
+                print("Sütik és zaccok betöltése folyamatban")
 
-        await ctx.message.add_reaction("✅")
+                player = fetchPlayerRoster(raw_guild)
+
+                i = 0
+                k = 0
+                y: int = 0
+                n = int_(len(player))
+
+                while k < n:
+                    sql = "SELECT Suti, Zacc FROM pilvax WHERE Allycode = %s"
+                    adr = (player[k]['allycode'],)
+                    mycursor.execute(sql, adr)
+                    myresult = mycursor.fetchall()
+                    for x in myresult:
+                        player[k]['suti'] = x[0]
+                        player[k]['zacc'] = x[1]
+                    k += 1
+
+                player.sort(reverse=False, key=Sort)
+
+                i = 0
+                n = int_(len(player))
+                lth = 0
+                while i < n:
+                    lth2 = int_(len(player[i]['jatekosnev']))
+                    if lth2 > lth:
+                        lth = lth2
+                    i += 1
+
+                embed = discord.Embed(title='Pilvax Hungary süti és zacctábla',
+                                      url="https://swgoh.gg/g/1294/pilvax-hungary/",
+                                      color=0x7289da)
+
+                i = 0
+                embed.add_field(name='============ Süti és Zacctáblázat 1/5 ============', value=
+                '```' + str(player[i]['jatekosnev']) + ' ' * (lth - len(str(player[i]['jatekosnev']))) + ' ' + str(player[i]['suti']) + ' 🍪' + '  ' + str(player[i]['zacc']) + ' ♨️' + '\n' +
+                str(player[i + 1]['jatekosnev']) + ' ' * (lth - len(str(player[i + 1]['jatekosnev']))) + ' ' + str(player[i + 1]['suti']) + ' 🍪' + '  ' + str(player[i + 1]['zacc']) + ' ♨️' + '\n' +
+                str(player[i + 2]['jatekosnev']) + ' ' * (lth - len(str(player[i + 2]['jatekosnev']))) + ' ' + str(player[i + 2]['suti']) + ' 🍪' + '  ' + str(player[i + 2]['zacc']) + ' ♨️' + '\n' +
+                str(player[i + 3]['jatekosnev']) + ' ' * (lth - len(str(player[i + 3]['jatekosnev']))) + ' ' + str(player[i + 3]['suti']) + ' 🍪' + '  ' + str(player[i + 3]['zacc']) + ' ♨️' + '\n' +
+                str(player[i + 4]['jatekosnev']) + ' ' * (lth - len(str(player[i + 4]['jatekosnev']))) + ' ' + str(player[i + 4]['suti']) + ' 🍪' + '  ' + str(player[i + 4]['zacc']) + ' ♨️' + '\n' +
+                str(player[i + 5]['jatekosnev']) + ' ' * (lth - len(str(player[i + 5]['jatekosnev']))) + ' ' + str(player[i + 5]['suti']) + ' 🍪' + '  ' + str(player[i + 5]['zacc']) + ' ♨️' + '\n' +
+                str(player[i + 6]['jatekosnev']) + ' ' * (lth - len(str(player[i + 6]['jatekosnev']))) + ' ' + str(player[i + 6]['suti']) + ' 🍪' + '  ' + str(player[i + 6]['zacc']) + ' ♨️' + '\n' +
+                str(player[i + 7]['jatekosnev']) + ' ' * (lth - len(str(player[i + 7]['jatekosnev']))) + ' ' + str(player[i + 7]['suti']) + ' 🍪' + '  ' + str(player[i + 7]['zacc']) + ' ♨️' + '\n' +
+                str(player[i + 8]['jatekosnev']) + ' ' * (lth - len(str(player[i + 8]['jatekosnev']))) + ' ' + str(player[i + 8]['suti']) + ' 🍪' + '  ' + str(player[i + 8]['zacc']) + ' ♨️' + '\n' +
+                str(player[i + 9]['jatekosnev']) + ' ' * (lth - len(str(player[i + 9]['jatekosnev']))) + ' ' + str(player[i + 9]['suti']) + ' 🍪' + '  ' + str(player[i + 9]['zacc']) + ' ♨️' + '\n' + '```', inline='false')
+
+                i = 10
+                embed.add_field(name='============ Süti és Zacctáblázat 2/5 ============', value=
+                '```' + str(player[i]['jatekosnev']) + ' ' * (lth - len(str(player[i]['jatekosnev']))) + ' ' + str(player[i]['suti']) + ' 🍪' + '  ' + str(player[i]['zacc']) + ' ♨️' + '\n' +
+                str(player[i + 1]['jatekosnev']) + ' ' * (lth - len(str(player[i + 1]['jatekosnev']))) + ' ' + str(player[i + 1]['suti']) + ' 🍪' + '  ' + str(player[i + 1]['zacc']) + ' ♨️' + '\n' +
+                str(player[i + 2]['jatekosnev']) + ' ' * (lth - len(str(player[i + 2]['jatekosnev']))) + ' ' + str(player[i + 2]['suti']) + ' 🍪' + '  ' + str(player[i + 2]['zacc']) + ' ♨️' + '\n' +
+                str(player[i + 3]['jatekosnev']) + ' ' * (lth - len(str(player[i + 3]['jatekosnev']))) + ' ' + str(player[i + 3]['suti']) + ' 🍪' + '  ' + str(player[i + 3]['zacc']) + ' ♨️' + '\n' +
+                str(player[i + 4]['jatekosnev']) + ' ' * (lth - len(str(player[i + 4]['jatekosnev']))) + ' ' + str(player[i + 4]['suti']) + ' 🍪' + '  ' + str(player[i + 4]['zacc']) + ' ♨️' + '\n' +
+                str(player[i + 5]['jatekosnev']) + ' ' * (lth - len(str(player[i + 5]['jatekosnev']))) + ' ' + str(player[i + 5]['suti']) + ' 🍪' + '  ' + str(player[i + 5]['zacc']) + ' ♨️' + '\n' +
+                str(player[i + 6]['jatekosnev']) + ' ' * (lth - len(str(player[i + 6]['jatekosnev']))) + ' ' + str(player[i + 6]['suti']) + ' 🍪' + '  ' + str(player[i + 6]['zacc']) + ' ♨️' + '\n' +
+                str(player[i + 7]['jatekosnev']) + ' ' * (lth - len(str(player[i + 7]['jatekosnev']))) + ' ' + str(player[i + 7]['suti']) + ' 🍪' + '  ' + str(player[i + 7]['zacc']) + ' ♨️' + '\n' +
+                str(player[i + 8]['jatekosnev']) + ' ' * (lth - len(str(player[i + 8]['jatekosnev']))) + ' ' + str(player[i + 8]['suti']) + ' 🍪' + '  ' + str(player[i + 8]['zacc']) + ' ♨️' + '\n' +
+                str(player[i + 9]['jatekosnev']) + ' ' * (lth - len(str(player[i + 9]['jatekosnev']))) + ' ' + str(player[i + 9]['suti']) + ' 🍪' + '  ' + str(player[i + 9]['zacc']) + ' ♨️' + '\n' + '```', inline='false')
+
+                i=20
+                embed.add_field(name='============ Süti és Zacctáblázat 3/5 ============', value=
+                '```' + str(player[i]['jatekosnev']) + ' ' * (lth - len(str(player[i]['jatekosnev']))) + ' ' + str(player[i]['suti']) + ' 🍪' + '  ' + str(player[i]['zacc']) + ' ♨️' + '\n' +
+                str(player[i + 1]['jatekosnev']) + ' ' * (lth - len(str(player[i + 1]['jatekosnev']))) + ' ' + str(player[i + 1]['suti']) + ' 🍪' + '  ' + str(player[i + 1]['zacc']) + ' ♨️' + '\n' +
+                str(player[i + 2]['jatekosnev']) + ' ' * (lth - len(str(player[i + 2]['jatekosnev']))) + ' ' + str(player[i + 2]['suti']) + ' 🍪' + '  ' + str(player[i + 2]['zacc']) + ' ♨️' + '\n' +
+                str(player[i + 3]['jatekosnev']) + ' ' * (lth - len(str(player[i + 3]['jatekosnev']))) + ' ' + str(player[i + 3]['suti']) + ' 🍪' + '  ' + str(player[i + 3]['zacc']) + ' ♨️' + '\n' +
+                str(player[i + 4]['jatekosnev']) + ' ' * (lth - len(str(player[i + 4]['jatekosnev']))) + ' ' + str(player[i + 4]['suti']) + ' 🍪' + '  ' + str(player[i + 4]['zacc']) + ' ♨️' + '\n' +
+                str(player[i + 5]['jatekosnev']) + ' ' * (lth - len(str(player[i + 5]['jatekosnev']))) + ' ' + str(player[i + 5]['suti']) + ' 🍪' + '  ' + str(player[i + 5]['zacc']) + ' ♨️' + '\n' +
+                str(player[i + 6]['jatekosnev']) + ' ' * (lth - len(str(player[i + 6]['jatekosnev']))) + ' ' + str(player[i + 6]['suti']) + ' 🍪' + '  ' + str(player[i + 6]['zacc']) + ' ♨️' + '\n' +
+                str(player[i + 7]['jatekosnev']) + ' ' * (lth - len(str(player[i + 7]['jatekosnev']))) + ' ' + str(player[i + 7]['suti']) + ' 🍪' + '  ' + str(player[i + 7]['zacc']) + ' ♨️' + '\n' +
+                str(player[i + 8]['jatekosnev']) + ' ' * (lth - len(str(player[i + 8]['jatekosnev']))) + ' ' + str(player[i + 8]['suti']) + ' 🍪' + '  ' + str(player[i + 8]['zacc']) + ' ♨️' + '\n' +
+                str(player[i + 9]['jatekosnev']) + ' ' * (lth - len(str(player[i + 9]['jatekosnev']))) + ' ' + str(player[i + 9]['suti']) + ' 🍪' + '  ' + str(player[i + 9]['zacc']) + ' ♨️' + '\n' + '```', inline='false')
+
+                i=30
+                embed.add_field(name='============ Süti és Zacctáblázat 4/5 ============', value=
+                '```' + str(player[i]['jatekosnev']) + ' ' * (lth - len(str(player[i]['jatekosnev']))) + ' ' + str(player[i]['suti']) + ' 🍪' + '  ' + str(player[i]['zacc']) + ' ♨️' + '\n' +
+                str(player[i + 1]['jatekosnev']) + ' ' * (lth - len(str(player[i + 1]['jatekosnev']))) + ' ' + str(player[i + 1]['suti']) + ' 🍪' + '  ' + str(player[i + 1]['zacc']) + ' ♨️' + '\n' +
+                str(player[i + 2]['jatekosnev']) + ' ' * (lth - len(str(player[i + 2]['jatekosnev']))) + ' ' + str(player[i + 2]['suti']) + ' 🍪' + '  ' + str(player[i + 2]['zacc']) + ' ♨️' + '\n' +
+                str(player[i + 3]['jatekosnev']) + ' ' * (lth - len(str(player[i + 3]['jatekosnev']))) + ' ' + str(player[i + 3]['suti']) + ' 🍪' + '  ' + str(player[i + 3]['zacc']) + ' ♨️' + '\n' +
+                str(player[i + 4]['jatekosnev']) + ' ' * (lth - len(str(player[i + 4]['jatekosnev']))) + ' ' + str(player[i + 4]['suti']) + ' 🍪' + '  ' + str(player[i + 4]['zacc']) + ' ♨️' + '\n' +
+                str(player[i + 5]['jatekosnev']) + ' ' * (lth - len(str(player[i + 5]['jatekosnev']))) + ' ' + str(player[i + 5]['suti']) + ' 🍪' + '  ' + str(player[i + 5]['zacc']) + ' ♨️' + '\n' +
+                str(player[i + 6]['jatekosnev']) + ' ' * (lth - len(str(player[i + 6]['jatekosnev']))) + ' ' + str(player[i + 6]['suti']) + ' 🍪' + '  ' + str(player[i + 6]['zacc']) + ' ♨️' + '\n' +
+                str(player[i + 7]['jatekosnev']) + ' ' * (lth - len(str(player[i + 7]['jatekosnev']))) + ' ' + str(player[i + 7]['suti']) + ' 🍪' + '  ' + str(player[i + 7]['zacc']) + ' ♨️' + '\n' +
+                str(player[i + 8]['jatekosnev']) + ' ' * (lth - len(str(player[i + 8]['jatekosnev']))) + ' ' + str(player[i + 8]['suti']) + ' 🍪' + '  ' + str(player[i + 8]['zacc']) + ' ♨️' + '\n' +
+                str(player[i + 9]['jatekosnev']) + ' ' * (lth - len(str(player[i + 9]['jatekosnev']))) + ' ' + str(player[i + 9]['suti']) + ' 🍪' + '  ' + str(player[i + 9]['zacc']) + ' ♨️' + '\n' + '```', inline='false')
+
+                i=40
+                embed.add_field(name='============ Süti és Zacctáblázat 5/5 ============', value=
+                '```' + str(player[i]['jatekosnev']) + ' ' * (lth - len(str(player[i]['jatekosnev']))) + ' ' + str(player[i]['suti']) + ' 🍪' + '  ' + str(player[i]['zacc']) + ' ♨️' + '\n' +
+                str(player[i + 1]['jatekosnev']) + ' ' * (lth - len(str(player[i + 1]['jatekosnev']))) + ' ' + str(player[i + 1]['suti']) + ' 🍪' + '  ' + str(player[i + 1]['zacc']) + ' ♨️' + '\n' +
+                str(player[i + 2]['jatekosnev']) + ' ' * (lth - len(str(player[i + 2]['jatekosnev']))) + ' ' + str(player[i + 2]['suti']) + ' 🍪' + '  ' + str(player[i + 2]['zacc']) + ' ♨️' + '\n' +
+                str(player[i + 3]['jatekosnev']) + ' ' * (lth - len(str(player[i + 3]['jatekosnev']))) + ' ' + str(player[i + 3]['suti']) + ' 🍪' + '  ' + str(player[i + 3]['zacc']) + ' ♨️' + '\n' +
+                str(player[i + 4]['jatekosnev']) + ' ' * (lth - len(str(player[i + 4]['jatekosnev']))) + ' ' + str(player[i + 4]['suti']) + ' 🍪' + '  ' + str(player[i + 4]['zacc']) + ' ♨️' + '\n' +
+                str(player[i + 5]['jatekosnev']) + ' ' * (lth - len(str(player[i + 5]['jatekosnev']))) + ' ' + str(player[i + 5]['suti']) + ' 🍪' + '  ' + str(player[i + 5]['zacc']) + ' ♨️' + '\n' +
+                str(player[i + 6]['jatekosnev']) + ' ' * (lth - len(str(player[i + 6]['jatekosnev']))) + ' ' + str(player[i + 6]['suti']) + ' 🍪' + '  ' + str(player[i + 6]['zacc']) + ' ♨️' + '\n' +
+                str(player[i + 7]['jatekosnev']) + ' ' * (lth - len(str(player[i + 7]['jatekosnev']))) + ' ' + str(player[i + 7]['suti']) + ' 🍪' + '  ' + str(player[i + 7]['zacc']) + ' ♨️' + '\n' +
+                str(player[i + 8]['jatekosnev']) + ' ' * (lth - len(str(player[i + 8]['jatekosnev']))) + ' ' + str(player[i + 8]['suti']) + ' 🍪' + '  ' + str(player[i + 8]['zacc']) + ' ♨️' + '\n' +
+                str(player[i + 9]['jatekosnev']) + ' ' * (lth - len(str(player[i + 9]['jatekosnev']))) + ' ' + str(player[i + 9]['suti']) + ' 🍪' + '  ' + str(player[i + 9]['zacc']) + ' ♨️' + '\n' + '```', inline='false')
+
+                await ctx.send(embed=embed)
+
+                await ctx.message.add_reaction("✅")
+
+            else:
+                await ctx.message.add_reaction("❌")
+
+            mycursor.close()
+            mydb.close()
+
+            toc()
+
+        else:
+            pass
 
 
-    @osszes.error
+    @osszes2.error
     async def josoultsag_hiba(self, ctx, error):
         self.ctx = ctx
         if isinstance(error, commands.CheckFailure):
@@ -573,8 +622,66 @@ class CG(commands.Cog):
             await self.ctx.send('⛔ - Nincsen hozzá jogosultságod!')
 
 def Sort(a):
-    return a['nev']
+    return a['jatekosnev']
 
+def fetchPlayerRoster(guilddata):
+    player = [{'jatekosnev': ' ', 'allycode': 0, 'suti': 0, 'zacc': 0}, {'jatekosnev': ' ', 'allycode': 0, 'suti': 0, 'zacc': 0},
+              {'jatekosnev': ' ', 'allycode': 0, 'suti': 0, 'zacc': 0}, {'jatekosnev': ' ', 'allycode': 0, 'suti': 0, 'zacc': 0},
+              {'jatekosnev': ' ', 'allycode': 0, 'suti': 0, 'zacc': 0}, {'jatekosnev': ' ', 'allycode': 0, 'suti': 0, 'zacc': 0},
+              {'jatekosnev': ' ', 'allycode': 0, 'suti': 0, 'zacc': 0}, {'jatekosnev': ' ', 'allycode': 0, 'suti': 0, 'zacc': 0},
+              {'jatekosnev': ' ', 'allycode': 0, 'suti': 0, 'zacc': 0}, {'jatekosnev': ' ', 'allycode': 0, 'suti': 0, 'zacc': 0},
+              {'jatekosnev': ' ', 'allycode': 0, 'suti': 0, 'zacc': 0}, {'jatekosnev': ' ', 'allycode': 0, 'suti': 0, 'zacc': 0},
+              {'jatekosnev': ' ', 'allycode': 0, 'suti': 0, 'zacc': 0}, {'jatekosnev': ' ', 'allycode': 0, 'suti': 0, 'zacc': 0},
+              {'jatekosnev': ' ', 'allycode': 0, 'suti': 0, 'zacc': 0}, {'jatekosnev': ' ', 'allycode': 0, 'suti': 0, 'zacc': 0},
+              {'jatekosnev': ' ', 'allycode': 0, 'suti': 0, 'zacc': 0}, {'jatekosnev': ' ', 'allycode': 0, 'suti': 0, 'zacc': 0},
+              {'jatekosnev': ' ', 'allycode': 0, 'suti': 0, 'zacc': 0}, {'jatekosnev': ' ', 'allycode': 0, 'suti': 0, 'zacc': 0},
+              {'jatekosnev': ' ', 'allycode': 0, 'suti': 0, 'zacc': 0}, {'jatekosnev': ' ', 'allycode': 0, 'suti': 0, 'zacc': 0},
+              {'jatekosnev': ' ', 'allycode': 0, 'suti': 0, 'zacc': 0}, {'jatekosnev': ' ', 'allycode': 0, 'suti': 0, 'zacc': 0},
+              {'jatekosnev': ' ', 'allycode': 0, 'suti': 0, 'zacc': 0}, {'jatekosnev': ' ', 'allycode': 0, 'suti': 0, 'zacc': 0},
+              {'jatekosnev': ' ', 'allycode': 0, 'suti': 0, 'zacc': 0}, {'jatekosnev': ' ', 'allycode': 0, 'suti': 0, 'zacc': 0},
+              {'jatekosnev': ' ', 'allycode': 0, 'suti': 0, 'zacc': 0}, {'jatekosnev': ' ', 'allycode': 0, 'suti': 0, 'zacc': 0},
+              {'jatekosnev': ' ', 'allycode': 0, 'suti': 0, 'zacc': 0}, {'jatekosnev': ' ', 'allycode': 0, 'suti': 0, 'zacc': 0},
+              {'jatekosnev': ' ', 'allycode': 0, 'suti': 0, 'zacc': 0}, {'jatekosnev': ' ', 'allycode': 0, 'suti': 0, 'zacc': 0},
+              {'jatekosnev': ' ', 'allycode': 0, 'suti': 0, 'zacc': 0}, {'jatekosnev': ' ', 'allycode': 0, 'suti': 0, 'zacc': 0},
+              {'jatekosnev': ' ', 'allycode': 0, 'suti': 0, 'zacc': 0}, {'jatekosnev': ' ', 'allycode': 0, 'suti': 0, 'zacc': 0},
+              {'jatekosnev': ' ', 'allycode': 0, 'suti': 0, 'zacc': 0}, {'jatekosnev': ' ', 'allycode': 0, 'suti': 0, 'zacc': 0},
+              {'jatekosnev': ' ', 'allycode': 0, 'suti': 0, 'zacc': 0}, {'jatekosnev': ' ', 'allycode': 0, 'suti': 0, 'zacc': 0},
+              {'jatekosnev': ' ', 'allycode': 0, 'suti': 0, 'zacc': 0}, {'jatekosnev': ' ', 'allycode': 0, 'suti': 0, 'zacc': 0},
+              {'jatekosnev': ' ', 'allycode': 0, 'suti': 0, 'zacc': 0}, {'jatekosnev': ' ', 'allycode': 0, 'suti': 0, 'zacc': 0},
+              {'jatekosnev': ' ', 'allycode': 0, 'suti': 0, 'zacc': 0}, {'jatekosnev': ' ', 'allycode': 0, 'suti': 0, 'zacc': 0},
+              {'jatekosnev': ' ', 'allycode': 0, 'suti': 0, 'zacc': 0}, {'jatekosnev': ' ', 'allycode': 0, 'suti': 0, 'zacc': 0}]
+
+    k = 0
+    lth = int_(len(guilddata[0]['roster']))
+
+    while k < lth:
+        player[k]['jatekosnev'] = guilddata[0]['roster'][k]['name']
+        player[k]['allycode'] = guilddata[0]['roster'][k]['allyCode']
+        k += 1
+
+    return player
+
+def TicTocGenerator():
+    # Generator that returns time differences
+    ti = 0  # initial time
+    tf = time.time()  # final time
+    while True:
+        ti = tf
+        tf = time.time()
+        yield tf - ti  # returns the time difference
+
+TicToc = TicTocGenerator()  # create an instance of the TicTocGen generator
+
+# This will be the main function through which we define both tic() and toc()
+def toc(tempBool=True):
+    # Prints the time difference yielded by generator instance TicToc
+    tempTimeInterval = next(TicToc)
+    if tempBool:
+        print("Elapsed time: %f seconds.\n" % tempTimeInterval)
+
+def tic():
+    # Records a time in TicToc, marks the beginning of a time interval
+    toc(False)
 
 def setup(bot):
     bot.add_cog(CG(bot))

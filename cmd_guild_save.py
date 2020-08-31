@@ -17,9 +17,12 @@ class GUILDSAVE(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(aliases=['GuildRangMentes'])
+    @commands.command(aliases=['Guild rang mentés'])
     @commands.has_any_role(global_settings.Role1, global_settings.Role2)  # User need this role to run command (can have multiple)
-    async def guildsave(self, ctx, raw_allycode, month="m"):
+    async def save(self, ctx, raw_allycode, month="m"):
+        """Havi guild rang mentéshez!
+        raw_allycode: me
+        month: 1,2,3,.. / jan, feb, mar,..."""
 
         tic()
         await ctx.message.add_reaction("⏳")
@@ -121,7 +124,7 @@ class GUILDSAVE(commands.Cog):
             pass
 
 
-    @guildsave.error
+    @save.error
     async def josoultsag_hiba(self, ctx, error):
         self.ctx = ctx
         if isinstance(error, commands.CheckFailure):

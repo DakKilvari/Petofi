@@ -9,7 +9,7 @@ import global_settings
 creds = settings()
 client = api_swgoh_help(creds)
 
-class LS_Geo_TB(commands.Cog):
+class ls_geo_tb(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
@@ -68,7 +68,7 @@ class LS_Geo_TB(commands.Cog):
             k = 0
             j = 0
             for n in player:
-                if player[i]['rank'] == 1:
+                if player[i]['chars'] == 1:
                     guild_meglevo.insert(k, player[i]['jatekosnev'])
                     k += 1
                 else:
@@ -129,16 +129,16 @@ def fetchGuildRoster(raw_guild):
 
 def character_data_search_Ki_Adi_Mundi(guilddata):
     i = 0
-    player = [{'jatekosnev': ' ', 'rank': 0}, {'jatekosnev': ' ', 'rank': 0}, {'jatekosnev': ' ', 'rank': 0}, {'jatekosnev': ' ', 'rank': 0}, {'jatekosnev': ' ', 'rank': 0},
-              {'jatekosnev': ' ', 'rank': 0}, {'jatekosnev': ' ', 'rank': 0}, {'jatekosnev': ' ', 'rank': 0}, {'jatekosnev': ' ', 'rank': 0}, {'jatekosnev': ' ', 'rank': 0},
-              {'jatekosnev': ' ', 'rank': 0}, {'jatekosnev': ' ', 'rank': 0}, {'jatekosnev': ' ', 'rank': 0}, {'jatekosnev': ' ', 'rank': 0}, {'jatekosnev': ' ', 'rank': 0},
-              {'jatekosnev': ' ', 'rank': 0}, {'jatekosnev': ' ', 'rank': 0}, {'jatekosnev': ' ', 'rank': 0}, {'jatekosnev': ' ', 'rank': 0}, {'jatekosnev': ' ', 'rank': 0},
-              {'jatekosnev': ' ', 'rank': 0}, {'jatekosnev': ' ', 'rank': 0}, {'jatekosnev': ' ', 'rank': 0}, {'jatekosnev': ' ', 'rank': 0}, {'jatekosnev': ' ', 'rank': 0},
-              {'jatekosnev': ' ', 'rank': 0}, {'jatekosnev': ' ', 'rank': 0}, {'jatekosnev': ' ', 'rank': 0}, {'jatekosnev': ' ', 'rank': 0}, {'jatekosnev': ' ', 'rank': 0},
-              {'jatekosnev': ' ', 'rank': 0}, {'jatekosnev': ' ', 'rank': 0}, {'jatekosnev': ' ', 'rank': 0}, {'jatekosnev': ' ', 'rank': 0}, {'jatekosnev': ' ', 'rank': 0},
-              {'jatekosnev': ' ', 'rank': 0}, {'jatekosnev': ' ', 'rank': 0}, {'jatekosnev': ' ', 'rank': 0}, {'jatekosnev': ' ', 'rank': 0}, {'jatekosnev': ' ', 'rank': 0},
-              {'jatekosnev': ' ', 'rank': 0}, {'jatekosnev': ' ', 'rank': 0}, {'jatekosnev': ' ', 'rank': 0}, {'jatekosnev': ' ', 'rank': 0}, {'jatekosnev': ' ', 'rank': 0},
-              {'jatekosnev': ' ', 'rank': 0}, {'jatekosnev': ' ', 'rank': 0}, {'jatekosnev': ' ', 'rank': 0}, {'jatekosnev': ' ', 'rank': 0}, {'jatekosnev': ' ', 'rank': 0}]
+    player = [{'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0},
+              {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0},
+              {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0},
+              {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0},
+              {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0},
+              {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0},
+              {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0},
+              {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0},
+              {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0},
+              {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}]
 
     for a in guilddata:
         chardata = guilddata[i]['roster']
@@ -164,7 +164,7 @@ def character_data_search_Ki_Adi_Mundi(guilddata):
             player[i]['jatekosnev'] = guilddata[i]['name']
         else:
             player[i]['jatekosnev'] = guilddata[i]['name']
-            player[i]['rank'] += 1
+            player[i]['chars'] += 1
         i += 1
 
     return player
@@ -194,4 +194,4 @@ def tic():
 
 
 def setup(bot):
-    bot.add_cog(LS_Geo_TB(bot))
+    bot.add_cog(ls_geo_tb(bot))
