@@ -106,7 +106,7 @@ class Guildsave(commands.Cog):
 
                 else:
                     await ctx.message.add_reaction("❌")
-                    await ctx.send("Hibás hónap! Nem " + honap + " van, nem engedélyezett a guild rang mentés.")
+                    await ctx.send("Hibás hónap! Nem " + honap + " van, nem engedélyezett a guild rang mentés " + mth + " hónapra.")
                     print("Hibás hónap!")
 
 
