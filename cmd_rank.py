@@ -6,13 +6,17 @@ from discord.ext import commands
 import global_settings
 
 
-class RANK(commands.Cog):
+class Rang(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(aliases=['JatekosRang'])
+    @commands.command(aliases=['Aktuális rang pontszám kiszámítása'])
     @commands.has_any_role(global_settings.Role3)  # User need this role to run command (can have multiple)
     async def rang(self, ctx, raw_allycode, show="b"):
+        """Aktuális rang pontszám kiszámítása
+        Aktuális rang pontszám kiszámítása adott játékosra
+        raw_allycode: me / taggelés / allykód
+        show: m (meglévő) / h (hiányzó) / üresen hagyva (csak pontszám és rang)"""
 
         tic()
         await ctx.message.add_reaction("⏳")
@@ -326,7 +330,7 @@ def fetchPlayerRoster(raw_player):
     fChar(player, raw_player, "FIRSTORDERTROOPER", "First Order Stromtrooper", 13, 0, 1)
     fChar(player, raw_player, "FIRSTORDERTIEPILOT", "First Order TIE Pilot", 13, 0, 1)
     fChar(player, raw_player, "GENERALHUX", "General Hux", 13, 1, 1)
-    fChar(player, raw_player, "KYLOREN", "Kylo Ren", 13, 1, 0)
+    fChar(player, raw_player, "KYLOREN", "Kylo Ren", 13, 1, 1)
     fChar(player, raw_player, "KYLORENUNMASKED", "Kylo Ren (Unmasked)", 13, 2, 1)
     fChar(player, raw_player, "ADMINISTRATORLANDO", "Lando Calrissian", 13, 0, 1)
     fChar(player, raw_player, "POE", "Poe Dameron", 13, 0, 1)
@@ -344,6 +348,12 @@ def fetchPlayerRoster(raw_player):
     fChar(player, raw_player, "WAMPA", "Wampa", 13, 1, 1)
     fChar(player, raw_player, "GLREY", "Rey", 13, 6, 5)
     fChar(player, raw_player, "JEDIKNIGHTLUKE", "Jedi Knight Luke Skywalker", 13, 2, 4)
+    fChar(player, raw_player, "MONMOTHMA", "Mon Mothma", 13, 0, 1)
+    fChar(player, raw_player, "C3POCHEWBACCA", "Threepio & Chewie", 13, 0, 1)
+    fChar(player, raw_player, "OLDBENKENOBI", "Obi-Wan Kenobi (Old Ben)", 13, 0, 1)
+    fChar(player, raw_player, "ADMIRALPIETT", "Admiral Piett", 13, 0, 1)
+    fChar(player, raw_player, "ROYALGUARD", "Royal Guard", 13, 0, 1)
+    fChar(player, raw_player, "DIRECTORKRENNIC", "Director Krennic", 13, 0, 1)
 
     fShip(player, raw_player, "CAPITALCHIMAERA", "Chimaera", 5, "GRANDADMIRALTHRAWN", "", "", 1)
     fShip(player, raw_player, "CAPITALSTARDESTROYER", "Executrix", 5, "GRANDMOFFTARKIN", "", "", 1)
@@ -398,4 +408,4 @@ def tic():
 
 
 def setup(bot):
-    bot.add_cog(RANK(bot))
+    bot.add_cog(Rang(bot))

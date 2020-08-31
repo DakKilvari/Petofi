@@ -6,13 +6,18 @@ from db_handler import db_handler
 import global_settings
 
 
-class LENGEDARY(commands.Cog):
+class Legendary(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(aliases=['PanicFigyelo'])
+    @commands.command(aliases=['Pánik figyelő'])
     @commands.has_any_role(global_settings.Role3)  # User need this role to run command (can have multiple)
     async def panic(self, ctx, raw_allycode, show="b"):
+        """Pánik figyelő
+        Legfrissebb kulcskarakterek megszerzéséhez
+        raw_allycode: me / taggelés / allykód
+        show: slkr, rey, jkl, kam"""
+
         tic()
         await ctx.message.add_reaction("⏳")
 
@@ -350,4 +355,4 @@ def tic():
 
 
 def setup(bot):
-    bot.add_cog(LENGEDARY(bot))
+    bot.add_cog(Legendary(bot))

@@ -13,14 +13,15 @@ creds = settings()
 client = api_swgoh_help(creds)
 
 
-class GUILDSAVE(commands.Cog):
+class Guildsave(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
     @commands.command(aliases=['Guild rang mentés'])
     @commands.has_any_role(global_settings.Role1, global_settings.Role2)  # User need this role to run command (can have multiple)
     async def save(self, ctx, raw_allycode, month="m"):
-        """Havi guild rang mentéshez!
+        """Guild rang mentés
+        Havi guild rang mentéshez! Csak az adott hónapban menthető!
         raw_allycode: me
         month: 1,2,3,.. / jan, feb, mar,..."""
 
@@ -216,4 +217,4 @@ def tic():
 
 
 def setup(bot):
-    bot.add_cog(GUILDSAVE(bot))
+    bot.add_cog(Guildsave(bot))

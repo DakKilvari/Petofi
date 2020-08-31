@@ -64,8 +64,7 @@ class CommandErrorHandler(commands.Cog):
 
     @commands.command(name='repeat', aliases=['mimic', 'copy'])
     async def do_repeat(self, ctx, *, inp: str):
-        """A simple command which repeats your input!
-        inp  : The input to be repeated"""
+        """Ne törődj vele.... :)"""
 
         await ctx.send(inp)
 

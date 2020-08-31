@@ -11,13 +11,17 @@ creds = settings()
 client = api_swgoh_help(creds)
 
 
-class GUILDRANK(commands.Cog):
+class Guildrang(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(aliases=['GuildRang'])
+    @commands.command(aliases=['Aktuális guild rang pont számítása'])
     @commands.has_any_role(global_settings.Role1, global_settings.Role2)  # User need this role to run command (can have multiple)
-    async def guildrang(self, ctx, raw_allycode):
+    async def grang(self, ctx, raw_allycode):
+        """Aktuális guild rang pont számítása
+        Aktuális guild rang pontok kiszámítására
+        raw_allycode: me / taggelés / allykód"""
+
         tic()
         await ctx.message.add_reaction("⏳")
 
@@ -148,7 +152,7 @@ class GUILDRANK(commands.Cog):
         else:
             pass
 
-    @guildrang.error
+    @grang.error
     async def josoultsag_hiba(self, ctx, error):
         self.ctx = ctx
         if isinstance(error, commands.CheckFailure):
@@ -242,4 +246,4 @@ def tic():
 
 
 def setup(bot):
-    bot.add_cog(GUILDRANK(bot))
+    bot.add_cog(Guildrang(bot))
