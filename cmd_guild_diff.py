@@ -117,7 +117,7 @@ class Guildload(commands.Cog):
                             lth = lth2
                         i += 1
 
-                    embed = discord.Embed(title='Pilvax Hungary ' + honap1 + ' - ' + honap2 + ' fejlődése',
+                    embed = discord.Embed(title='Pilvax Hungary ' + honap2 + 'i fejlődése',
                                           url="https://swgoh.gg/g/1294/pilvax-hungary/",
                                           color=0x7289da)
 

@@ -285,7 +285,7 @@ def fetchPlayerRoster(raw_player):
     fChar(player, raw_player, "BASTILASHANDARK", "Bastila Shan (Fallen)", 13, 1, 1)
     fChar(player, raw_player, "SITHTROOPER", "Sith Trooper", 12, 0, 1)
     fChar(player, raw_player, "SITHMARAUDER", "Sith Marauder", 12, 0, 1)
-    fChar(player, raw_player, "EMPERORPALPATINE", "Emperor Palpatine", 12, 2, 1)
+    fChar(player, raw_player, "EMPERORPALPATINE", "Emperor Palpatine", 13, 2, 2)
     fChar(player, raw_player, "DARTHMALAK", "Darth Malak", 13, 2, 4)
     fChar(player, raw_player, "NUTEGUNRAY", "Nute Gunray", 12, 1, 1)
     fChar(player, raw_player, "MOTHERTALZIN", "Mother Talzin", 12, 2, 1)
