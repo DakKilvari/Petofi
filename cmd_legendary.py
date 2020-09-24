@@ -12,7 +12,7 @@ class Legendary(commands.Cog):
 
     @commands.command(aliases=['Pánik figyelő'])
     @commands.has_any_role(global_settings.Role3)  # User need this role to run command (can have multiple)
-    async def panic(self, ctx, raw_allycode, show="b"):
+    async def panic(self, ctx, raw_allycode, show="b", show2="b"):
         """Pánik figyelő
         Legfrissebb kulcskarakterek megszerzéséhez
         raw_allycode: me / taggelés / allykód
@@ -55,7 +55,7 @@ class Legendary(commands.Cog):
 
             await ctx.message.add_reaction("✅")
 
-            if show != "Rey" and show != "rey" and show != "SLKR" and show != "slkr" and show != "KAM" and show != "kam" and show != "JKL" and show != "jkl":
+            if show != "Rey" and show != "rey" and show != "SLKR" and show != "slkr" and show != "KAM" and show != "kam" and show != "JKL" and show != "jkl" and show != "JML" and show != "jml" and show != "SEE" and show != "see":
                 await ctx.send(ctx.message.author.mention + " Nem adtál meg parancsot! / Ilyen parancs nincs még. :)")
             else:
                 if show == "Rey" or show == "rey":
@@ -73,6 +73,14 @@ class Legendary(commands.Cog):
                 if show == "JKL" or show == "jkl":
                     player = fetchPlayerJKL(raw_player[0])
                     await ctx.send(ctx.message.author.mention + " " + player['jatekosnev'] + " JKL legendary eventre állása: ")
+
+                if show == "JML" or show == "jml":
+                    player = fetchPlayerJML(raw_player[0])
+                    await ctx.send(ctx.message.author.mention + " " + player['jatekosnev'] + " JML legendary eventre állása: ")
+
+                if show == "SEE" or show == "see":
+                    player = fetchPlayerSEE(raw_player[0])
+                    await ctx.send(ctx.message.author.mention + " " + player['jatekosnev'] + " SEE legendary eventre állása: ")
 
                 player['chars'].sort()
                 player['ships'].sort()
@@ -94,14 +102,18 @@ class Legendary(commands.Cog):
                 message3 += "\n**Hiányzó karakterek:** \n" + str("```ini\n" + s3 + "```")
                 message4 += "\n**Hiányzó hajók:** \n" + str("```ini\n" + s4 + "```")
 
-                if message1 != "\n**Meglévő karakterek:** \n" + str("```ini\n" + "```"):
-                    await ctx.send(message1)
-                if message2 != "\n**Meglévő hajók:** \n" + str("```ini\n" + "```"):
-                    await ctx.send(message2)
-                if message3 != "\n**Hiányzó karakterek:** \n" + str("```ini\n" + "```"):
-                    await ctx.send(message3)
-                if message4 != "\n**Hiányzó hajók:** \n" + str("```ini\n" + "```"):
-                    await ctx.send(message4)
+                if show2 == "b" or show2 == "m":
+                    if message1 != "\n**Meglévő karakterek:** \n" + str("```ini\n" + "```"):
+                        await ctx.send(message1)
+                    if message2 != "\n**Meglévő hajók:** \n" + str("```ini\n" + "```"):
+                        await ctx.send(message2)
+                if show2 == "b" or show2 == "h":
+                    if message3 != "\n**Hiányzó karakterek:** \n" + str("```ini\n" + "```"):
+                        await ctx.send(message3)
+                    if message4 != "\n**Hiányzó hajók:** \n" + str("```ini\n" + "```"):
+                        await ctx.send(message4)
+                    if (message3 == "\n**Hiányzó karakterek:** \n" + str("```ini\n" + "```")) and (message4 == "\n**Hiányzó hajók:** \n" + str("```ini\n" + "```")):
+                        await ctx.send("Nincsen hátra semmi, készen állsz az eventre! Gratulálok! 🍺")
 
             toc()
 
@@ -122,9 +134,6 @@ def fChar(player, raw_player, defID, realName, gear, zeta, relic, pont):
     i = 0
     printName = realName
     l = len(printName)
-    if pont > 1:
-        printName += ' ' + str(pont)
-
     for a in raw_player['roster']:
         a = raw_player['roster'][i]
         if a['defId'] == defID:
@@ -146,7 +155,7 @@ def fChar(player, raw_player, defID, realName, gear, zeta, relic, pont):
                             player['rank'] += pont
                         else:
                             player['rank'] += 1
-                            player['miss'].insert(player['rank'], printName + (26-l)* ' ' + ' (1P) G:' + str(a['gear']) + '/' + str(gear) + (2-l2)* ' ' + ' & R:' + str(a['relic']['currentTier']-2) + '/' + str(relic) + '')
+                            player['miss'].insert(player['rank'], printName + (26-l)* ' ' + ' G:' + str(a['gear']) + '/' + str(gear) + (2-l2)* ' ' + ' & R:' + str(a['relic']['currentTier']-2) + '/' + str(relic) + '')
                         retval = 1
                 else:
                     player['miss'].insert(player['rank'], printName + (26-l)* ' ' + ' Z:' + str(temp) + '/' + str(zeta) + '')
@@ -165,8 +174,6 @@ def fChar(player, raw_player, defID, realName, gear, zeta, relic, pont):
 def fShip(player, raw_player, defID, realName, skills, pilot1, pilot2, pilot3, pont):
     missingChar = 1
     printName = realName
-    if pont > 1:
-        printName += ' ' + str(pont)
     i = 0
     for a in raw_player['roster']:
         a = raw_player['roster'][i]
@@ -327,6 +334,67 @@ def fetchPlayerJKL(raw_player):
 
     return player
 
+def fetchPlayerJML(raw_player):
+    player = {
+        "jatekosnev": " ",
+        "rank": 0,
+        "chars": [],
+        "ships": [],
+        "miss": [],
+        "missShips": [],
+    }
+
+    player['jatekosnev'] = raw_player['name']
+
+    fChar(player, raw_player, "REYJEDITRAINING", "Rey (Jedi Training)", 13, 2, 7, 1)
+    fChar(player, raw_player, "BIGGSDARKLIGHTER", "Biggs Darklighter", 13, 0, 3, 1)
+    fChar(player, raw_player, "C3POLEGENDARY", "C3PO", 13, 1, 5, 2)
+    fChar(player, raw_player, "CHEWBACCALEGENDARY", "Chewbacca", 13, 2, 6, 2)
+    fChar(player, raw_player, "HANSOLO", "Han Solo", 13, 1, 6, 1)
+    fChar(player, raw_player, "HERMITYODA", "Hermit Yoda", 13, 1, 5, 1)
+    fChar(player, raw_player, "JEDIKNIGHTLUKE", "Jedi Knight Luke Skywalker", 13, 2, 7, 4)
+    fChar(player, raw_player, "ADMINISTRATORLANDO", "Lando Calrissian", 13, 0, 5, 1)
+    fChar(player, raw_player, "PRINCESSLEIA", "Princess Leia", 13, 0, 3, 1)
+    fChar(player, raw_player, "MONMOTHMA", "Mon Mothma", 13, 0, 5, 1)
+    fChar(player, raw_player, "OLDBENKENOBI", "Obi-Wan Kenobi (Old Ben)", 13, 0, 5, 1)
+    fChar(player, raw_player, "R2D2_LEGENDARY", "R2D2", 13, 2, 7, 2)
+    fChar(player, raw_player, "C3POCHEWBACCA", "Threepio & Chewie", 13, 0, 5, 1)
+    fChar(player, raw_player, "WEDGEANTILLES", "Wedge Antilles", 13, 0, 3, 1)
+
+    fShip(player, raw_player, "YWINGREBEL", "Rebel Y-wing", 3, "", "", "", 1)
+
+    return player
+
+def fetchPlayerSEE(raw_player):
+    player = {
+        "jatekosnev": " ",
+        "rank": 0,
+        "chars": [],
+        "ships": [],
+        "miss": [],
+        "missShips": [],
+    }
+
+    player['jatekosnev'] = raw_player['name']
+
+    fChar(player, raw_player, "COUNTDOOKU", "Count Dooku", 13, 1, 6, 1)
+    fChar(player, raw_player, "EMPERORPALPATINE", "Emperor Palpatine", 13, 2, 7, 2)
+    fChar(player, raw_player, "ANAKINKNIGHT", "Anakin Skywalker", 13, 1, 7, 1)
+    fChar(player, raw_player, "DIRECTORKRENNIC", "Director Krennic", 13, 0, 4, 1)
+    fChar(player, raw_player, "SITHMARAUDER", "Sith Marauder", 13, 0, 7, 1)
+    fChar(player, raw_player, "MAUL", "Darth Maul", 13, 0, 4, 1)
+    fChar(player, raw_player, "ADMIRALPIETT", "Admiral Piett", 13, 0, 5, 1)
+    fChar(player, raw_player, "ROYALGUARD", "Royal Guard", 13, 0, 3, 1)
+    fChar(player, raw_player, "DARTHSIDIOUS", "Darth Sidious", 13, 0, 7, 1)
+    fChar(player, raw_player, "COLONELSTARCK", "Colonel Starck", 13, 0, 3, 1)
+    fChar(player, raw_player, "GRANDMOFFTARKIN", "Grand Moff Tarkin", 13, 0, 3, 1)
+    fChar(player, raw_player, "GRANDADMIRALTHRAWN", "Grand Admiral Thrawn", 13, 1, 6, 2)
+    fChar(player, raw_player, "VADER", "Darth Vader", 13, 3, 7, 3)
+    fChar(player, raw_player, "VEERS", "General Veers", 13, 0, 3, 1)
+
+    fShip(player, raw_player, "TIEBOMBERIMPERIAL", "Imperial TIE Bomber", 3, "", "", "", 1)
+
+    return player
 
 def TicTocGenerator():
     # Generator that returns time differences

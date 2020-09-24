@@ -356,6 +356,12 @@ def fetchPlayerRoster(raw_player):
     fChar(player, raw_player, "DIRECTORKRENNIC", "Director Krennic", 13, 0, 1)
     fChar(player, raw_player, "MAUL", "Darth Maul", 13, 0, 1)
     fChar(player, raw_player, "DARTHSIDIOUS", "Darth Sidious", 13, 0, 1)
+    fChar(player, raw_player, "GRANDMOFFTARKIN", "Grand Moff Tarkin", 13, 0, 1)
+    fChar(player, raw_player, "VEERS", "General Veers", 13, 0, 1)
+    fChar(player, raw_player, "COLONELSTARCK", "Colonel Starck", 13, 0, 1)
+    fChar(player, raw_player, "PRINCESSLEIA", "Princess Leia", 13, 0, 1)
+    fChar(player, raw_player, "WEDGEANTILLES", "Wedge Antilles", 13, 0, 1)
+    fChar(player, raw_player, "BIGGSDARKLIGHTER", "Biggs Darklighter", 13, 0, 1)
 
     fShip(player, raw_player, "CAPITALCHIMAERA", "Chimaera", 5, "GRANDADMIRALTHRAWN", "", "", 1)
     fShip(player, raw_player, "CAPITALSTARDESTROYER", "Executrix", 5, "GRANDMOFFTARKIN", "", "", 1)
