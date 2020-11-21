@@ -19,6 +19,7 @@ class LsGeoTb(commands.Cog):
         """LS geo tb-hez guild készenlét ellenőrző
         Végigelemzi az egyes fázisok készenléti állapotát combat és sm pályákra.
         raw_allycode: me / taggelés / allykód"""
+
         tic()
         await ctx.message.add_reaction("⏳")
 
@@ -56,41 +57,46 @@ class LsGeoTb(commands.Cog):
 
             guilddata = fetchGuildRoster(raw_guild)
 
-            embed = discord.Embed(title='LS Geo TB Ki-Adi-Mundi áttekintő',
-                                  url="https://swgoh.gg/p/" + str(raw_guild[0]['roster'][0]['allyCode']) + "/",
-                                  color=0x7289da)
+            embed = discord.Embed(title='LS Geo TB P1-P2-P3 áttekintő', url="https://swgoh.gg/p/" + str(raw_guild[0]['roster'][0]['allyCode']) + "/", color=0x7289da)
 
-            player = character_data_search_Ki_Adi_Mundi(guilddata)
+            guild_members = character_data_search_GR1(guilddata)
 
-            n = int_(len(player))
+            guild_members.sort()
+            s: str = '\n'.join(map(str, guild_members))
+            n: int = len(guild_members)
+            embed.add_field(name=str(n) + ' játékos nem áll készen 1. GR csapattal (Shaak Ti, ARC, Echo, Rex, Fives):', value='```' + "\n" + s + '```', inline='false')
 
-            guild_meglevo = []
-            guild_hianyzo = []
 
-            i = 0
-            k = 0
-            j = 0
-            for n in player:
-                if player[i]['chars'] == 1:
-                    guild_meglevo.insert(k, player[i]['jatekosnev'])
-                    k += 1
-                else:
-                    guild_hianyzo.insert(j, player[i]['jatekosnev'])
-                    j += 1
-                i += 1
+            guild_members = character_data_search_GR2(guilddata)
 
-            guild_meglevo.sort()
-            guild_hianyzo.sort()
+            guild_members.sort()
+            s: str = '\n'.join(map(str, guild_members))
+            n: int = len(guild_members)
+            embed.add_field(name=str(n) + ' játékos nem áll készen 2. GR csapattal (Padme, JKA, GK, Ahsoka, C-3PO)', value='```' + "\n" + s + '```', inline='false')
 
-            s1: str = '\n'.join(map(str, guild_meglevo))
-            n1: int = len(guild_meglevo)
-            s2: str = '\n'.join(map(str, guild_hianyzo))
-            n2: int = len(guild_hianyzo)
 
-            embed.add_field(name=str(n1) + ' játékos áll készen Ki-Adi-Mundi shard megszerzésére:',
-                            value='```' + "\n" + s1 + '```', inline='false')
-            embed.add_field(name=str(n2) + ' játékos nem áll készen Ki-Adi-Mundi shard megszerzésére:',
-                            value='```' + "\n" + s2 + '```', inline='false')
+            guild_members = character_data_search_Jedi1(guilddata)
+
+            guild_members.sort()
+            s: str = '\n'.join(map(str, guild_members))
+            n: int = len(guild_members)
+            embed.add_field(name=str(n) + ' játékos nem áll készen 1. Jedi csapattal (JML, JKR, GMY, Jolee, Bastila):', value='```' + "\n" + s + '```', inline='false')
+
+
+            guild_members = character_data_search_Jedi2(guilddata)
+
+            guild_members.sort()
+            s: str = '\n'.join(map(str, guild_members))
+            n: int = len(guild_members)
+            embed.add_field(name=str(n) + ' játékos nem áll készen 2. Jedi csapattal (JKL, GAS, Hoda, OB, Zariss):', value='```' + "\n" + s + '```', inline='false')
+
+
+            guild_members = character_data_search_Resi(guilddata)
+
+            guild_members.sort()
+            s: str = '\n'.join(map(str, guild_members))
+            n: int = len(guild_members)
+            embed.add_field(name=str(n) + ' játékos nem áll készen Resi csapattal (Rey, H.Finn, Han, Chewie, L3):', value='```' + "\n" + s + '```', inline='false')
 
             await ctx.send(embed=embed)
 
@@ -130,19 +136,10 @@ def fetchGuildRoster(raw_guild):
     return guilddata
 
 
-def character_data_search_Ki_Adi_Mundi(guilddata):
+def character_data_search_GR1(guilddata):
+    k = 0
     i = 0
-    player = [{'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0},
-              {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0},
-              {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0},
-              {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0},
-              {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0},
-              {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0},
-              {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0},
-              {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0},
-              {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0},
-              {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}, {'jatekosnev': ' ', 'chars': 0}]
-
+    chardata_ally = []
     for a in guilddata:
         chardata = guilddata[i]['roster']
         aa = 0
@@ -152,25 +149,151 @@ def character_data_search_Ki_Adi_Mundi(guilddata):
         ae = 0
         j = 0
         for b in chardata:
-            if chardata[j]['defId'] == "CT210408" and chardata[j]['rarity'] == 7 and chardata[j]['gear'] == 13 and (chardata[j]['relic']['currentTier']-2) >= 5:
-                aa = 1
-            if chardata[j]['defId'] == "CT5555" and chardata[j]['rarity'] == 7 and chardata[j]['gear'] == 13 and (chardata[j]['relic']['currentTier']-2) >= 5:
-                ab = 1
-            if chardata[j]['defId'] == "CT7567" and chardata[j]['rarity'] == 7 and chardata[j]['gear'] == 13 and (chardata[j]['relic']['currentTier']-2) >= 5:
-                ac = 1
-            if chardata[j]['defId'] == "ARCTROOPER501ST" and chardata[j]['rarity'] == 7 and chardata[j]['gear'] == 13 and (chardata[j]['relic']['currentTier']-2) >= 5:
-                ad = 1
             if chardata[j]['defId'] == "SHAAKTI" and chardata[j]['rarity'] == 7 and chardata[j]['gear'] == 13 and (chardata[j]['relic']['currentTier']-2) >= 3:
+                aa = 1
+            if chardata[j]['defId'] == "ARCTROOPER501ST" and chardata[j]['rarity'] == 7 and chardata[j]['gear'] == 13 and (chardata[j]['relic']['currentTier']-2) >= 6:
+                ab = 1
+            if chardata[j]['defId'] == "CT210408" and chardata[j]['rarity'] == 7 and chardata[j]['gear'] == 13 and (chardata[j]['relic']['currentTier']-2) >= 6:
+                ac = 1
+            if chardata[j]['defId'] == "CT7567" and chardata[j]['rarity'] == 7 and chardata[j]['gear'] == 13 and (chardata[j]['relic']['currentTier']-2) >= 5:
+                ad = 1
+            if chardata[j]['defId'] == "CT5555" and chardata[j]['rarity'] == 7 and chardata[j]['gear'] == 13 and (chardata[j]['relic']['currentTier']-2) >= 7:
                 ae = 1
             j += 1
         if aa != 1 or ab != 1 or ac != 1 or ad != 1 or ae != 1:
-            player[i]['jatekosnev'] = guilddata[i]['name']
-        else:
-            player[i]['jatekosnev'] = guilddata[i]['name']
-            player[i]['chars'] += 1
+            chardata_ally.insert(k, guilddata[i]['name'])
+            k += 1
         i += 1
 
-    return player
+    return chardata_ally
+
+
+def character_data_search_GR2(guilddata):
+    k = 0
+    i = 0
+    chardata_ally = []
+    for a in guilddata:
+        chardata = guilddata[i]['roster']
+        aa = 0
+        ab = 0
+        ac = 0
+        ad = 0
+        ae = 0
+        j = 0
+        for b in chardata:
+            if chardata[j]['defId'] == "PADMEAMIDALA" and chardata[j]['rarity'] == 7 and chardata[j]['gear'] == 13 and (chardata[j]['relic']['currentTier']-2) >= 4:
+                aa = 1
+            if chardata[j]['defId'] == "ANAKINKNIGHT" and chardata[j]['rarity'] == 7 and chardata[j]['gear'] == 13 and (chardata[j]['relic']['currentTier']-2) >= 7:
+                ab = 1
+            if chardata[j]['defId'] == "GENERALKENOBI" and chardata[j]['rarity'] == 7 and chardata[j]['gear'] == 13 and (chardata[j]['relic']['currentTier']-2) >= 7:
+                ac = 1
+            if chardata[j]['defId'] == "AHSOKATANO" and chardata[j]['rarity'] == 7 and chardata[j]['gear'] == 13 and (chardata[j]['relic']['currentTier']-2) >= 4:
+                ad = 1
+            if chardata[j]['defId'] == "C3POLEGENDARY" and chardata[j]['rarity'] == 7 and chardata[j]['gear'] == 13 and (chardata[j]['relic']['currentTier']-2) >= 3:
+                ae = 1
+            j += 1
+        if aa != 1 or ab != 1 or ac != 1 or ad != 1 or ae != 1:
+            chardata_ally.insert(k, guilddata[i]['name'])
+            k += 1
+        i += 1
+
+    return chardata_ally
+
+
+def character_data_search_Jedi1(guilddata):
+    k = 0
+    i = 0
+    chardata_ally = []
+    for a in guilddata:
+        chardata = guilddata[i]['roster']
+        aa = 0
+        ab = 0
+        ac = 0
+        ad = 0
+        ae = 0
+        j = 0
+        for b in chardata:
+            if chardata[j]['defId'] == "GRANDMASTERLUKE" and chardata[j]['rarity'] == 7 and chardata[j]['gear'] == 13 and (chardata[j]['relic']['currentTier']-2) >= 7:
+                aa = 1
+            if chardata[j]['defId'] == "JEDIKNIGHTREVAN" and chardata[j]['rarity'] == 7 and chardata[j]['gear'] == 13 and (chardata[j]['relic']['currentTier']-2) >= 3:
+                ab = 1
+            if chardata[j]['defId'] == "GRANDMASTERYODA" and chardata[j]['rarity'] == 7 and chardata[j]['gear'] == 13 and (chardata[j]['relic']['currentTier']-2) >= 5:
+                ac = 1
+            if chardata[j]['defId'] == "JOLEEBINDO" and chardata[j]['rarity'] == 7 and chardata[j]['gear'] == 13 and (chardata[j]['relic']['currentTier']-2) >= 3:
+                ad = 1
+            if chardata[j]['defId'] == "BASTILASHAN" and chardata[j]['rarity'] == 7 and chardata[j]['gear'] == 13 and (chardata[j]['relic']['currentTier']-2) >= 3:
+                ae = 1
+            j += 1
+        if aa != 1 or ab != 1 or ac != 1 or ad != 1 or ae != 1:
+            chardata_ally.insert(k, guilddata[i]['name'])
+            k += 1
+        i += 1
+
+    return chardata_ally
+
+
+def character_data_search_Jedi2(guilddata):
+    k = 0
+    i = 0
+    chardata_ally = []
+    for a in guilddata:
+        chardata = guilddata[i]['roster']
+        aa = 0
+        ab = 0
+        ac = 0
+        ad = 0
+        ae = 0
+        j = 0
+        for b in chardata:
+            if chardata[j]['defId'] == "JEDIKNIGHTLUKE" and chardata[j]['rarity'] == 7 and chardata[j]['gear'] == 13 and (chardata[j]['relic']['currentTier']-2) >= 7:
+                aa = 1
+            if chardata[j]['defId'] == "GENERALSKYWALKER" and chardata[j]['rarity'] == 7 and chardata[j]['gear'] == 13 and (chardata[j]['relic']['currentTier']-2) >= 7:
+                ab = 1
+            if chardata[j]['defId'] == "HERMITYODA" and chardata[j]['rarity'] == 7 and chardata[j]['gear'] == 13 and (chardata[j]['relic']['currentTier']-2) >= 3:
+                ac = 1
+            if chardata[j]['defId'] == "OLDBENKENOBI" and chardata[j]['rarity'] == 7 and chardata[j]['gear'] == 13 and (chardata[j]['relic']['currentTier']-2) >= 5:
+                ad = 1
+            if chardata[j]['defId'] == "BARRISSOFFEE" and chardata[j]['rarity'] == 7 and chardata[j]['gear'] == 13 and (chardata[j]['relic']['currentTier']-2) >= 3:
+                ae = 1
+            j += 1
+        if aa != 1 or ab != 1 or ac != 1 or ad != 1 or ae != 1:
+            chardata_ally.insert(k, guilddata[i]['name'])
+            k += 1
+        i += 1
+
+    return chardata_ally
+
+
+def character_data_search_Resi(guilddata):
+    k = 0
+    i = 0
+    chardata_ally = []
+    for a in guilddata:
+        chardata = guilddata[i]['roster']
+        aa = 0
+        ab = 0
+        ac = 0
+        ad = 0
+        ae = 0
+        j = 0
+        for b in chardata:
+            if chardata[j]['defId'] == "GLREY" and chardata[j]['rarity'] == 7 and chardata[j]['gear'] == 13 and (chardata[j]['relic']['currentTier']-2) >= 7:
+                aa = 1
+            if chardata[j]['defId'] == "EPIXFINN" and chardata[j]['rarity'] == 7 and chardata[j]['gear'] == 13 and (chardata[j]['relic']['currentTier']-2) >= 5:
+                ab = 1
+            if chardata[j]['defId'] == "HANSOLO" and chardata[j]['rarity'] == 7 and chardata[j]['gear'] == 13 and (chardata[j]['relic']['currentTier']-2) >= 4:
+                ac = 1
+            if chardata[j]['defId'] == "CHEWBACCALEGENDARY" and chardata[j]['rarity'] == 7 and chardata[j]['gear'] == 13 and (chardata[j]['relic']['currentTier']-2) >= 4:
+                ad = 1
+            if chardata[j]['defId'] == "L3_37" and chardata[j]['rarity'] == 7 and chardata[j]['gear'] == 13 and (chardata[j]['relic']['currentTier']-2) >= 3:
+                ae = 1
+            j += 1
+        if aa != 1 or ab != 1 or ac != 1 or ad != 1 or ae != 1:
+            chardata_ally.insert(k, guilddata[i]['name'])
+            k += 1
+        i += 1
+
+    return chardata_ally
 
 
 def TicTocGenerator():

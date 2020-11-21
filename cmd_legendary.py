@@ -16,7 +16,7 @@ class Legendary(commands.Cog):
         """Pánik figyelő
         Legfrissebb kulcskarakterek megszerzéséhez
         raw_allycode: me / taggelés / allykód
-        show: slkr, rey, jkl, kam"""
+        show: slkr, rey, jkl, jml, see, kam"""
 
         tic()
         await ctx.message.add_reaction("⏳")
@@ -303,10 +303,10 @@ def fetchPlayerKAM(raw_player):
     player['jatekosnev'] = raw_player['name']
 
     fChar(player, raw_player, "SHAAKTI", "Shaak Ti", 13, 2, 3, 1)
-    fChar(player, raw_player, "CT210408", "Echo", 13, 1, 7, 1)
+    fChar(player, raw_player, "CT210408", "Echo", 13, 1, 6, 1)
     fChar(player, raw_player, "CT7567", "Rex", 13, 1, 5, 1)
     fChar(player, raw_player, "CT5555", "Fives", 13, 2, 7, 1)
-    fChar(player, raw_player, "ARCTROOPER501ST", "ARC Trooper", 13, 1, 7, 1)
+    fChar(player, raw_player, "ARCTROOPER501ST", "ARC Trooper", 13, 1, 6, 1)
 
     return player
 
