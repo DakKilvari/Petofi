@@ -79,11 +79,11 @@ class Rang(commands.Cog):
                 message3 = ""
                 message4 = ""
 
-                if show == "b" or show == "m":
+                if show == "m":
                     message1 += "\n**Meglévő karakterek:** \n" + str("```ini\n" + s + "```")
                     message2 += "\n**Meglévő hajók:** \n" + str("```ini\n" + s2 + "```")
 
-                if show == "b" or show == "h":
+                if show == "h":
                     message3 += "\n**Hiányzó karakterek:** \n" + str("```ini\n" + s3 + "```")
                     message4 += "\n**Hiányzó hajók:** \n" + str("```ini\n" + s4 + "```")
 
@@ -126,22 +126,28 @@ def fetchPlayerRanknev(player):
     if 60 < player['rank'] <= 70:
         player['ranknev'] = "Rebel / Stormtrooper"
     if 70 < player['rank'] <= 80:
-        player['ranknev'] = "X-Wing Pilot / Tie-Fighter Pilot"
+        player['ranknev'] = "Rebel Soldier / Sith Trooper"
     if 80 < player['rank'] <= 90:
-        player['ranknev'] = "Rebel Officer / Imperial Officer"
+        player['ranknev'] = "X-Wing Pilot / Tie-Fighter Pilot"
     if 90 < player['rank'] <= 100:
-        player['ranknev'] = "Senator / Moff"
+        player['ranknev'] = "Rebel Officer / Imperial Officer"
     if 100 < player['rank'] <= 110:
-        player['ranknev'] = "Padavan / Apprentice"
+        player['ranknev'] = "Captain / Százados"
     if 110 < player['rank'] <= 120:
-        player['ranknev'] = "Jedi / Sith"
+        player['ranknev'] = "General / Tábornok"
     if 120 < player['rank'] <= 130:
-        player['ranknev'] = "Jedi Master / Sith Master"
+        player['ranknev'] = "Senator / Moff"
     if 130 < player['rank'] <= 140:
-        player['ranknev'] = "Grandmaster / Sith Lord"
+        player['ranknev'] = "Padavan / Apprentice"
     if 140 < player['rank'] <= 150:
+        player['ranknev'] = "Jedi / Sith"
+    if 150 < player['rank'] <= 160:
+        player['ranknev'] = "Jedi Master / Sith Master"
+    if 160 < player['rank'] <= 170:
+        player['ranknev'] = "Grandmaster / Sith Lord"
+    if 170 < player['rank'] <= 180:
         player['ranknev'] = "Mandalorian"
-    if player['rank'] > 150:
+    if player['rank'] > 180:
         player['ranknev'] = "Petőfi"
 
     return player
@@ -283,7 +289,7 @@ def fetchPlayerRoster(raw_player):
     fChar(player, raw_player, "COUNTDOOKU", "Count Dooku", 12, 1, 1)
     fChar(player, raw_player, "DARTHREVAN", "Darth Revan", 13, 3, 4)
     fChar(player, raw_player, "BASTILASHANDARK", "Bastila Shan (Fallen)", 13, 1, 1)
-    fChar(player, raw_player, "SITHTROOPER", "Sith Trooper", 12, 0, 1)
+    fChar(player, raw_player, "SITHTROOPER", "Sith Empire Trooper", 12, 0, 1)
     fChar(player, raw_player, "SITHMARAUDER", "Sith Marauder", 12, 0, 1)
     fChar(player, raw_player, "EMPERORPALPATINE", "Emperor Palpatine", 13, 2, 2)
     fChar(player, raw_player, "DARTHMALAK", "Darth Malak", 13, 2, 4)
@@ -298,8 +304,8 @@ def fetchPlayerRoster(raw_player):
     fChar(player, raw_player, "GENERALSKYWALKER", "General Skywalker", 13, 4, 4)
     fChar(player, raw_player, "GENERALKENOBI", "General Kenobi", 13, 1, 2)
     fChar(player, raw_player, "AHSOKATANO", "Ahsoka Tano", 13, 1, 2)
-    fChar(player, raw_player, "ANAKINKNIGHT", "Anakin Skywalker", 13, 1, 1)
-    fChar(player, raw_player, "C3POLEGENDARY", "C3PO", 13, 1, 2)
+    fChar(player, raw_player, "ANAKINKNIGHT", "Jedi Knight Anakin", 13, 1, 1)
+    fChar(player, raw_player, "C3POLEGENDARY", "C-3PO", 13, 1, 2)
     fChar(player, raw_player, "JEDIKNIGHTREVAN", "Jedi Knight Revan", 13, 3, 3)
     fChar(player, raw_player, "BASTILASHAN", "Bastila Shan", 13, 1, 1)
     fChar(player, raw_player, "JOLEEBINDO", "Jolee Bindo", 13, 1, 1)
@@ -362,6 +368,8 @@ def fetchPlayerRoster(raw_player):
     fChar(player, raw_player, "PRINCESSLEIA", "Princess Leia", 13, 0, 1)
     fChar(player, raw_player, "WEDGEANTILLES", "Wedge Antilles", 13, 0, 1)
     fChar(player, raw_player, "BIGGSDARKLIGHTER", "Biggs Darklighter", 13, 0, 1)
+    fChar(player, raw_player, "GRANDMASTERLUKE", "Jedi Master Luke Skywalker", 13, 6, 5)
+    fChar(player, raw_player, "SITHPALPATINE", "Sith Eternal Emperor", 13, 6, 5)
 
     fShip(player, raw_player, "CAPITALCHIMAERA", "Chimaera", 5, "GRANDADMIRALTHRAWN", "", "", 1)
     fShip(player, raw_player, "CAPITALSTARDESTROYER", "Executrix", 5, "GRANDMOFFTARKIN", "", "", 1)
