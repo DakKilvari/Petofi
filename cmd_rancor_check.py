@@ -65,9 +65,9 @@ class Raidcheck(commands.Cog):
             message4 = "Nincsen hátra semmi, készen állsz a csapattal! Gratulálok! 🍺"
 
             if message3 != "\n":
-                embed.add_field(name='P1: Rey, Rex, Fives, C-3PO, Hermit Yoda (15%+)', value='```' + "\n" + message3 + '```', inline='false')
+                embed.add_field(name='P1: Rey, Rex, Fives, C-3PO, Hoda (15%+)', value='```' + "\n" + message3 + '```', inline='false')
             if message3 == "\n":
-                embed.add_field(name='P1: Rey, Rex, Fives, C-3PO, Hermit Yoda (15%+)', value='```' + "\n" + message4 + '```', inline='false')
+                embed.add_field(name='P1: Rey, Rex, Fives, C-3PO, Hoda (15%+)', value='```' + "\n" + message4 + '```', inline='false')
 
 
             player = fetchPlayerP102(raw_player[0])
@@ -79,9 +79,9 @@ class Raidcheck(commands.Cog):
             message4 = "Nincsen hátra semmi, készen állsz a csapattal! Gratulálok! 🍺"
 
             if message3 != "\n":
-                embed.add_field(name='P1: Supreme Leader Kylo Ren, Nightsister Zombie, Old Daka, General Hux, Grand Admiral Thrawn (12%+)', value='```' + "\n" + message3 + '```', inline='false')
+                embed.add_field(name='P1: SLKR, Zombie, Daka, Hux, Thrawn (12%+)', value='```' + "\n" + message3 + '```', inline='false')
             if message3 == "\n":
-                embed.add_field(name='P1: Supreme Leader Kylo Ren, Nightsister Zombie, Old Daka, General Hux, Grand Admiral Thrawn (12%+)', value='```' + "\n" + message4 + '```', inline='false')
+                embed.add_field(name='P1: SLKR, Zombie, Daka, Hux, Thrawn (12%+)', value='```' + "\n" + message4 + '```', inline='false')
 
 
             player = fetchPlayerP103(raw_player[0])
@@ -93,9 +93,9 @@ class Raidcheck(commands.Cog):
             message4 = "Nincsen hátra semmi, készen állsz a csapattal! Gratulálok! 🍺"
 
             if message3 != "\n":
-                embed.add_field(name='P1: Padmé Amidala, Ahsoka Tano, Jedi Knight Anakin, General Kenobi, Grand Master Yoda (3%+)', value='```' + "\n" + message3 + '```', inline='false')
+                embed.add_field(name='P1: Padmé, Ahsoka, Jedi Anakin, GK, GMY (3%+)', value='```' + "\n" + message3 + '```', inline='false')
             if message3 == "\n":
-                embed.add_field(name='P1: Padmé Amidala, Ahsoka Tano, Jedi Knight Anakin, General Kenobi, Grand Master Yoda (3%+)', value='```' + "\n" + message4 + '```', inline='false')
+                embed.add_field(name='P1: Padmé, Ahsoka, Jedi Anakin, GK, GMY (3%+)', value='```' + "\n" + message4 + '```', inline='false')
 
 
             player = fetchPlayerP104(raw_player[0])
@@ -107,9 +107,9 @@ class Raidcheck(commands.Cog):
             message4 = "Nincsen hátra semmi, készen állsz a csapattal! Gratulálok! 🍺"
 
             if message3 != "\n":
-                embed.add_field(name='P1: Sith Eternal Emperor, Darth Traya, Darth Sion, Sith Empire Trooper, Darth Sidious (3%+)', value='```' + "\n" + message3 + '```', inline='false')
+                embed.add_field(name='P1: SEE, Traya, Sion, Sith Empire Trooper, Sidious (3%+)', value='```' + "\n" + message3 + '```', inline='false')
             if message3 == "\n":
-                embed.add_field(name='P1: Sith Eternal Emperor, Darth Traya, Darth Sion, Sith Empire Trooper, Darth Sidious (3%+)', value='```' + "\n" + message4 + '```', inline='false')
+                embed.add_field(name='P1: SEE, Traya, Sion, Sith Empire Trooper, Sidious (3%+)', value='```' + "\n" + message4 + '```', inline='false')
 
 
             player = fetchPlayerP201(raw_player[0])
@@ -121,9 +121,9 @@ class Raidcheck(commands.Cog):
             message4 = "Nincsen hátra semmi, készen állsz a csapattal! Gratulálok! 🍺"
 
             if message3 != "\n":
-                embed.add_field(name='P2: Supreme Leader Kylo Ren, General Hux, Grand Admiral Thrawn, Kylo Ren (Unmasked), Sith Trooper (12%+)', value='```' + "\n" + message3 + '```', inline='false')
+                embed.add_field(name='P2: SLKR, Hux, Thrawn, KRU, Sith Trooper (12%+)', value='```' + "\n" + message3 + '```', inline='false')
             if message3 == "\n":
-                embed.add_field(name='P2: Supreme Leader Kylo Ren, General Hux, Grand Admiral Thrawn, Kylo Ren (Unmasked), Sith Trooper (12%+)', value='```' + "\n" + message4 + '```', inline='false')
+                embed.add_field(name='P2: SLKR, Hux, Thrawn, KRU, Sith Trooper (12%+)', value='```' + "\n" + message4 + '```', inline='false')
 
 
             player = fetchPlayerP202(raw_player[0])
@@ -135,9 +135,9 @@ class Raidcheck(commands.Cog):
             message4 = "Nincsen hátra semmi, készen állsz a csapattal! Gratulálok! 🍺"
 
             if message3 != "\n":
-                embed.add_field(name='P2: Darth Vader, Wat Tambor, Darth Malak, Emperor Palpatine, Grand Admiral Thrawn (10%+)', value='```' + "\n" + message3 + '```', inline='false')
+                embed.add_field(name='P2: Vader, Wat, Malak, Palpatine, Thrawn (10%+)', value='```' + "\n" + message3 + '```', inline='false')
             if message3 == "\n":
-                embed.add_field(name='P2: Darth Vader, Wat Tambor, Darth Malak, Emperor Palpatine, Grand Admiral Thrawn (10%+)', value='```' + "\n" + message4 + '```', inline='false')
+                embed.add_field(name='P2: Vader, Wat, Malak, Palpatine, Thrawn (10%+)', value='```' + "\n" + message4 + '```', inline='false')
 
 
             player = fetchPlayerP203(raw_player[0])
@@ -163,9 +163,9 @@ class Raidcheck(commands.Cog):
             message4 = "Nincsen hátra semmi, készen állsz a csapattal! Gratulálok! 🍺"
 
             if message3 != "\n":
-                embed.add_field(name='P2: Jedi Knight Revan, Jedi Knight Luke Skywalker, Jedi Master Luke Skywalker, General Skywalker, Grand Master Yoda (8%+)', value='```' + "\n" + message3 + '```', inline='false')
+                embed.add_field(name='P2: JKR, JKL, JML, GAS, GMY (8%+)', value='```' + "\n" + message3 + '```', inline='false')
             if message3 == "\n":
-                embed.add_field(name='P2: Jedi Knight Revan, Jedi Knight Luke Skywalker, Jedi Master Luke Skywalker, General Skywalker, Grand Master Yoda (8%+)', value='```' + "\n" + message4 + '```', inline='false')
+                embed.add_field(name='P2: JKR, JKL, JML, GAS, GMY (8%+)', value='```' + "\n" + message4 + '```', inline='false')
 
 
             player = fetchPlayerP205(raw_player[0])
@@ -177,9 +177,9 @@ class Raidcheck(commands.Cog):
             message4 = "Nincsen hátra semmi, készen állsz a csapattal! Gratulálok! 🍺"
 
             if message3 != "\n":
-                embed.add_field(name='P2: Jedi Knight Revan, Jedi Knight Luke Skywalker, General Skywalker, Grand Master Yoda, Hermit Yoda (5%+)', value='```' + "\n" + message3 + '```', inline='false')
+                embed.add_field(name='P2: JKR, JKL, GAS, GMY, Hoda (5%+)', value='```' + "\n" + message3 + '```', inline='false')
             if message3 == "\n":
-                embed.add_field(name='P2: Jedi Knight Revan, Jedi Knight Luke Skywalker, General Skywalker, Grand Master Yoda, Hermit Yoda (5%+)', value='```' + "\n" + message4 + '```', inline='false')
+                embed.add_field(name='P2: JKR, JKL, GAS, GMY, Hoda (5%+)', value='```' + "\n" + message4 + '```', inline='false')
 
 
             player = fetchPlayerP401(raw_player[0])
@@ -191,9 +191,9 @@ class Raidcheck(commands.Cog):
             message4 = "Nincsen hátra semmi, készen állsz a csapattal! Gratulálok! 🍺"
 
             if message3 != "\n":
-                embed.add_field(name='P4: Commander Luke Skywalker, Han Solo, Chewbacca, C-3PO, Threepio & Chewie (1.5%+)', value='```' + "\n" + message3 + '```', inline='false')
+                embed.add_field(name='P4: CLS, Han, Chewbacca, C-3PO, 3Pac (1.5%+)', value='```' + "\n" + message3 + '```', inline='false')
             if message3 == "\n":
-                embed.add_field(name='P4: Commander Luke Skywalker, Han Solo, Chewbacca, C-3PO, Threepio & Chewie (1.5%+)', value='```' + "\n" + message4 + '```', inline='false')
+                embed.add_field(name='P4: CLS, Han, Chewbacca, C-3PO, 3Pac (1.5%+)', value='```' + "\n" + message4 + '```', inline='false')
 
 
             player = fetchPlayerP402(raw_player[0])
@@ -205,9 +205,9 @@ class Raidcheck(commands.Cog):
             message4 = "Nincsen hátra semmi, készen állsz a csapattal! Gratulálok! 🍺"
 
             if message3 != "\n":
-                embed.add_field(name='P4: Darth Revan, Bastila Shan (Fallen), HK-47, Darth Malak, Sith Marauder (1.5%+)', value='```' + "\n" + message3 + '```', inline='false')
+                embed.add_field(name='P4: Drevan, Fastila, HK-47, Malak, Marauder (1.5%+)', value='```' + "\n" + message3 + '```', inline='false')
             if message3 == "\n":
-                embed.add_field(name='P4: Darth Revan, Bastila Shan (Fallen), HK-47, Darth Malak, Sith Marauder (1.5%+)', value='```' + "\n" + message4 + '```', inline='false')
+                embed.add_field(name='P4: Drevan, Fastila, HK-47, Malak, Marauder (1.5%+)', value='```' + "\n" + message4 + '```', inline='false')
 
 
             player = fetchPlayerP403(raw_player[0])
@@ -219,9 +219,9 @@ class Raidcheck(commands.Cog):
             message4 = "Nincsen hátra semmi, készen állsz a csapattal! Gratulálok! 🍺"
 
             if message3 != "\n":
-                embed.add_field(name='P4: General Grievous, B1 Battle Droid, B2 Super Battle Droid, Droideka, IG-100 MagnaGuard (1%+)', value='```' + "\n" + message3 + '```', inline='false')
+                embed.add_field(name='P4: GG, B1, B2, Droideka, MagnaGuard (1%+)', value='```' + "\n" + message3 + '```', inline='false')
             if message3 == "\n":
-                embed.add_field(name='P4: General Grievous, B1 Battle Droid, B2 Super Battle Droid, Droideka, IG-100 MagnaGuard (1%+)', value='```' + "\n" + message4 + '```', inline='false')
+                embed.add_field(name='P4: GG, B1, B2, Droideka, MagnaGuard (1%+)', value='```' + "\n" + message4 + '```', inline='false')
 
             await ctx.send(embed=embed)
 
