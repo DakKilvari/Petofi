@@ -157,18 +157,14 @@ def fChar(player, raw_player, defID, realName, pont):
         if a['defId'] == defID:
             missingChar = 0
 
-            if a['gear'] >= 13 or (a['gear'] == 12 and pont > 1):
-                if a['gear'] >= 13:
-                    player['rank'] += pont
-                    if a['relic']['currentTier']-2 >= 5:
-                        printName = realName + ' ' + str(pont+1)
-                        player['rank'] += 1
-                    if a['relic']['currentTier']-2 >= 8:
-                        printName = realName + ' ' + str(pont+2)
-                        player['rank'] += 1
-                else:
+            if a['gear'] >= 13:
+                player['rank'] += pont
+                if a['relic']['currentTier']-2 >= 5:
+                    printName = realName + ' ' + str(pont+1)
                     player['rank'] += 1
-                    player['miss'].insert(player['rank'], printName + ' (1P) G:' + str(a['gear']) + '/13')
+                if a['relic']['currentTier']-2 >= 8:
+                    printName = realName + ' ' + str(pont+2)
+                    player['rank'] += 1
                 player['chars'].insert(player['rank'], printName)
                 retval = 1
             else:
