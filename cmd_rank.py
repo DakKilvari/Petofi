@@ -11,7 +11,7 @@ class Rang(commands.Cog):
         self.bot = bot
 
     @commands.command(aliases=['Aktuális rang pontszám kiszámítása'])
-    @commands.has_any_role(global_settings.Role3)  # User need this role to run command (can have multiple)
+    @commands.has_any_role(global_settings.Role3, global_settings.Role5, global_settings.Role6)  # User need this role to run command (can have multiple)
     async def rang(self, ctx, raw_allycode, show="b"):
         """Aktuális rang pontszám kiszámítása
         Aktuális rang pontszám kiszámítása adott játékosra
@@ -350,6 +350,7 @@ def fetchPlayerRoster(raw_player):
     fChar(player, raw_player, "SMUGGLERHAN", "Veteran Smuggler Han Solo", 1)
     fChar(player, raw_player, "WAMPA", "Wampa", 1)
     fChar(player, raw_player, "WEDGEANTILLES", "Wedge Antilles", 1)
+    fChar(player, raw_player, "RANGETROOPER", "Range Trooper", 1)
 
     fShip(player, raw_player, "CAPITALCHIMAERA", "Chimaera", 5, "GRANDADMIRALTHRAWN", "", "", 12, 2)
     fShip(player, raw_player, "CAPITALNEGOTIATOR", "Negotiator", 5, "GENERALKENOBI", "", "", 13, 3)
