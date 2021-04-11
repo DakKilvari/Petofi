@@ -12,7 +12,7 @@ async def on_ready():
     await bot.change_presence(status=discord.Status.online, activity=game)
 
 extensions = ['cmd_admin', 'cmd_ds_geo_tb', 'cmd_guild_diff', 'cmd_guild_rank', 'cmd_bakery', 'cmd_guild_save', 'cmd_kam', 'cmd_legendary',
-              'cmd_ls_check', 'cmd_ls_geo_tb', 'cmd_rank', 'cmd_top80', 'cmd_tw', 'error_handler']
+              'cmd_ls_check', 'cmd_ls_geo_tb', 'cmd_rank', 'cmd_top80', 'cmd_tw', 'cmd_tbfeedback', 'error_handler']
 
 
 if __name__ == '__main__':
