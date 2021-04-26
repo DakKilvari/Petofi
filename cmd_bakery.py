@@ -153,7 +153,7 @@ class Bakery(commands.Cog):
                     if n >= 3:
 
                         sql = "UPDATE pilvax SET Suti = %s WHERE DiscordID = %s"
-                        val = (n - 1, DiscordID)
+                        val = (n - 3, DiscordID)
 
                         mycursor.execute(sql, val)
                         mydb.commit()
