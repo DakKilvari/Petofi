@@ -55,7 +55,7 @@ class Legendary(commands.Cog):
 
             await ctx.message.add_reaction("✅")
 
-            if show != "Rey" and show != "rey" and show != "SLKR" and show != "slkr" and show != "KAM" and show != "kam" and show != "JKL" and show != "jkl" and show != "JML" and show != "jml" and show != "SEE" and show != "see":
+            if show != "Rey" and show != "rey" and show != "SLKR" and show != "slkr" and show != "JMK" and show != "jmk" and show != "KAM" and show != "kam" and show != "JKL" and show != "jkl" and show != "JML" and show != "jml" and show != "SEE" and show != "see":
                 await ctx.send(ctx.message.author.mention + " Nem adtál meg parancsot! / Ilyen parancs nincs még. :)")
             else:
                 if show == "Rey" or show == "rey":
@@ -81,6 +81,10 @@ class Legendary(commands.Cog):
                 if show == "SEE" or show == "see":
                     player = fetchPlayerSEE(raw_player[0])
                     await ctx.send(ctx.message.author.mention + " " + player['jatekosnev'] + " SEE legendary eventre állása: ")
+
+                if show == "JMK" or show == "jmk":
+                    player = fetchPlayerJMK(raw_player[0])
+                    await ctx.send(ctx.message.author.mention + " " + player['jatekosnev'] + " JMK legendary eventre állása: ")
 
                 player['chars'].sort()
                 player['ships'].sort()
@@ -205,8 +209,7 @@ def fShip(player, raw_player, defID, realName, skills, pilot1, pilot2, pilot3, p
                         player['ships'].insert(player['rank'], printName)
                         player['rank'] += pont
                     else:
-                        player['missShips'].insert(player['rank'],
-                                                   printName + 'S:' + str(temp) + '/' + str(skills) + '')
+                        player['missShips'].insert(player['rank'], printName + 'S:' + str(temp) + '/' + str(skills) + '')
                 else:
                     needpilots = 0
                     if pilot1 != "":
@@ -223,8 +226,7 @@ def fShip(player, raw_player, defID, realName, skills, pilot1, pilot2, pilot3, p
                             sumpilots += 1
                             if p3 == 1:
                                 sumpilots += 1
-                    player['missShips'].insert(player['rank'],
-                                               printName + ' P:' + str(sumpilots) + '/' + str(needpilots) + ' & S:' + str(a['rarity']) + '/5' + '')
+                    player['missShips'].insert(player['rank'], printName + ' P:' + str(sumpilots) + '/' + str(needpilots) + ' & S:' + str(a['rarity']) + '/5' + '')
             else:
                 player['missShips'].insert(player['rank'], printName + ' S:' + str(a['rarity']) + '/5' + '')
         i += 1
@@ -393,6 +395,28 @@ def fetchPlayerSEE(raw_player):
     fChar(player, raw_player, "VEERS", "General Veers", 13, 0, 3, 1)
 
     fShip(player, raw_player, "TIEBOMBERIMPERIAL", "Imperial TIE Bomber", 3, "", "", "", 1)
+
+    return player
+
+
+def fetchPlayerJMK(raw_player):
+    player = {
+        "jatekosnev": " ",
+        "rank": 0,
+        "chars": [],
+        "ships": [],
+        "miss": [],
+        "missShips": [],
+    }
+
+    player['jatekosnev'] = raw_player['name']
+
+    fChar(player, raw_player, "GENERALKENOBI", "General Kenobi", 13, 0, 8, 1)
+    fChar(player, raw_player, "MACEWINDU", "Mace Windu", 13, 0, 3, 1)
+    fChar(player, raw_player, "AAYLASECURA", "Aayla Secura", 13, 0, 3, 1)
+    fChar(player, raw_player, "BOKATAN", "Bo-Katan Kryze", 13, 0, 5, 1)
+
+    fShip(player, raw_player, "CAPITALNEGOTIATOR", "Negotiator", 5, "", "", "", 1)
 
     return player
 
