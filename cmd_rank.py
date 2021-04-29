@@ -351,6 +351,9 @@ def fetchPlayerRoster(raw_player):
     fChar(player, raw_player, "WAMPA", "Wampa", 1)
     fChar(player, raw_player, "WEDGEANTILLES", "Wedge Antilles", 1)
     fChar(player, raw_player, "RANGETROOPER", "Range Trooper", 1)
+    fChar(player, raw_player, "MACEWINDU", "Mace Windu", 1)
+    fChar(player, raw_player, "AAYLASECURA", "Aayla Secura", 1)
+    fChar(player, raw_player, "BOKATAN", "Bo-Katan Kryze", 1)
 
     fShip(player, raw_player, "CAPITALCHIMAERA", "Chimaera", 5, "GRANDADMIRALTHRAWN", "", "", 12, 2)
     fShip(player, raw_player, "CAPITALNEGOTIATOR", "Negotiator", 5, "GENERALKENOBI", "", "", 13, 3)
