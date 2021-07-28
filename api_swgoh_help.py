@@ -199,8 +199,10 @@ class api_swgoh_help():
 
 class settings():
     def __init__(self, **kwargs):
-        self.username = "YOUR USERNAME"
-        self.password = "YOUR PASSWORD"
+        self.username = "Kilvari"
+        self.password = "Pilvax_Officer_Dak4160"
+        #self.username = "Anystone"
+        #self.password = "Q1w2e3r4"
         self.client_id = kwargs.get('client_id', '123')
         self.client_secret = kwargs.get('client_secret', 'abc')
         self.charStatsApi = kwargs.get('charStatsApi', '')

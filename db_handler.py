@@ -5,8 +5,8 @@ import mysql.connector
 class db_handler():
     def __init__(self, _authorID, _userID):
         self.host = "localhost"
-        self.user = "YOUR DB USERNAME"
-        self.password = "YOUR DB PASSWORD"
+        self.user = "DakKilvari"
+        self.password = "Pilvax_Officer_Dak4160"
         self.database = "swgoh"
         self.authorID = _authorID
         self.userID = _userID
